@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import ProductFilters from '../components/ProductFilters.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 
@@ -22,6 +23,7 @@ const SearchResultsPage = () => {
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans">
             <Navbar />
+            <SubNavbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}

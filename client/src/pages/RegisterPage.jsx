@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 
 const RegisterPage = () => {
@@ -22,6 +23,7 @@ const RegisterPage = () => {
                 }
             `}</style>
             <Navbar />
+            <SubNavbar />
 
             <main className="flex-grow flex items-center justify-center p-8 sm:p-12 relative overflow-hidden">
                 {/* Background Decorations */}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 
 const PaymentPage = () => {
@@ -40,6 +41,7 @@ const PaymentPage = () => {
                 }
             `}</style>
             <Navbar />
+            <SubNavbar />
 
             <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
                 <div className="max-w-3xl mx-auto animate-scaleUp">
