@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import PCCard from '../components/PCCard.jsx';
 import PCFilters from '../components/PCFilters.jsx';
 
@@ -55,6 +56,7 @@ const ReadyMadePCsPage = () => {
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans">
             <Navbar />
+            <SubNavbar />
 
             <header className="bg-white border-b border-gray-200 py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

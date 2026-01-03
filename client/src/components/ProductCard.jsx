@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 
 const ProductCard = (props) => {
-    const { id, image, title, price, originalPrice, specs, stockStatus, rating } = props;
+    const { id, image, title, price, originalPrice, specs, stockStatus, rating, brand, badges } = props;
     const navigate = useNavigate();
     const { addToCart } = useCart();
 
@@ -12,12 +12,9 @@ const ProductCard = (props) => {
     const productId = id || 1;
 
     const handleAddToCart = (e) => {
-        e.preventDefault(); // Prevent navigation if wrapped in Link
-        e.stopPropagation();
+        // e.preventDefault is handled in UniversalCard check, but good to be safe if passed as handler
+        console.log("Adding to cart:", title);
 
-        console.log("Adding to cart:", title); // Debug log
-
-        // Construct product object for cart
         const productToAdd = {
             id: productId,
             image,
@@ -26,15 +23,14 @@ const ProductCard = (props) => {
             specs
         };
         addToCart(productToAdd);
-
-        // Optional: Show some visual feedback or toast here? 
-        // For now, the Navbar count update is the feedback.
     };
 
     return (
         <UniversalCard
             image={image}
             title={title}
+            brand={brand}
+            badges={badges}
             specs={specs}
             price={price}
             originalPrice={originalPrice}
@@ -45,7 +41,7 @@ const ProductCard = (props) => {
                 onClick: handleAddToCart
             }}
             secondaryAction={{
-                label: "View",
+                label: "Quick View",
                 to: `/product/${productId}`
             }}
         />

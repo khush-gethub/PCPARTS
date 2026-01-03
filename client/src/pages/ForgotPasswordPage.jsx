@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 
 const ForgotPasswordPage = () => {
     return (
         <div className="min-h-screen bg-[#eef2f2] flex flex-col font-sans">
             <Navbar />
+            <SubNavbar />
 
             <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100 transition-all hover:shadow-xl">

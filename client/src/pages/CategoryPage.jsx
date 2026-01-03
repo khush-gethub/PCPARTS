@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import AdvancedFilters from '../components/AdvancedFilters.jsx';
 
@@ -17,9 +18,14 @@ const CategoryPage = () => {
             price: "₹49,999",
             originalPrice: "₹65,000",
             image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=400",
-            specs: ["LGA 1700", "24 Cores / 32 Threads", "Up to 5.8 GHz", "125W TDP"],
+            specs: [
+                { label: 'Socket', val: 'LGA 1700' },
+                { label: 'Cores', val: '24C / 32T' },
+                { label: 'Boost', val: '5.8 GHz' }
+            ],
             stockStatus: "In Stock",
-            rating: 4.9
+            rating: 4.9,
+            brand: "INTEL"
         },
         {
             id: 2,
@@ -27,9 +33,14 @@ const CategoryPage = () => {
             price: "₹52,999",
             originalPrice: "₹69,000",
             image: "https://images.unsplash.com/photo-1555618568-96041067d5ce?auto=format&fit=crop&q=80&w=400",
-            specs: ["AM5 Socket", "16 Cores / 32 Threads", "Up to 5.7 GHz", "170W TDP"],
+            specs: [
+                { label: 'Socket', val: 'AM5' },
+                { label: 'Cores', val: '16C / 32T' },
+                { label: 'Boost', val: '5.7 GHz' }
+            ],
             stockStatus: "Low Stock",
-            rating: 4.8
+            rating: 4.8,
+            brand: "AMD"
         },
         {
             id: 3,
@@ -37,9 +48,14 @@ const CategoryPage = () => {
             price: "₹1,85,000",
             originalPrice: "₹2,10,000",
             image: "https://images.unsplash.com/photo-1624705024411-db5267b2d396?auto=format&fit=crop&q=80&w=400",
-            specs: ["24GB GDDR6X", "Ada Lovelace Arch", "DLSS 3.0", "3.5 Slot Design"],
+            specs: [
+                { label: 'VRAM', val: '24GB' },
+                { label: 'Arch', val: 'Ada' },
+                { label: 'Slots', val: '3.5' }
+            ],
             stockStatus: "In Stock",
-            rating: 5.0
+            rating: 5.0,
+            brand: "ASUS"
         },
         {
             id: 4,
@@ -47,9 +63,14 @@ const CategoryPage = () => {
             price: "₹38,500",
             originalPrice: "₹45,000",
             image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=400",
-            specs: ["8GB GDDR6", "128-bit Memory Interface", "Compact Design"],
+            specs: [
+                { label: 'VRAM', val: '8GB' },
+                { label: 'Exam', val: '128-bit' },
+                { label: 'Fans', val: '2' }
+            ],
             stockStatus: "In Stock",
-            rating: 4.5
+            rating: 4.5,
+            brand: "MSI"
         },
         {
             id: 5,
@@ -57,9 +78,14 @@ const CategoryPage = () => {
             price: "₹12,499",
             originalPrice: "₹18,000",
             image: "https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=400",
-            specs: ["DDR5", "6000MHz", "CL36 Latency", "XMP 3.0 Support"],
+            specs: [
+                { label: 'Type', val: 'DDR5' },
+                { label: 'Speed', val: '6000MHz' },
+                { label: 'Lat.', val: 'CL36' }
+            ],
             stockStatus: "In Stock",
-            rating: 4.7
+            rating: 4.7,
+            brand: "CORSAIR"
         },
         {
             id: 6,
@@ -67,9 +93,14 @@ const CategoryPage = () => {
             price: "₹16,999",
             originalPrice: "₹22,999",
             image: "https://images.unsplash.com/photo-1628557672631-1a890e0c0c7e?auto=format&fit=crop&q=80&w=400",
-            specs: ["PCIe Gen 4.0", "Up to 7450 MB/s", "Heatsink Optional"],
+            specs: [
+                { label: 'Type', val: 'NVMe 4.0' },
+                { label: 'Size', val: '2TB' },
+                { label: 'Speed', val: '7450MB/s' }
+            ],
             stockStatus: "Out of Stock",
-            rating: 4.9
+            rating: 4.9,
+            brand: "SAMSUNG"
         },
         {
             id: 7,
@@ -77,9 +108,14 @@ const CategoryPage = () => {
             price: "₹15,499",
             originalPrice: "₹19,000",
             image: "https://images.unsplash.com/photo-1587202372616-b4345bb655a6?auto=format&fit=crop&q=80&w=400",
-            specs: ["Dual Chamber", "Tempered Glass", "High Airflow", "Supports 360mm AIO"],
+            specs: [
+                { label: 'Type', val: 'Mid-Tower' },
+                { label: 'Build', val: 'Dual' },
+                { label: 'Air', val: 'High' }
+            ],
             stockStatus: "In Stock",
-            rating: 4.8
+            rating: 4.8,
+            brand: "NZXT"
         },
         {
             id: 8,
@@ -87,15 +123,21 @@ const CategoryPage = () => {
             price: "₹14,200",
             originalPrice: "₹17,500",
             image: "https://images.unsplash.com/photo-1587202372634-32705e3bf42c?auto=format&fit=crop&q=80&w=400",
-            specs: ["1000W", "80 Plus Gold", "ATX 3.0 Compatible", "Zero RPM Mode"],
+            specs: [
+                { label: 'Power', val: '1000W' },
+                { label: 'Eff.', val: 'Gold' },
+                { label: 'Mod.', val: 'Full' }
+            ],
             stockStatus: "In Stock",
-            rating: 4.6
+            rating: 4.6,
+            brand: "CORSAIR"
         }
     ];
 
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans pb-12">
             <Navbar />
+            <SubNavbar />
 
             {/* Breadcrumb Header */}
             <div className="bg-white border-b border-gray-200">

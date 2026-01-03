@@ -9,19 +9,22 @@ const PCCard = ({ id, name, image, cpu, gpu, ram, price, useCase, rating }) => {
         <UniversalCard
             image={image}
             title={name}
-            badges={[useCase]}
+            badges={[useCase, 'Pro-Assembled']}
             specs={[
-                `CPU: ${cpu}`,
-                `GPU: ${gpu}`,
-                `RAM: ${ram}`
+                { label: 'CPU', val: cpu },
+                { label: 'GPU', val: gpu },
+                { label: 'RAM', val: ram }
             ]}
             price={price}
             rating={rating}
             primaryAction={{
-                label: "View Details",
+                label: "Buy Now",
                 onClick: () => navigate(`/ready-made-pc/${id}`)
             }}
-        // Optional: Secondary action could be "Configure" if that feature existed
+            secondaryAction={{
+                label: "View Build Details",
+                onClick: () => navigate(`/ready-made-pc/${id}`)
+            }}
         />
     );
 };

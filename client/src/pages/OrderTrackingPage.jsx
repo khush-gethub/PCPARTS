@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 
 const OrderTrackingPage = () => {
@@ -19,6 +20,7 @@ const OrderTrackingPage = () => {
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans flex flex-col">
             <Navbar />
+            <SubNavbar />
 
             <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
                 <div className="mb-8">

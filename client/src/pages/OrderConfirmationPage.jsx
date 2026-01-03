@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 
 const OrderConfirmationPage = () => {
@@ -30,6 +31,7 @@ const OrderConfirmationPage = () => {
                 }
             `}</style>
             <Navbar />
+            <SubNavbar />
 
             <main className="flex-grow flex items-center justify-center p-8 relative overflow-hidden">
                 {/* Decorative background blobs */}

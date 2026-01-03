@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import SubNavbar from '../components/SubNavbar.jsx';
 import ProductGallery from '../components/ProductGallery.jsx';
 import ReadyMadePCInfo from '../components/ReadyMadePCInfo.jsx';
 import ProductSpecsAccordion from '../components/ProductSpecsAccordion.jsx';
@@ -68,6 +69,7 @@ const ReadyMadePCDetailsPage = () => {
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans pb-12">
             <Navbar />
+            <SubNavbar />
 
             <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div className="bg-white rounded-sm shadow-sm flex flex-col lg:flex-row p-4 lg:p-6 mb-4">
