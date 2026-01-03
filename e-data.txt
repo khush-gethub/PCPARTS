@@ -1,0 +1,170 @@
+E-commers Tables
+1. Users:
+Field	Type
+user_id	UUID PK
+name	varchar
+email	varchar UNIQUE
+password_	varchar
+phone	varchar
+role	enum("user","admin")
+created_at	timestamp
+
+2. Addresses:
+Field	Type
+address_id	UUID PK
+user_id	UUID FK
+line1	varchar
+line2	varchar
+city	varchar
+state	varchar
+pincode	varchar
+country	varchar
+
+3. Categories:
+Field	Type
+category_id	UUID PK
+name	varchar
+
+4. Brands
+Field	Type
+brand_id	UUID PK
+name	varchar
+5. Products
+Field	Type
+product_id	UUID PK
+category_id	UUID FK
+brand_id	UUID FK
+name	varchar
+description	text
+specs	jsonb
+
+6. ProductVariants
+Field	Type
+variant_id	UUID PK
+product_id	UUID FK
+name	varchar
+sku	varchar UNIQUE
+price	int
+discount_price	int nullable
+stock_status	enum("in_stock","low_stock","out_of_stock")
+weight	int nullable
+
+7. Stock
+Field	Type
+stock_id	UUID PK
+variant_id	UUID FK UNIQUE
+quantity	int
+updated_at	timestamp
+
+
+
+8. ProductImages
+Field	Type
+image_id	UUID PK
+product_id	UUID FK
+image_url	varchar
+position	int
+
+9. Benchmarks
+(For CPUs/GPUs — scores, FPS, synthetic benchmarks)
+Field	Type
+benchmark_id	UUID PK
+product_id	UUID FK
+name	varchar
+score	float
+details	jsonb
+
+10. PCBuilderCompatibility
+(Ensures parts match: CPU <-> Motherboard, GPU <-> PSU etc.)
+Field	Type
+compat_id	UUID PK
+product_id	UUID FK
+compatible_with_product_id	UUID FK
+rule	varchar
+
+
+
+11. ReadyMadePC
+(Prebuilt PC models)
+Field	Type
+pc_id	UUID PK
+name	varchar
+price	int
+category	varchar
+image	varchar
+Image2	varchar
+Image3	varchar
+
+12. ReadyMadePCItems
+(List of components inside a prebuilt PC)
+Field	Type
+item_id	UUID PK
+pc_id	UUID FK
+product_id	UUID FK
+variant_id	UUID FK
+
+13. Coupons
+Field	Type
+coupon_id	UUID PK
+code	varchar UNIQUE
+discount_value	int
+min_order_amount	int nullable
+expires_at	timestamp
+usage_limit	int
+created_at	timestamp
+
+
+
+14. UserCoupons
+(To track if user has used a coupon)
+Field	Type
+user_coupon_id	UUID PK
+user_id	UUID FK
+coupon_id	UUID FK
+used_at	timestamp
+
+15. Cart
+Field	Type
+cart_id	UUID PK
+user_id	UUID FK
+created_at	timestamp
+updated_at	timestamp
+
+16. CartItems
+Field	Type
+cart_item_id	UUID PK
+cart_id	UUID FK
+variant_id	UUID FK
+quantity	int
+price_snapshot	int
+
+
+
+17. Orders
+Field	Type
+order_id	UUID PK
+user_id	UUID FK
+address_id	UUID FK
+total_price	int
+payment_status	enum("pending","paid","failed")
+order_status	enum("processing","shipped","delivered","cancelled")
+payment_id	varchar
+created_at	timestamp
+
+18. OrderItems
+Field	Type
+order_item_id	UUID PK
+order_id	UUID FK
+variant_id	UUID FK
+product_name	varchar
+price	int
+quantity	int
+
+19. PDFDownloads
+(Stores downloadable invoices or PC build summaries)
+Field	Type
+pdf_id	UUID PK
+user_id	UUID FK
+order_id	UUID FK
+pdf_url	varchar
+created_at	timestamp
