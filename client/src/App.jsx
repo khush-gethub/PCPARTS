@@ -19,6 +19,16 @@ import ReadyMadePCDetailsPage from './pages/ReadyMadePCDetailsPage.jsx';
 import ReadyMadePCComponentsPage from './pages/ReadyMadePCComponentsPage.jsx';
 import SearchResultsPage from './pages/SearchResultsPage.jsx';
 
+// Admin Imports
+import AdminLayout from './layouts/AdminLayout.jsx';
+import AdminDashboard from './pages/admin/AdminDashboard.jsx';
+import AdminProducts from './pages/admin/AdminProducts.jsx';
+import AdminOrders from './pages/admin/AdminOrders.jsx';
+import AdminUsers from './pages/admin/AdminUsers.jsx';
+import AdminCoupons from './pages/admin/AdminCoupons.jsx';
+import AdminReadyMadePCs from './pages/admin/AdminReadyMadePCs.jsx';
+import AdminPlaceholderPage from './pages/admin/AdminPlaceholderPage.jsx';
+
 function App() {
   return (
     <Router>
@@ -41,6 +51,16 @@ function App() {
         <Route path="/ready-made-pc/:id" element={<ReadyMadePCDetailsPage />} />
         <Route path="/ready-made-pc/:id/components" element={<ReadyMadePCComponentsPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="coupons" element={<AdminCoupons />} />
+          <Route path="ready-made-pcs" element={<AdminReadyMadePCs />} />
+        </Route>
       </Routes>
     </Router>
   );
