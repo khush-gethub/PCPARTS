@@ -38,6 +38,10 @@ const Navbar = () => {
                                 Login Register
                             </Link>
 
+                            <Link to="/admin" className="text-gray-700 hover:text-[#f06437] font-bold text-sm transition-colors border border-gray-200 px-3 py-2 rounded-md hover:border-[#f06437]">
+                                Admin Dashboard
+                            </Link>
+
                             {/* Profile Icon */}
                             <Link to="/profile" className="text-gray-700 hover:text-black transition-colors">
                                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
