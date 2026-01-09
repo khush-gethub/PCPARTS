@@ -6,7 +6,7 @@
  * - mongoose
  * - cors
  *
- * Updated to support 19-entity schema.
+ * Updated to support 19-entity schema and 'pcparts' DB.
  */
 
 const express = require('express');
@@ -29,8 +29,8 @@ app.use(cors());
 app.use(express.json());
 
 // --- Database Connection ---
-mongoose.connect('mongodb://127.0.0.1:27017/pcstore')
-    .then(() => console.log('✅ MongoDB Connected to pc_store_db'))
+mongoose.connect('mongodb://127.0.0.1:27017/pcparts')
+    .then(() => console.log('✅ MongoDB Connected to pcparts'))
     .catch(err => console.error('❌ Database Connection Error:', err));
 
 // --- Routes ---
@@ -40,10 +40,40 @@ app.get('/', (req, res) => {
     res.send({ message: 'PC Store API is running 🚀', endpoints: 'Check /products, /categories, etc.' });
 });
 
-// --- GENERIC CRUD HANDLER (Simplified for demonstration) ---
-// In a real app, you would separate these into controllers
+// Helper for simple GET all
+const createGetAllRoute = (path, Model) => {
+    app.get(path, async (req, res) => {
+        try {
+            const items = await Model.find();
+            res.json(items);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    });
+};
 
-// 1. Products
+// 1. Users
+createGetAllRoute('/users', User);
+app.post('/users', async (req, res) => {
+    try {
+        const newUser = new User(req.body);
+        await newUser.save();
+        res.status(201).json(newUser);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+// 2. Addresses
+createGetAllRoute('/addresses', Address);
+
+// 3. Categories
+createGetAllRoute('/categories', Category);
+
+// 4. Brands
+createGetAllRoute('/brands', Brand);
+
+// 5. Products
 app.get('/products', async (req, res) => {
     try {
         const products = await Product.find()
@@ -57,7 +87,6 @@ app.get('/products', async (req, res) => {
 
 app.get('/products/:id', async (req, res) => {
     try {
-        // Search by product_id (UUID) not _id
         const product = await Product.findOne({ product_id: req.params.id })
             .populate('category_id')
             .populate('brand_id');
@@ -68,27 +97,7 @@ app.get('/products/:id', async (req, res) => {
     }
 });
 
-// 2. Categories
-app.get('/categories', async (req, res) => {
-    try {
-        const categories = await Category.find();
-        res.json(categories);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// 3. Brands
-app.get('/brands', async (req, res) => {
-    try {
-        const brands = await Brand.find();
-        res.json(brands);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// 4. Product Variants (by Product ID)
+// 6. ProductVariants
 app.get('/products/:id/variants', async (req, res) => {
     try {
         const variants = await ProductVariant.find({ product_id: req.params.id });
@@ -97,8 +106,17 @@ app.get('/products/:id/variants', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+createGetAllRoute('/variants', ProductVariant);
+app.put('/variants/:id', async (req, res) => {
+    try {
+        const updated = await ProductVariant.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updated);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
 
-// 5. Stock Check
+// 7. Stock
 app.get('/stock/:variant_id', async (req, res) => {
     try {
         const stock = await Stock.findOne({ variant_id: req.params.variant_id });
@@ -109,28 +127,78 @@ app.get('/stock/:variant_id', async (req, res) => {
     }
 });
 
-// 6. Users (For Testing)
-app.get('/users', async (req, res) => {
+// 8. ProductImages
+app.get('/products/:id/images', async (req, res) => {
     try {
-        const users = await User.find();
-        res.json(users);
+        const images = await ProductImage.find({ product_id: req.params.id }).sort('position');
+        res.json(images);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-app.post('/users', async (req, res) => {
-    
+// 9. Benchmarks
+// 9. Benchmarks
+createGetAllRoute('/benchmarks', Benchmark);
+app.post('/benchmarks', async (req, res) => {
     try {
-        const newUser = new User(req.body);
-        await newUser.save();
-        res.status(201).json(newUser);
+        const newBench = new Benchmark(req.body);
+        await newBench.save();
+        res.status(201).json(newBench);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
 });
+app.get('/products/:id/benchmarks', async (req, res) => {
+    try {
+        const benchmarks = await Benchmark.find({ product_id: req.params.id });
+        res.json(benchmarks);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
-// 7. Orders
+// 10. PCBuilderCompatibility
+createGetAllRoute('/compatibility', PCBuilderCompatibility);
+
+// 11. ReadyMadePC
+createGetAllRoute('/readymade-pcs', ReadyMadePC);
+app.get('/readymade-pcs/:id', async (req, res) => {
+    try {
+        const pc = await ReadyMadePC.findOne({ pc_id: req.params.id });
+        if (!pc) return res.status(404).json({ error: 'PC not found' });
+
+        // Get items too
+        const items = await ReadyMadePCItem.find({ pc_id: req.params.id })
+            .populate('product_id', 'name')
+            .populate('variant_id', 'price');
+
+        res.json({ ...pc.toObject(), items });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 12. Coupons
+createGetAllRoute('/coupons', Coupon);
+
+// 13. UserCoupons
+createGetAllRoute('/user-coupons', UserCoupon);
+
+// 14. Cart
+app.get('/cart/:user_id', async (req, res) => {
+    try {
+        const cart = await Cart.findOne({ user_id: req.params.user_id });
+        if (!cart) return res.status(404).json({ message: 'No cart found' });
+
+        const items = await CartItem.find({ cart_id: cart.cart_id });
+        res.json({ ...cart.toObject(), items });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 15. Orders
 app.get('/orders', async (req, res) => {
     try {
         const orders = await Order.find().populate('user_id', 'name email');
@@ -142,7 +210,6 @@ app.get('/orders', async (req, res) => {
 
 app.post('/orders', async (req, res) => {
     try {
-        // Logic should handle order_items creation too, but keeping it simple
         const newOrder = new Order(req.body);
         await newOrder.save();
         res.status(201).json(newOrder);
@@ -151,8 +218,11 @@ app.post('/orders', async (req, res) => {
     }
 });
 
+// 16. PDFDownloads
+createGetAllRoute('/pdfs', PDFDownload);
+
 // --- Server Start ---
 app.listen(PORT, () => {
     console.log(`📡 Server running on http://localhost:${PORT}`);
-    console.log(`Endpoints available: /products, /categories, /brands, /users, /orders`);
+    console.log(`Endpoints available for all 19 entities. Check /products, /readymade-pcs, etc.`);
 });

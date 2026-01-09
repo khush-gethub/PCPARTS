@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { api } from '../api';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import ProductCard from '../components/ProductCard.jsx';
@@ -10,129 +11,180 @@ const CategoryPage = () => {
     const categoryName = categoryId ? categoryId.charAt(0).toUpperCase() + categoryId.slice(1) : 'Category';
     const [sortBy, setSortBy] = useState('relevance');
 
-    // Mock Product Data with advanced specs
-    const allProducts = [
-        {
-            id: 1,
-            title: "Intel Core i9-13900K Processor (24 Cores, 32 Threads)",
-            price: "₹49,999",
-            originalPrice: "₹65,000",
-            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=400",
-            specs: [
-                { label: 'Socket', val: 'LGA 1700' },
-                { label: 'Cores', val: '24C / 32T' },
-                { label: 'Boost', val: '5.8 GHz' }
-            ],
-            stockStatus: "In Stock",
-            rating: 4.9,
-            brand: "INTEL"
-        },
-        {
-            id: 2,
-            title: "AMD Ryzen 9 7950X Desktop Processor",
-            price: "₹52,999",
-            originalPrice: "₹69,000",
-            image: "https://images.unsplash.com/photo-1555618568-96041067d5ce?auto=format&fit=crop&q=80&w=400",
-            specs: [
-                { label: 'Socket', val: 'AM5' },
-                { label: 'Cores', val: '16C / 32T' },
-                { label: 'Boost', val: '5.7 GHz' }
-            ],
-            stockStatus: "Low Stock",
-            rating: 4.8,
-            brand: "AMD"
-        },
-        {
-            id: 3,
-            title: "ASUS ROG Strix GeForce RTX 4090 OC Edition 24GB",
-            price: "₹1,85,000",
-            originalPrice: "₹2,10,000",
-            image: "https://images.unsplash.com/photo-1624705024411-db5267b2d396?auto=format&fit=crop&q=80&w=400",
-            specs: [
-                { label: 'VRAM', val: '24GB' },
-                { label: 'Arch', val: 'Ada' },
-                { label: 'Slots', val: '3.5' }
-            ],
-            stockStatus: "In Stock",
-            rating: 5.0,
-            brand: "ASUS"
-        },
-        {
-            id: 4,
-            title: "MSI GeForce RTX 4060 Ti Ventus 2X Black 8GB OC",
-            price: "₹38,500",
-            originalPrice: "₹45,000",
-            image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=400",
-            specs: [
-                { label: 'VRAM', val: '8GB' },
-                { label: 'Exam', val: '128-bit' },
-                { label: 'Fans', val: '2' }
-            ],
-            stockStatus: "In Stock",
-            rating: 4.5,
-            brand: "MSI"
-        },
-        {
-            id: 5,
-            title: "Corsair Vengeance 32GB (2x16GB) DDR5 6000MHz",
-            price: "₹12,499",
-            originalPrice: "₹18,000",
-            image: "https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=400",
-            specs: [
-                { label: 'Type', val: 'DDR5' },
-                { label: 'Speed', val: '6000MHz' },
-                { label: 'Lat.', val: 'CL36' }
-            ],
-            stockStatus: "In Stock",
-            rating: 4.7,
-            brand: "CORSAIR"
-        },
-        {
-            id: 6,
-            title: "Samsung 990 Pro 2TB NVMe PCIe 4.0 SSD",
-            price: "₹16,999",
-            originalPrice: "₹22,999",
-            image: "https://images.unsplash.com/photo-1628557672631-1a890e0c0c7e?auto=format&fit=crop&q=80&w=400",
-            specs: [
-                { label: 'Type', val: 'NVMe 4.0' },
-                { label: 'Size', val: '2TB' },
-                { label: 'Speed', val: '7450MB/s' }
-            ],
-            stockStatus: "Out of Stock",
-            rating: 4.9,
-            brand: "SAMSUNG"
-        },
-        {
-            id: 7,
-            title: "NZXT H9 Flow Dual-Chamber Mid-Tower Airflow Case",
-            price: "₹15,499",
-            originalPrice: "₹19,000",
-            image: "https://images.unsplash.com/photo-1587202372616-b4345bb655a6?auto=format&fit=crop&q=80&w=400",
-            specs: [
-                { label: 'Type', val: 'Mid-Tower' },
-                { label: 'Build', val: 'Dual' },
-                { label: 'Air', val: 'High' }
-            ],
-            stockStatus: "In Stock",
-            rating: 4.8,
-            brand: "NZXT"
-        },
-        {
-            id: 8,
-            title: "Corsair RM1000e Fully Modular Low-Noise ATX Power Supply",
-            price: "₹14,200",
-            originalPrice: "₹17,500",
-            image: "https://images.unsplash.com/photo-1587202372634-32705e3bf42c?auto=format&fit=crop&q=80&w=400",
-            specs: [
-                { label: 'Power', val: '1000W' },
-                { label: 'Eff.', val: 'Gold' },
-                { label: 'Mod.', val: 'Full' }
-            ],
-            stockStatus: "In Stock",
-            rating: 4.6,
-            brand: "CORSAIR"
+    // Filter State
+    const [filters, setFilters] = useState({
+        priceRange: 200000,
+        brands: [],
+        availability: 'any',
+        specs: {}
+    });
+
+    const handleFilterChange = (category, value) => {
+        if (category === 'reset') {
+            setFilters({
+                priceRange: 200000,
+                brands: [],
+                availability: 'any',
+                specs: {}
+            });
+        } else {
+            setFilters(prev => ({ ...prev, [category]: value }));
         }
-    ];
+    };
+
+    // Mock Product Data with advanced specs
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Fetch data on mount or when categoryId changes
+    React.useEffect(() => {
+        const fetchProducts = async () => {
+            setLoading(true);
+            try {
+                // 1. Fetch All Products and Categories Global
+                const [allProducts, categories] = await Promise.all([
+                    api.getProducts(),
+                    api.getCategories()
+                ]);
+
+                let data = allProducts;
+                let matchedCategory = null;
+
+                // 2. Filter by Category if categoryId is present and not generic
+                if (categoryId && categoryId.toLowerCase() !== 'components' && categoryId.toLowerCase() !== 'all') {
+
+                    // Try to match by ID or Name
+                    const targetCat = categories.find(c =>
+                        c.name.toLowerCase() === categoryId.toLowerCase() ||
+                        c.category_id === categoryId
+                    );
+
+                    if (targetCat) {
+                        matchedCategory = targetCat;
+                        // Filter by ID Match
+                        const filtered = allProducts.filter(p =>
+                            p.category_id && (p.category_id._id === targetCat.category_id || p.category_id === targetCat.category_id)
+                        );
+                        if (filtered.length > 0) data = filtered;
+                        // If filtered is 0, we might want to keep it 0 to show "No products in this category" 
+                        // BUT user said "show data like home page", implying if "no category" (or invalid), show data.
+                        // However, if I am in "Processors", and I have 0 Processors, showing ALL products is confusing.
+                        // I will assume if targetCat is found, we respect the filter (even if 0).
+                        // If targetCat is NOT found, we fallback to text search, and if that fails, maybe we show all?
+                        // Let's stick to: Match -> Filter. No Match -> Text Filter.
+                        data = filtered;
+                    } else {
+                        // Fallback: Text search on category_name or just return all if it looks like a "main" page request
+                        const textFiltered = allProducts.filter(p => p.category_name?.toLowerCase().includes(categoryId.toLowerCase()));
+                        if (textFiltered.length > 0) {
+                            data = textFiltered;
+                        } else {
+                            // If no text match found, it might be an invalid category URL. 
+                            // User request: "in category page there is no category i want to show product data like home page data"
+                            // This implies if category is missing/invalid, show ALL.
+                            console.warn("Category not found, showing all products");
+                            data = allProducts;
+                        }
+                    }
+                }
+
+                // 3. Enrich Data (Image, Price, Stock)
+                const enriched = await Promise.all(data.map(async (p) => {
+                    let price = "N/A";
+                    let image = "https://placehold.co/400x400?text=No+Image";
+                    let stockStatus = "Out of Stock";
+                    let originalPrice = null;
+
+                    try {
+                        const variants = await api.getVariants();
+                        const variant = variants.find(v => v.product_id === p.product_id || v.product_id === p._id);
+                        if (variant) {
+                            price = `$${variant.price}`;
+                            if (variant.discount_price) originalPrice = `$${variant.discount_price}`;
+
+                            try {
+                                const s = await api.getStock(variant.variant_id);
+                                stockStatus = (s && s.quantity > 0) ? "In Stock" : "Out of Stock";
+                            } catch (e) { }
+                        }
+
+                        const images = await api.getProductImages(p.product_id || p._id);
+                        if (images.length > 0) image = images[0].image_url;
+
+                    } catch (e) { console.warn("Enrich error", e) }
+
+                    return {
+                        id: p.product_id || p._id,
+                        title: p.name,
+                        price: price,
+                        originalPrice: originalPrice,
+                        image: image,
+                        stockStatus: stockStatus,
+                        brand: p.brand_id?.name || "Brand",
+                        specs: p.specs ? Object.entries(p.specs).map(([k, v]) => ({ label: k, val: v })) : []
+                    };
+                }));
+
+                setProducts(enriched);
+
+            } catch (err) {
+                console.error("Failed to load category products", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProducts();
+    }, [categoryId]);
+
+    // Filtering Logic
+    const filteredProducts = useMemo(() => {
+        let result = products;
+
+        // 1. Price Filter
+        result = result.filter(p => {
+            const priceNum = parseFloat(p.price.replace(/[^0-9.-]+/g, ""));
+            return !isNaN(priceNum) ? priceNum <= filters.priceRange : true;
+        });
+
+        // 2. Brand Filter
+        if (filters.brands.length > 0) {
+            result = result.filter(p => filters.brands.map(b => b.toLowerCase()).includes(p.brand.toLowerCase()));
+        }
+
+        // 3. Availability Filter
+        if (filters.availability === 'in_stock') {
+            result = result.filter(p => p.stockStatus === 'In Stock');
+        }
+
+        // 4. Specs Filter (Best effort match)
+        Object.values(filters.specs).forEach(selectedOptions => {
+            if (selectedOptions.length > 0) {
+                result = result.filter(p =>
+                    p.specs.some(spec =>
+                        selectedOptions.some(opt =>
+                            spec.val.toString().toLowerCase().includes(opt.toLowerCase()) ||
+                            spec.label.toLowerCase().includes(opt.toLowerCase())
+                        )
+                    )
+                );
+            }
+        });
+
+        // Sorting
+        return result.sort((a, b) => {
+            if (sortBy === 'price_low') {
+                const pA = parseFloat(a.price.replace(/[^0-9.-]+/g, ""));
+                const pB = parseFloat(b.price.replace(/[^0-9.-]+/g, ""));
+                return pA - pB;
+            }
+            if (sortBy === 'price_high') {
+                const pA = parseFloat(a.price.replace(/[^0-9.-]+/g, ""));
+                const pB = parseFloat(b.price.replace(/[^0-9.-]+/g, ""));
+                return pB - pA;
+            }
+            return 0; // Relevance default
+        });
+    }, [products, filters, sortBy]);
 
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans pb-12">
@@ -162,7 +214,11 @@ const CategoryPage = () => {
                     {/* Left Column: Stats & Filters (Sticky) - 25% */}
                     <div className="w-full lg:w-1/4 flex-shrink-0">
                         <div className="sticky top-24">
-                            <AdvancedFilters categoryId={categoryId} />
+                            <AdvancedFilters
+                                categoryId={categoryId}
+                                filters={filters}
+                                onFilterChange={handleFilterChange}
+                            />
                         </div>
                     </div>
 
@@ -171,7 +227,7 @@ const CategoryPage = () => {
                         {/* Top Controls */}
                         <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-center">
                             <h1 className="text-lg font-bold text-gray-900 mb-2 sm:mb-0">
-                                {categoryName} <span className="text-gray-400 font-normal text-sm ml-2">({allProducts.length} Results)</span>
+                                {categoryName} <span className="text-gray-400 font-normal text-sm ml-2">({filteredProducts.length} Results)</span>
                             </h1>
 
                             <div className="flex items-center space-x-4">
@@ -190,24 +246,48 @@ const CategoryPage = () => {
                             </div>
                         </div>
 
-                        {/* Selected Filter Chips (Mock) */}
+                        {/* Selected Filter Chips */}
                         <div className="flex flex-wrap gap-2 mb-6">
-                            <span className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-sm">
-                                Brand: ASUS <button className="ml-2 text-gray-400 hover:text-red-500">×</button>
-                            </span>
-                            <span className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-sm">
-                                In Stock <button className="ml-2 text-gray-400 hover:text-red-500">×</button>
-                            </span>
-                            <button className="text-xs text-orange-600 font-bold hover:underline ml-2">Clear All</button>
+                            {filters.brands.map(brand => (
+                                <span key={brand} className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-sm">
+                                    Brand: {brand}
+                                    <button onClick={() => handleFilterChange('brands', filters.brands.filter(b => b !== brand))} className="ml-2 text-gray-400 hover:text-red-500">×</button>
+                                </span>
+                            ))}
+                            {filters.availability === 'in_stock' && (
+                                <span className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-sm">
+                                    In Stock
+                                    <button onClick={() => handleFilterChange('availability', 'any')} className="ml-2 text-gray-400 hover:text-red-500">×</button>
+                                </span>
+                            )}
+                            {Object.entries(filters.specs).flatMap(([key, options]) =>
+                                options.map(opt => (
+                                    <span key={`${key}-${opt}`} className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-sm">
+                                        {opt}
+                                        <button onClick={() => {
+                                            const newOptions = options.filter(o => o !== opt);
+                                            handleFilterChange('specs', { ...filters.specs, [key]: newOptions });
+                                        }} className="ml-2 text-gray-400 hover:text-red-500">×</button>
+                                    </span>
+                                ))
+                            )}
+                            {(filters.brands.length > 0 || filters.availability !== 'any' || Object.values(filters.specs).some(arr => arr.length > 0)) && (
+                                <button onClick={() => handleFilterChange('reset')} className="text-xs text-orange-600 font-bold hover:underline ml-2">Clear All</button>
+                            )}
                         </div>
 
                         {/* Product Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {allProducts.map(product => (
-                                <div key={product.id} className="h-full">
-                                    <ProductCard {...product} />
-                                </div>
-                            ))}
+                            {loading ? <div className="col-span-full text-center py-12 text-gray-500">Loading products...</div> :
+                                filteredProducts.length === 0 ? <div className="col-span-full text-center py-12 text-gray-500">No products found matching your filters.</div> :
+                                    filteredProducts.map(product => (
+                                        <div key={product.id} className="h-full">
+                                            <ProductCard
+                                                {...product}
+                                                specs={product.specs.slice(0, 3)} // Ensure visual consistency
+                                            />
+                                        </div>
+                                    ))}
                         </div>
 
                         {/* Pagination */}
