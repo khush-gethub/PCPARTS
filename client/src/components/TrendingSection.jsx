@@ -1,61 +1,71 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import motherboardImg from '../assets/motherboard.jpg';
-import ramImg from '../assets/ram.jpg';
-import gpuImg from '../assets/gpu.jpg';
+import { api } from '../api';
 import ProductCard from './ProductCard';
+// Removed fallback image import as we will use real images
+
 
 const TrendingSection = () => {
-    const trends = [
-        {
-            id: 1,
-            name: 'RTX 4090 OC Edition',
-            category: 'Graphics',
-            price: '$1,599',
-            image: gpuImg,
-            specs: [
-                { label: 'VRAM', val: '24GB' },
-                { label: 'Clock', val: '2.5GHz' },
-                { label: 'TDP', val: '450W' }
-            ]
-        },
-        {
-            id: 2,
-            name: 'Z790 Aorus Master',
-            category: 'Motherboard',
-            price: '$499',
-            image: motherboardImg,
-            specs: [
-                { label: 'Socket', val: 'LGA1700' },
-                { label: 'Format', val: 'E-ATX' },
-                { label: 'DDR5', val: 'Yes' }
-            ]
-        },
-        {
-            id: 3,
-            name: 'Dominator Plat 64GB',
-            category: 'Memory',
-            price: '$289',
-            image: ramImg,
-            specs: [
-                { label: 'Speed', val: '6000MT/s' },
-                { label: 'Latency', val: 'CL30' },
-                { label: 'Type', val: 'DDR5' }
-            ]
-        },
-        {
-            id: 4,
-            name: 'Ryzen 9 7950X3D',
-            category: 'CPU',
-            price: '$699',
-            image: gpuImg, // Placeholder
-            specs: [
-                { label: 'Cores', val: '16' },
-                { label: 'Boost', val: '5.7GHz' },
-                { label: 'Cache', val: '128MB' }
-            ]
-        },
-    ];
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [productsData, variantsData] = await Promise.all([
+                    api.getProducts(),
+                    api.getVariants()
+                ]);
+
+                // We need to fetch images and stock for these products to show real data.
+                // Limit to 4 for trending first to avoid too many requests
+                const trendingProducts = productsData.slice(0, 4);
+
+                const dataWithDetails = await Promise.all(trendingProducts.map(async (p) => {
+                    const variant = variantsData.find(v => v.product_id === p.product_id);
+                    let image = null;
+                    let stock = null;
+
+                    try {
+                        const images = await api.getProductImages(p.product_id);
+                        if (images && images.length > 0) {
+                            image = images[0].image_url;
+                        }
+                    } catch (e) { console.warn("Image fetch failed", e); }
+
+                    if (variant) {
+                        try {
+                            const stockData = await api.getStock(variant.variant_id);
+                            stock = stockData;
+                        } catch (e) { console.warn("Stock fetch failed", e); }
+                    }
+
+                    return {
+                        ...p,
+                        // Use real image or a placeholder URL if missing (or handle in card)
+                        image: image || "https://placehold.co/300x200?text=No+Image",
+                        price: variant ? `$${variant.price}` : 'N/A',
+                        category_name: p.category_id?.name || 'Component',
+                        stockStatus: (stock && stock.quantity > 0) ? "In Stock" : "Out of Stock",
+                        // Convert specs string/object roughly
+                        specList: p.specs ? Object.entries(p.specs).slice(0, 2).map(([key, val]) => ({
+                            label: key.charAt(0).toUpperCase() + key.slice(1),
+                            val: val.toString()
+                        })) : []
+                    };
+                }));
+
+                setProducts(dataWithDetails);
+            } catch (err) {
+                console.error("Failed to fetch trending products", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    if (loading) return <div className="py-24 text-center">Loading Engine Room...</div>;
 
     return (
         <section className="py-24 bg-white border-b border-gray-100">
@@ -77,18 +87,18 @@ const TrendingSection = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {trends.map((item) => (
+                    {products.map((item) => (
                         <ProductCard
-                            key={item.id}
-                            id={item.id}
+                            key={item.product_id || item._id}
+                            id={item.product_id || item._id}
                             title={item.name}
                             image={item.image}
                             price={item.price}
-                            brand={item.category}
-                            specs={item.specs}
-                            rating={4.9}
-                            badges={['Verified Fit']}
-                            stockStatus="In Stock"
+                            brand={item.category_name}
+                            specs={item.specList}
+                            rating={null} // Hiding rating as not in DB
+                            badges={[]} // Removed static badge
+                            stockStatus={item.stockStatus}
                         />
                     ))}
                 </div>

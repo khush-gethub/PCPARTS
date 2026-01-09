@@ -38,8 +38,6 @@ const HomePage = () => {
                 <BenchmarksSection />
 
 
-
-
                 {/* 7. PC BUILDER PROMOTION */}
                 <BuilderPromoSection />
 
