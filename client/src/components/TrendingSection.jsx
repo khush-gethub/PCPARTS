@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { api } from '../api';
 import ProductCard from './ProductCard';
-// Removed fallback image import as we will use real images
-
 
 const TrendingSection = () => {
     const [products, setProducts] = useState([]);
@@ -12,50 +9,46 @@ const TrendingSection = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [productsData, variantsData] = await Promise.all([
-                    api.getProducts(),
-                    api.getVariants()
-                ]);
+                // Fetch basic product info
+                const productsData = await api.getProducts();
 
-                // We need to fetch images and stock for these products to show real data.
-                // Limit to 4 for trending first to avoid too many requests
+                // Limit to 4 for trending
                 const trendingProducts = productsData.slice(0, 4);
 
-                const dataWithDetails = await Promise.all(trendingProducts.map(async (p) => {
-                    const variant = variantsData.find(v => v.product_id === p.product_id);
-                    let image = null;
-                    let stock = null;
+                // Enrich with variants (images are now in p.image_url from backend)
+                const enrichedData = await Promise.all(trendingProducts.map(async (p) => {
+                    let image = p.image_url || "https://placehold.co/300x200?text=No+Image";
+                    let price = "N/A";
+                    let stockStatus = "Unknown";
 
                     try {
-                        const images = await api.getProductImages(p.product_id);
-                        if (images && images.length > 0) {
-                            image = images[0].image_url;
-                        }
-                    } catch (e) { console.warn("Image fetch failed", e); }
+                        const [variants] = await Promise.all([
+                            api.getVariantsByProductId(p.product_id)
+                        ]);
 
-                    if (variant) {
-                        try {
-                            const stockData = await api.getStock(variant.variant_id);
-                            stock = stockData;
-                        } catch (e) { console.warn("Stock fetch failed", e); }
+                        if (variants.length > 0) {
+                            price = `$${variants[0].price}`;
+                            stockStatus = variants[0].stock_status === 'in_stock' ? "In Stock" : "Out of Stock";
+                        }
+                    } catch (e) {
+                        console.warn("Error enriching product", p.product_id, e);
                     }
 
                     return {
                         ...p,
-                        // Use real image or a placeholder URL if missing (or handle in card)
-                        image: image || "https://placehold.co/300x200?text=No+Image",
-                        price: variant ? `$${variant.price}` : 'N/A',
+                        image,
+                        price,
                         category_name: p.category_id?.name || 'Component',
-                        stockStatus: (stock && stock.quantity > 0) ? "In Stock" : "Out of Stock",
-                        // Convert specs string/object roughly
-                        specList: p.specs ? Object.entries(p.specs).slice(0, 2).map(([key, val]) => ({
-                            label: key.charAt(0).toUpperCase() + key.slice(1),
-                            val: val.toString()
+                        stockStatus,
+                        // Convert specs to array for card
+                        specList: p.specs ? Object.entries(p.specs).slice(0, 3).map(([key, val]) => ({
+                            label: key,
+                            val: val ? val.toString() : ''
                         })) : []
                     };
                 }));
 
-                setProducts(dataWithDetails);
+                setProducts(enrichedData);
             } catch (err) {
                 console.error("Failed to fetch trending products", err);
             } finally {
@@ -65,7 +58,11 @@ const TrendingSection = () => {
         fetchData();
     }, []);
 
-    if (loading) return <div className="py-24 text-center">Loading Engine Room...</div>;
+    if (loading) return (
+        <section className="py-24 bg-white border-b border-gray-100 flex justify-center">
+            <div className="text-gray-400 font-medium animate-pulse">Loading Engine Room...</div>
+        </section>
+    );
 
     return (
         <section className="py-24 bg-white border-b border-gray-100">
@@ -94,11 +91,10 @@ const TrendingSection = () => {
                             title={item.name}
                             image={item.image}
                             price={item.price}
-                            brand={item.category_name}
+                            brand={item.brand_id?.name || item.category_name}
                             specs={item.specList}
-                            rating={null} // Hiding rating as not in DB
-                            badges={[]} // Removed static badge
                             stockStatus={item.stockStatus}
+                            rating={4.8} // Placeholder rating
                         />
                     ))}
                 </div>

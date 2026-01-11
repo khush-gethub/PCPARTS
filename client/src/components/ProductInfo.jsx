@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 
-const ProductInfo = ({ title, brand, rating, reviewsCount, price, originalPrice, discount, offers }) => {
+const ProductInfo = ({ title, brand, rating, reviewsCount, price, originalPrice, discount, offers, onAddToCart, onBuyNow }) => {
     const [pincode, setPincode] = useState('');
-    const [selectedRam, setSelectedRam] = useState('16GB');
-    const [selectedStorage, setSelectedStorage] = useState('1TB SSD');
 
     return (
         <div className="flex flex-col h-full pl-0 lg:pl-8">
@@ -69,47 +67,19 @@ const ProductInfo = ({ title, brand, rating, reviewsCount, price, originalPrice,
                 </div>
             </div>
 
-            {/* Variants */}
-            <div className="grid grid-cols-[80px_1fr] gap-4 mb-8 text-sm items-center">
-                <span className="text-gray-500 font-medium">RAM</span>
-                <div className="flex space-x-3">
-                    {['16GB', '32GB', '64GB'].map(ram => (
-                        <button
-                            key={ram}
-                            onClick={() => setSelectedRam(ram)}
-                            className={`px-4 py-2 border rounded-md font-medium transition-all ${selectedRam === ram
-                                    ? 'border-orange-500 text-orange-600 bg-orange-50'
-                                    : 'border-gray-300 text-gray-800 hover:border-gray-400'
-                                }`}
-                        >
-                            {ram}
-                        </button>
-                    ))}
-                </div>
-
-                <span className="text-gray-500 font-medium">Storage</span>
-                <div className="flex space-x-3">
-                    {['512GB SSD', '1TB SSD', '2TB SSD'].map(store => (
-                        <button
-                            key={store}
-                            onClick={() => setSelectedStorage(store)}
-                            className={`px-4 py-2 border rounded-md font-medium transition-all ${selectedStorage === store
-                                    ? 'border-orange-500 text-orange-600 bg-orange-50'
-                                    : 'border-gray-300 text-gray-800 hover:border-gray-400'
-                                }`}
-                        >
-                            {store}
-                        </button>
-                    ))}
-                </div>
-            </div>
 
             {/* CTA Buttons */}
             <div className="flex space-x-4 mt-auto">
-                <button className="flex-1 bg-white border border-gray-300 text-gray-900 py-4 rounded-md font-bold text-lg hover:shadow-lg transition uppercase">
+                <button
+                    onClick={onAddToCart}
+                    className="flex-1 bg-white border border-gray-300 text-gray-900 py-4 rounded-md font-bold text-lg hover:shadow-lg transition uppercase"
+                >
                     Add to Cart
                 </button>
-                <button className="flex-1 bg-orange-600 text-white py-4 rounded-md font-bold text-lg hover:bg-orange-700 transition shadow-lg uppercase">
+                <button
+                    onClick={onBuyNow}
+                    className="flex-1 bg-orange-600 text-white py-4 rounded-md font-bold text-lg hover:bg-orange-700 transition shadow-lg uppercase"
+                >
                     Buy Now
                 </button>
             </div>

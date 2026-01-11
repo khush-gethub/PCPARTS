@@ -44,66 +44,70 @@ const CategoryPage = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
+                // 1. Fetch All Products and Categories
                 const [allProducts, categories] = await Promise.all([
                     api.getProducts(),
                     api.getCategories()
                 ]);
 
-                let data = allProducts;
+                let filteredList = allProducts;
 
-                if (categoryId && categoryId.toLowerCase() !== 'components' && categoryId.toLowerCase() !== 'all') {
+                // 2. Filter by Category if present
+                if (categoryId && categoryId.toLowerCase() !== 'all' && categoryId.toLowerCase() !== 'components') {
+                    // Try to find category object
                     const targetCat = categories.find(c =>
                         c.name.toLowerCase() === categoryId.toLowerCase() ||
                         c.category_id === categoryId
                     );
 
                     if (targetCat) {
-                        data = allProducts.filter(p =>
+                        // Strict filter if category exists
+                        filteredList = allProducts.filter(p =>
                             p.category_id && (p.category_id._id === targetCat.category_id || p.category_id === targetCat.category_id)
                         );
                     } else {
-                        const textFiltered = allProducts.filter(p => p.category_name?.toLowerCase().includes(categoryId.toLowerCase()));
-                        if (textFiltered.length > 0) {
-                            data = textFiltered;
-                        } else {
-                            data = allProducts;
-                        }
+                        // Fallback: Text search on category name provided in URL
+                        console.warn(`Category '${categoryId}' not found in DB, using text filter.`);
+                        filteredList = allProducts.filter(p =>
+                            p.category_id && p.category_id.name && p.category_id.name.toLowerCase().includes(categoryId.toLowerCase())
+                        );
+                        // If still 0, maybe we shouldn't show anything, or we show all but warn?
+                        // For now sticking to filtered result even if empty to be correct.
                     }
                 }
 
-                const enriched = await Promise.all(data.map(async (p) => {
+                // 3. Enrich with Variants and Images
+                // We'll fetch all variants once to avoid N+1 network requests if possible, 
+                // or parallelize per item if the list is small. 
+                // Let's fetch all variants/images if API supports it, otherwise parallel loop.
+                // Given the API limitations, we'll do parallel loop but limited concurrent if huge (not handling limit here complexity-wise)
+
+                const enriched = await Promise.all(filteredList.map(async (p) => {
                     let price = "N/A";
-                    let image = "https://placehold.co/400x400?text=No+Image";
+                    let image = p.image_url || "https://placehold.co/400x400?text=No+Image";
                     let stockStatus = "Out of Stock";
                     let originalPrice = null;
 
                     try {
-                        const variants = await api.getVariants();
-                        const variant = variants.find(v => v.product_id === p.product_id || v.product_id === p._id);
-                        if (variant) {
-                            price = `$${variant.price}`;
-                            if (variant.discount_price) originalPrice = `$${variant.discount_price}`;
-
-                            try {
-                                const s = await api.getStock(variant.variant_id);
-                                stockStatus = (s && s.quantity > 0) ? "In Stock" : "Out of Stock";
-                            } catch (e) { }
+                        // Fetch variants for this product
+                        const variants = await api.getVariantsByProductId(p.product_id);
+                        if (variants && variants.length > 0) {
+                            const v = variants[0];
+                            price = `$${v.price}`;
+                            if (v.discount_price) originalPrice = `$${v.discount_price}`;
+                            stockStatus = v.stock_status === 'in_stock' ? "In Stock" : "Out of Stock";
                         }
-
-                        const images = await api.getProductImages(p.product_id || p._id);
-                        if (images.length > 0) image = images[0].image_url;
-
-                    } catch (e) { console.warn("Enrich error", e) }
+                    } catch (e) { console.warn("Enrich error", p.name, e); }
 
                     return {
-                        id: p.product_id || p._id,
+                        id: p.product_id,
                         title: p.name,
                         price: price,
-                        originalPrice: originalPrice,
+                        originalPrice,
                         image: image,
-                        stockStatus: stockStatus,
                         brand: p.brand_id?.name || "Brand",
-                        specs: p.specs ? Object.entries(p.specs).map(([k, v]) => ({ label: k, val: v })) : []
+                        stockStatus,
+                        specs: p.specs ? Object.entries(p.specs).slice(0, 3).map(([k, v]) => ({ label: k, val: v })) : []
                     };
                 }));
 

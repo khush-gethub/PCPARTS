@@ -1,90 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { api } from '../api';
+import { useCart } from '../context/CartContext.jsx';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import ProductGallery from '../components/ProductGallery.jsx';
 import ReadyMadePCInfo from '../components/ReadyMadePCInfo.jsx';
 import ProductSpecsAccordion from '../components/ProductSpecsAccordion.jsx';
-import ProductBenchmarks from '../components/ProductBenchmarks.jsx';
-import { api } from '../api';
+import PCCard from '../components/PCCard.jsx';
+import ProductCarousel from '../components/ProductCarousel.jsx';
+import heroPC from '../assets/hero-pc.png'; // Fallback
 
 const ReadyMadePCDetailsPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const { addToCart } = useCart();
     const [pcData, setPcData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [recommendedPCs, setRecommendedPCs] = useState([]);
 
     useEffect(() => {
-        const fetchPC = async () => {
+        const fetchDetails = async () => {
+            setLoading(true);
             try {
-                setLoading(true);
                 const data = await api.getReadyMadePCById(id);
+                setPcData(data);
 
-                // Format data for the UI
-                const formatted = {
-                    name: data.name,
-                    price: new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(data.price),
-                    originalPrice: new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(data.price * 1.2),
-                    discount: 15,
-                    useCase: data.category,
-                    status: "In Stock",
-                    rating: 4.8,
-                    reviewsCount: 42,
-                    images: [
-                        data.image,
-                        data.Image2 || "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=1000",
-                        data.Image3 || "https://cdn.pixabay.com/photo/2019/07/28/05/18/gaming-pc-4368146_1280.jpg"
-                    ].filter(img => img),
-                    offers: [
-                        { title: "Bank Offer", desc: "Flat ₹5000 off on HDFC Credit Cards" },
-                        { title: "No Cost EMI", desc: "Available for up to 12 months" }
-                    ],
-                    highlights: data.items.slice(0, 6).map(item => item.product_id?.name || "Premium Component"),
-                    specs: [
-                        {
-                            category: "Core Components",
-                            items: data.items.slice(0, 4).map(item => ({
-                                label: item.product_id?.category_id?.name || "Part",
-                                value: item.product_id?.name || "Spec Details"
-                            }))
-                        }
-                    ]
-                };
+                // Fetch recommendations (Other PCs)
+                const allPCs = await api.getReadyMadePCs();
+                const related = allPCs
+                    .filter(p => p.pc_id !== data.pc_id)
+                    .slice(0, 10);
+                setRecommendedPCs(related);
 
-                setPcData(formatted);
             } catch (err) {
-                console.error("Error fetching PC details:", err);
-                setError("Failed to load PC details.");
+                console.error("Error fetching PC details", err);
             } finally {
                 setLoading(false);
             }
         };
 
-        if (id) fetchPC();
+        if (id) {
+            fetchDetails();
+            window.scrollTo(0, 0);
+        }
     }, [id]);
 
-    if (loading) {
-        return (
-            <div className="min-h-screen bg-[#eef2f2]">
-                <Navbar /><SubNavbar />
-                <div className="flex items-center justify-center h-[60vh]">
-                    <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-            </div>
-        );
-    }
+    const handleAddToCart = () => {
+        if (!pcData) return;
+        addToCart({
+            id: pcData.pc_id,
+            product_id: pcData.pc_id,
+            title: pcData.name,
+            price: pcData.price,
+            image: (pcData.images && pcData.images.length > 0) ? pcData.images[0] : heroPC,
+            category: pcData.category
+        });
+    };
 
-    if (error || !pcData) {
-        return (
-            <div className="min-h-screen bg-[#eef2f2]">
-                <Navbar /><SubNavbar />
-                <div className="max-w-7xl mx-auto px-4 py-24 text-center">
-                    <h2 className="text-2xl font-bold text-red-600">{error || "PC Not Found"}</h2>
-                    <Link to="/ready-made-pcs" className="mt-4 inline-block text-blue-600 hover:underline">Back to All PCs</Link>
-                </div>
-            </div>
-        );
-    }
+    const handleBuyNow = () => {
+        handleAddToCart();
+        navigate('/cart');
+    };
+
+    if (loading) return (
+        <div className="min-h-screen flex text-center items-center justify-center bg-[#eef2f2]">
+            <div className="text-xl font-bold text-gray-600 animate-pulse">Loading PC details...</div>
+        </div>
+    );
+
+    if (!pcData) return (
+        <div className="min-h-screen flex text-center items-center justify-center bg-[#eef2f2]">
+            <div className="text-xl font-bold text-gray-800">PC configuration not found.</div>
+        </div>
+    );
+
+    // Transform API images array or fallback
+    const images = (pcData.images && pcData.images.length > 0) ? pcData.images : [heroPC];
+
+    // Transform Items into Specs structure
+    const componentSpecs = {
+        category: "System Components",
+        items: pcData.items ? pcData.items.map(item => ({
+            label: item.product_id?.name || "Component",
+            value: item.variant_id?.name || "Standard"
+        })) : []
+    };
+
+    const specs = [componentSpecs];
 
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans pb-12">
@@ -95,37 +98,39 @@ const ReadyMadePCDetailsPage = () => {
                 <div className="bg-white rounded-sm shadow-sm flex flex-col lg:flex-row p-4 lg:p-6 mb-4">
                     {/* Left Column: Gallery (40%) */}
                     <div className="lg:w-[40%] flex-shrink-0">
-                        <ProductGallery images={pcData.images} />
+                        <ProductGallery images={images} />
                     </div>
 
                     {/* Right Column: Info (60%) */}
                     <div className="lg:w-[60%] mt-6 lg:mt-0">
                         <ReadyMadePCInfo
                             title={pcData.name}
-                            useCase={pcData.useCase}
-                            rating={pcData.rating}
-                            reviewsCount={pcData.reviewsCount}
-                            price={pcData.price}
-                            originalPrice={pcData.originalPrice}
-                            discount={pcData.discount}
-                            offers={pcData.offers}
-                            status={pcData.status}
+                            useCase={pcData.category}
+                            rating={4.8}
+                            reviewsCount={42}
+                            price={`$${pcData.price} `}
+                            originalPrice={null}
+                            discount={null}
+                            offers={[
+                                { title: "Bank Offer", desc: "Flat ₹5000 off on HDFC Credit Cards" },
+                                { title: "No Cost EMI", desc: "Available for up to 12 months" }
+                            ]}
+                            status="In Stock"
+                            onAddToCart={handleAddToCart}
+                            onBuyNow={handleBuyNow}
                         />
                     </div>
                 </div>
 
-                {/* Benchmarks Section */}
-                <div className="mb-4">
-                    <ProductBenchmarks />
-                </div>
 
                 {/* Highlights & Seller Info Section */}
                 <div className="bg-white rounded-sm shadow-sm p-6 mb-4">
                     <h3 className="text-lg font-bold text-gray-900 mb-4">System Highlights</h3>
                     <div className="flex flex-col md:flex-row gap-8">
                         <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 flex-1">
-                            {pcData.highlights.map((highlight, i) => (
-                                <li key={i}>{highlight}</li>
+                            {/* Dynamic Highlighting based on top components */}
+                            {pcData.items && pcData.items.slice(0, 5).map((item, i) => (
+                                <li key={i}>{item.product_id?.name}</li>
                             ))}
                         </ul>
 
@@ -149,33 +154,29 @@ const ReadyMadePCDetailsPage = () => {
                 </div>
 
                 {/* Specs Accordion */}
-                <ProductSpecsAccordion specs={pcData.specs} />
+                <ProductSpecsAccordion specs={specs} />
 
-                {/* Ratings & Reviews */}
-                <div className="bg-white rounded-sm shadow-sm p-6 mt-4">
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-bold text-gray-900">Ratings & Reviews</h2>
+                {/* Recommended PC Upgrade Options / Related PCs */}
+                {recommendedPCs.length > 0 && (
+                    <div className="bg-white rounded-sm shadow-sm p-6 mt-4">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-6 font-primary">Similar Systems</h2>
+                        <ProductCarousel>
+                            {recommendedPCs.map(pc => (
+                                <PCCard
+                                    key={pc.pc_id}
+                                    id={pc.pc_id}
+                                    name={pc.name}
+                                    price={`$${pc.price}`}
+                                    image={pc.image || heroPC}
+                                    useCase={pc.category}
+                                    cpu="See Details"
+                                    gpu="See Details"
+                                    ram="See Details"
+                                />
+                            ))}
+                        </ProductCarousel>
                     </div>
-                    <div className="flex flex-col md:flex-row gap-12">
-                        <div className="text-center md:text-left">
-                            <div className="text-5xl font-bold text-gray-900">4.8 <span className="text-3xl text-gray-400">★</span></div>
-                            <p className="text-gray-500 text-sm mt-1">42 Ratings &<br />12 Reviews</p>
-                        </div>
-                        <div className="flex-1">
-                            <div className="border-b border-gray-100 pb-4">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="bg-green-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">5 ★</span>
-                                    <span className="font-bold text-gray-900 text-sm">Beast of a machine!</span>
-                                </div>
-                                <p className="text-gray-600 text-sm mb-2">Can handle anything I throw at it. Rendering 4K video is a breeze. Cable management is top notch.</p>
-                                <div className="flex justify-between text-xs text-gray-400">
-                                    <span>Arjun K.</span>
-                                    <span>1 week ago</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     );

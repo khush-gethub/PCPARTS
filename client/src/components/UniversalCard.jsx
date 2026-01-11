@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const UniversalCard = ({
     image,
@@ -17,21 +17,31 @@ const UniversalCard = ({
     onClick
 }) => {
     const isOutOfStock = stockStatus === 'Out of Stock';
+    const navigate = useNavigate();
 
     return (
         <div
             className={`
                 group relative bg-white border border-gray-200 rounded-lg overflow-hidden 
                 hover:border-orange-500/50 hover:shadow-2xl transition-all duration-300
-                flex flex-col w-full
+                flex flex-col w-full cursor-pointer
                 ${isDisabled ? 'opacity-75 grayscale' : ''}
             `}
-            onClick={onClick}
+            onClick={(e) => {
+                if (onClick) onClick(e);
+                // Fallback to secondaryAction.to if provided and no explicit onClick
+                if (!e.defaultPrevented) {
+                    if (secondaryAction?.to) {
+                        navigate(secondaryAction.to);
+                    } else if (secondaryAction?.onClick) {
+                        secondaryAction.onClick(e);
+                    }
+                }
+            }}
         >
             {/* 1. Badge Overlay */}
             <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
                 {badges.map((badge, index) => {
-                    // Check 'Verified Fit' or 'Pro-Assembled' for styling
                     const badgeLower = typeof badge === 'string' ? badge.toLowerCase() : '';
                     const isVerified = badgeLower.includes('verified') || badgeLower.includes('fitted');
                     const isPro = badgeLower.includes('pro-assembled');
@@ -56,12 +66,12 @@ const UniversalCard = ({
                 })}
             </div>
 
-            {/* 1. Top Section: Image */}
+            {/* 2. Top Section: Image */}
             <div className="relative aspect-[5/4] bg-gray-50 border-b border-gray-50 overflow-hidden p-6">
                 <img
                     src={image}
                     alt={title}
-                    className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                 />
 
                 {/* Status Overlay (Top Right) */}
@@ -79,16 +89,10 @@ const UniversalCard = ({
 
                 {/* Quick View / Secondary Action Overlay */}
                 {secondaryAction && (
-                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                        {secondaryAction.to ? (
-                            <span className="bg-white text-orange-600 font-bold px-6 py-2 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                {secondaryAction.label}
-                            </span>
-                        ) : (
-                            <span className="bg-white text-orange-600 font-bold px-6 py-2 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                {secondaryAction.label}
-                            </span>
-                        )}
+                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="bg-white text-orange-600 font-bold px-6 py-2 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            {secondaryAction.label}
+                        </span>
                     </div>
                 )}
             </div>
@@ -107,7 +111,7 @@ const UniversalCard = ({
                     </div>
                 </div>
 
-                {/* Title (Max 3 lines to fit long names) */}
+                {/* Title */}
                 <h3 className="text-sm font-bold text-gray-900 leading-snug line-clamp-3 mb-3 h-[3.25rem] group-hover:text-orange-600 transition-colors">
                     {title}
                 </h3>
@@ -152,8 +156,8 @@ const UniversalCard = ({
                             className={`
                                 rounded-full transition-all flex items-center justify-center font-bold uppercase text-sm
                                 ${primaryAction.label === 'Add to Cart'
-                                    ? 'text-orange-600 p-2 hover:bg-orange-50' // Icon only style look
-                                    : 'text-orange-600 p-2 hover:bg-orange-50 px-4' // Text button style
+                                    ? 'text-orange-600 p-2 hover:bg-orange-50'
+                                    : 'text-orange-600 p-2 hover:bg-orange-50 px-4'
                                 }
                             `}
                         >

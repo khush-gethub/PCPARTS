@@ -46,9 +46,25 @@ const ProductSpecsAccordion = ({ specs: customSpecs }) => {
         }
     ];
 
-    const specs = customSpecs || defaultSpecs;
-
     const [openIndex, setOpenIndex] = useState(0);
+
+    // Normalize specs: If it's a flat object from DB, wrap it in a category
+    let normalizedSpecs = [];
+    if (Array.isArray(customSpecs) && customSpecs.length > 0) {
+        normalizedSpecs = customSpecs;
+    } else if (customSpecs && typeof customSpecs === 'object' && Object.keys(customSpecs).length > 0) {
+        normalizedSpecs = [{
+            category: "Technical Specifications",
+            items: Object.entries(customSpecs).map(([label, value]) => ({
+                label: label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' '),
+                value: String(value)
+            }))
+        }];
+    } else {
+        normalizedSpecs = defaultSpecs;
+    }
+
+    const specs = normalizedSpecs;
 
     return (
         <div className="bg-white rounded-md border border-gray-200 mt-8">
