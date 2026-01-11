@@ -1,19 +1,59 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useCart } from '../context/CartContext.jsx';
+import { api } from '../api';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 
 const BenchmarksPage = () => {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [notification, setNotification] = useState(null);
-    const itemsPerPage = 10;
+    const itemsPerPage = 9;
     const { addToCart } = useCart();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const data = await api.getBenchmarkTable();
+
+                const formattedProducts = data.map(item => ({
+                    id: item.product_id,
+                    name: item.name,
+                    image: item.image,
+                    capacity: item.capacity,
+                    cache: item.cache,
+                    type: item.type,
+                    interface: item.interface,
+                    writeSpeed: item.write_speed,
+                    readSpeed: item.read_speed,
+                    maxWrite: item.max_write,
+                    maxRead: item.max_read,
+                    rating: item.rating,
+                    reviews: item.reviews,
+                    price: item.price
+                }));
+
+                setProducts(formattedProducts);
+                setError(null);
+            } catch (err) {
+                console.error("Error fetching benchmark table:", err);
+                setError("Failed to load benchmark results.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const handleAddToCart = (product) => {
         addToCart({
-            id: `benchmark-${product.id}`, // Ensure unique ID for benchmark items
+            id: `benchmark-${product.id}`,
             name: product.name,
             price: product.price,
             image: product.image,
@@ -23,37 +63,6 @@ const BenchmarksPage = () => {
         setNotification(`${product.name} added to cart!`);
         setTimeout(() => setNotification(null), 3000);
     };
-
-    const products = useMemo(() => {
-        const brands = ["Samsung", "Kingston", "Western Digital", "Crucial", "Lexar", "Sabrent", "Seagate", "PNY", "Corsair", "KIOXIA"];
-        const models = ["990 PRO", "FURY Renegade", "WD_BLACK SN850X", "T705", "NM790", "Rocket 4 Plus", "FireCuda 540", "CS3140", "MP700", "EXCERIA PRO"];
-        const capacities = ["500 GB", "1 TB", "2 TB", "4 TB"];
-
-        return Array.from({ length: 35 }, (_, i) => {
-            const brand = brands[i % brands.length];
-            const model = models[i % models.length];
-            const cap = capacities[i % capacities.length];
-            const writeSpeed = 12000 - (i * 100) + Math.floor(Math.random() * 500);
-            const readSpeed = 13000 - (i * 100) + Math.floor(Math.random() * 500);
-
-            return {
-                id: i + 1,
-                name: `${brand} ${model} ${cap} M.2-2280 PCIe 5.0 X4 NVME`,
-                capacity: cap,
-                cache: i % 3 === 0 ? "4096 MB" : "-",
-                type: "SSD",
-                interface: "M.2 PCIe 5.0 X4",
-                writeSpeed,
-                readSpeed,
-                maxWrite: 14000,
-                maxRead: 14000,
-                rating: (Math.random() * 2 + 3).toFixed(1),
-                reviews: Math.floor(Math.random() * 50),
-                price: (200 + i * 15.5 + Math.random() * 20),
-                image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=200"
-            };
-        });
-    }, []);
 
     const filteredProducts = useMemo(() => {
         return products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -79,8 +88,10 @@ const BenchmarksPage = () => {
             <Navbar />
             <SubNavbar />
 
-            <main className="flex-grow max-w-[1400px] w-full mx-auto p-4 md:p-8">
-                <h1 className="text-2xl font-bold mb-6 text-slate-800">{filteredProducts.length} Compatible Products</h1>
+            <main className="flex-grow max-w-[1400px] w-full mx-auto p-4 md:p-6 lg:p-8">
+                <h1 className="text-2xl font-bold mb-4 text-slate-800">
+                    {loading ? "Loading..." : `${filteredProducts.length} Compatible Products`}
+                </h1>
 
                 {notification && (
                     <div className="fixed top-24 right-8 z-[100] bg-green-600 text-white px-6 py-3 rounded-lg shadow-2xl animate-bounce flex items-center gap-2">
@@ -91,14 +102,20 @@ const BenchmarksPage = () => {
                     </div>
                 )}
 
+                {error && (
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                        {error}
+                    </div>
+                )}
+
                 {/* Control Bar */}
-                <div className="bg-white border border-slate-200 border-b-0 rounded-t-lg p-4 flex flex-col md:flex-row justify-end items-center gap-4">
+                <div className="bg-white border border-slate-200 border-b-0 rounded-t-lg p-3 flex flex-col md:flex-row justify-end items-center gap-4">
                     <div className="flex items-center gap-4 w-full md:w-auto">
                         <div className="relative group w-full md:w-64">
                             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
                             <input
                                 type="text"
-                                className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                                className="w-full pl-9 pr-4 py-1.5 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-medium"
                                 placeholder="Search Storage..."
                                 value={searchTerm}
                                 onChange={(e) => {
@@ -107,93 +124,103 @@ const BenchmarksPage = () => {
                                 }}
                             />
                         </div>
-                        <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">
+                        <button className="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap shadow-sm">
                             Add From Filter
                         </button>
                     </div>
                 </div>
 
                 {/* Table */}
-                <div className="bg-white border border-slate-200 rounded-b-lg overflow-x-auto custom-scrollbar-hide">
-                    <table className="w-full text-left border-collapse text-[13px]">
-                        <thead>
-                            <tr className="bg-slate-50 border-b border-slate-200">
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider pl-8">Name</th>
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider">Capacity</th>
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider">Cache</th>
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider">Type</th>
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider">Interface</th>
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider">Seq. Write (QD4)</th>
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider">Seq. Read (QD4)</th>
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider">Rating</th>
-                                <th className="p-4 font-semibold text-slate-600 uppercase tracking-wider text-right">Price</th>
-                                <th className="p-4"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedProducts.length > 0 ? (
-                                paginatedProducts.map(product => (
-                                    <tr key={product.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                                        <td className="p-4 pl-8">
-                                            <div className="flex items-center gap-3 min-w-[250px]">
-                                                <img src={product.image} alt="" className="w-10 h-10 object-contain bg-white p-1 rounded border border-slate-100" />
-                                                <span className="font-medium text-slate-900">{product.name}</span>
-                                            </div>
-                                        </td>
-                                        <td className="p-4 whitespace-nowrap">{product.capacity}</td>
-                                        <td className="p-4 whitespace-nowrap">{product.cache}</td>
-                                        <td className="p-4 whitespace-nowrap">{product.type}</td>
-                                        <td className="p-4 whitespace-nowrap">{product.interface}</td>
-                                        <td className="p-4">
-                                            <div className="w-40">
-                                                <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                                    <div
-                                                        className="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full transition-all duration-500"
-                                                        style={{ width: `${(product.writeSpeed / product.maxWrite) * 100}%` }}
-                                                    ></div>
+                <div className="bg-white border border-slate-200 rounded-b-lg overflow-x-auto custom-scrollbar-hide shadow-sm">
+                    {loading ? (
+                        <div className="p-10 text-center text-slate-500 animate-pulse">
+                            <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+                            Loading benchmark data...
+                        </div>
+                    ) : (
+                        <table className="w-full text-left border-collapse text-[12px]">
+                            <thead>
+                                <tr className="bg-slate-50 border-b border-slate-200">
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight pl-6">Name</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Cap.</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Cache</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Type</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Interface</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Seq. Write</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Seq. Read</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Rating</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight text-right pr-6">Price</th>
+                                    <th className="p-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedProducts.length > 0 ? (
+                                    paginatedProducts.map(product => (
+                                        <tr key={product.id} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
+                                            <td className="p-3 pl-6">
+                                                <div className="flex items-center gap-2.5 min-w-[200px]">
+                                                    <img src={product.image} alt="" className="w-8 h-8 object-contain bg-white p-0.5 rounded border border-slate-100 shrink-0" />
+                                                    <span className="font-semibold text-slate-800 truncate max-w-[200px]" title={product.name}>{product.name}</span>
                                                 </div>
-                                                <span className="text-[11px] text-slate-500 mt-1 block">{product.writeSpeed.toLocaleString()} MB/s</span>
-                                            </div>
-                                        </td>
-                                        <td className="p-4">
-                                            <div className="w-40">
-                                                <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                                    <div
-                                                        className="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full transition-all duration-500"
-                                                        style={{ width: `${(product.readSpeed / product.maxRead) * 100}%` }}
-                                                    ></div>
+                                            </td>
+                                            <td className="p-3 whitespace-nowrap font-medium text-slate-600">{product.capacity}</td>
+                                            <td className="p-3 whitespace-nowrap text-slate-500">{product.cache}</td>
+                                            <td className="p-3 whitespace-nowrap text-slate-500">{product.type}</td>
+                                            <td className="p-3 whitespace-nowrap text-slate-500">{product.interface}</td>
+                                            <td className="p-3">
+                                                <div className="w-28 xl:w-32">
+                                                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                                        <div
+                                                            className="h-full bg-gradient-to-r from-orange-400 to-orange-500 rounded-full transition-all duration-700"
+                                                            style={{ width: `${Math.min(100, (product.writeSpeed / product.maxWrite) * 100)}%` }}
+                                                        ></div>
+                                                    </div>
+                                                    <span className="text-[10px] font-bold text-slate-500 mt-1 block leading-none">{product.writeSpeed.toLocaleString()} MB/s</span>
                                                 </div>
-                                                <span className="text-[11px] text-slate-500 mt-1 block">{product.readSpeed.toLocaleString()} MB/s</span>
-                                            </div>
-                                        </td>
-                                        <td className="p-4">
-                                            <div className="flex items-center gap-1">
-                                                {renderStars(product.rating)}
-                                                <span className="text-slate-400 text-[11px]">({product.reviews})</span>
-                                            </div>
-                                        </td>
-                                        <td className="p-4 text-right">
-                                            <span className="font-bold text-slate-900">${product.price.toFixed(2)}</span>
-                                        </td>
-                                        <td className="p-4">
-                                            <button
-                                                onClick={() => handleAddToCart(product)}
-                                                className="bg-blue-600 text-white px-4 py-2 rounded text-xs font-bold hover:bg-blue-700 transition-all hover:scale-105 active:scale-95 shadow-md"
-                                            >
-                                                Add
-                                            </button>
+                                            </td>
+                                            <td className="p-3">
+                                                <div className="w-28 xl:w-32">
+                                                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                                        <div
+                                                            className="h-full bg-gradient-to-r from-blue-400 to-blue-500 rounded-full transition-all duration-700 delay-100"
+                                                            style={{ width: `${Math.min(100, (product.readSpeed / product.maxRead) * 100)}%` }}
+                                                        ></div>
+                                                    </div>
+                                                    <span className="text-[10px] font-bold text-slate-500 mt-1 block leading-none">{product.readSpeed.toLocaleString()} MB/s</span>
+                                                </div>
+                                            </td>
+                                            <td className="p-3">
+                                                <div className="flex items-center gap-1.5">
+                                                    {renderStars(product.rating)}
+                                                    <span className="text-slate-400 text-[10px] font-bold">({product.reviews})</span>
+                                                </div>
+                                            </td>
+                                            <td className="p-3 text-right pr-6">
+                                                <span className="font-bold text-slate-900">
+                                                    {product.price > 0 ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(product.price) : "N/A"}
+                                                </span>
+                                            </td>
+                                            <td className="p-3 pr-6">
+                                                <button
+                                                    onClick={() => handleAddToCart(product)}
+                                                    className="bg-blue-600 text-white px-3 py-1.5 rounded text-[11px] font-bold hover:bg-blue-700 transition-all shadow-sm active:scale-95 disabled:bg-slate-200 disabled:text-slate-400"
+                                                    disabled={product.price === 0}
+                                                >
+                                                    Add
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="10" className="p-12 text-center text-slate-400 italic text-sm">
+                                            {searchTerm ? "No matching products found." : "No benchmark data available."}
                                         </td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="10" className="p-12 text-center text-slate-500 italic text-base">
-                                        No matching products found.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                                )}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
 
                 {/* Pagination */}

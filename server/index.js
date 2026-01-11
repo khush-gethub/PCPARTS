@@ -16,7 +16,7 @@ const cors = require('cors');
 // Import all models
 const {
     User, Address, Category, Brand, Product, ProductVariant, Stock,
-    ProductImage, Benchmark, PCBuilderCompatibility, ReadyMadePC,
+    ProductImage, Benchmark, BenchmarkTable, PCBuilderCompatibility, ReadyMadePC,
     ReadyMadePCItem, Coupon, UserCoupon, Cart, CartItem, Order,
     OrderItem, PDFDownload
 } = require('./schema');
@@ -29,7 +29,7 @@ app.use(cors());
 app.use(express.json());
 
 // --- Database Connection ---
-mongoose.connect('mongodb://127.0.0.1:27017/Pcpart')
+mongoose.connect('mongodb://127.0.0.1:27017/pcparts')
     .then(() => console.log('✅ MongoDB Connected to pcparts'))
     .catch(err => console.error('❌ Database Connection Error:', err));
 
@@ -173,10 +173,27 @@ app.get('/products/:id/images', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+createGetAllRoute('/product-images', ProductImage);
 
 // 9. Benchmarks
-// 9. Benchmarks
-createGetAllRoute('/benchmarks', Benchmark);
+app.get('/benchmarks', async (req, res) => {
+    try {
+        const benchmarks = await Benchmark.find().populate('product_id');
+        res.json(benchmarks);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/benchmark-table', async (req, res) => {
+    try {
+        const data = await BenchmarkTable.find();
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.post('/benchmarks', async (req, res) => {
     try {
         const newBench = new Benchmark(req.body);

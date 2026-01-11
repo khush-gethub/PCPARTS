@@ -10,6 +10,8 @@ const CategoryPage = () => {
     const { categoryId } = useParams();
     const categoryName = categoryId ? categoryId.charAt(0).toUpperCase() + categoryId.slice(1) : 'Category';
     const [sortBy, setSortBy] = useState('relevance');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 9;
 
     // Filter State
     const [filters, setFilters] = useState({
@@ -30,6 +32,7 @@ const CategoryPage = () => {
         } else {
             setFilters(prev => ({ ...prev, [category]: value }));
         }
+        setCurrentPage(1); // Reset to page 1 on filter change
     };
 
     // Mock Product Data with advanced specs
@@ -90,8 +93,9 @@ const CategoryPage = () => {
                         const variants = await api.getVariantsByProductId(p.product_id);
                         if (variants && variants.length > 0) {
                             const v = variants[0];
-                            price = `$${v.price}`;
-                            if (v.discount_price) originalPrice = `$${v.discount_price}`;
+                            const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+                            price = formatter.format(v.price);
+                            if (v.discount_price) originalPrice = formatter.format(v.discount_price);
                             stockStatus = v.stock_status === 'in_stock' ? "In Stock" : "Out of Stock";
                         }
                     } catch (e) { console.warn("Enrich error", p.name, e); }
@@ -123,23 +127,19 @@ const CategoryPage = () => {
     const filteredProducts = useMemo(() => {
         let result = products;
 
-        // 1. Price Filter
         result = result.filter(p => {
             const priceNum = parseFloat(p.price.replace(/[^0-9.-]+/g, ""));
             return !isNaN(priceNum) ? priceNum <= filters.priceRange : true;
         });
 
-        // 2. Brand Filter
         if (filters.brands.length > 0) {
             result = result.filter(p => filters.brands.map(b => b.toLowerCase()).includes(p.brand.toLowerCase()));
         }
 
-        // 3. Availability Filter
         if (filters.availability === 'in_stock') {
             result = result.filter(p => p.stockStatus === 'In Stock');
         }
 
-        // 4. Specs Filter (Best effort match)
         Object.values(filters.specs).forEach(selectedOptions => {
             if (selectedOptions.length > 0) {
                 result = result.filter(p =>
@@ -153,7 +153,6 @@ const CategoryPage = () => {
             }
         });
 
-        // Sorting
         return result.sort((a, b) => {
             if (sortBy === 'price_low') {
                 const pA = parseFloat(a.price.replace(/[^0-9.-]+/g, ""));
@@ -165,16 +164,24 @@ const CategoryPage = () => {
                 const pB = parseFloat(b.price.replace(/[^0-9.-]+/g, ""));
                 return pB - pA;
             }
-            return 0; // Relevance default
+            return 0;
         });
     }, [products, filters, sortBy]);
+
+    // Pagination Calculation
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans pb-12">
             <Navbar />
             <SubNavbar />
 
-            {/* Breadcrumb Header */}
             <div className="bg-white border-b border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <nav className="text-sm text-gray-500 font-medium">
@@ -193,8 +200,6 @@ const CategoryPage = () => {
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="flex flex-col lg:flex-row gap-8">
-
-                    {/* Left Column: Stats & Filters (Sticky) - 25% */}
                     <div className="w-full lg:w-1/4 flex-shrink-0">
                         <div className="sticky top-24">
                             <AdvancedFilters
@@ -205,9 +210,7 @@ const CategoryPage = () => {
                         </div>
                     </div>
 
-                    {/* Right Column: Product Grid - 75% */}
                     <div className="flex-1">
-                        {/* Top Controls */}
                         <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-center">
                             <h1 className="text-lg font-bold text-gray-900 mb-2 sm:mb-0">
                                 {categoryName} <span className="text-gray-400 font-normal text-sm ml-2">({filteredProducts.length} Results)</span>
@@ -223,13 +226,10 @@ const CategoryPage = () => {
                                     <option value="relevance">Relevance</option>
                                     <option value="price_low">Price: Low to High</option>
                                     <option value="price_high">Price: High to Low</option>
-                                    <option value="rating">Rating</option>
-                                    <option value="newest">Newest First</option>
                                 </select>
                             </div>
                         </div>
 
-                        {/* Selected Filter Chips */}
                         <div className="flex flex-wrap gap-2 mb-6">
                             {filters.brands.map(brand => (
                                 <span key={brand} className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-sm">
@@ -243,51 +243,54 @@ const CategoryPage = () => {
                                     <button onClick={() => handleFilterChange('availability', 'any')} className="ml-2 text-gray-400 hover:text-red-500">×</button>
                                 </span>
                             )}
-                            {Object.entries(filters.specs).flatMap(([key, options]) =>
-                                options.map(opt => (
-                                    <span key={`${key}-${opt}`} className="bg-white border border-gray-200 text-gray-700 text-xs font-bold px-3 py-1 rounded-full flex items-center shadow-sm">
-                                        {opt}
-                                        <button onClick={() => {
-                                            const newOptions = options.filter(o => o !== opt);
-                                            handleFilterChange('specs', { ...filters.specs, [key]: newOptions });
-                                        }} className="ml-2 text-gray-400 hover:text-red-500">×</button>
-                                    </span>
-                                ))
-                            )}
                             {(filters.brands.length > 0 || filters.availability !== 'any' || Object.values(filters.specs).some(arr => arr.length > 0)) && (
                                 <button onClick={() => handleFilterChange('reset')} className="text-xs text-orange-600 font-bold hover:underline ml-2">Clear All</button>
                             )}
                         </div>
 
-                        {/* Product Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {loading ? <div className="col-span-full text-center py-12 text-gray-500">Loading products...</div> :
                                 filteredProducts.length === 0 ? <div className="col-span-full text-center py-12 text-gray-500">No products found matching your filters.</div> :
-                                    filteredProducts.map(product => (
+                                    paginatedProducts.map(product => (
                                         <div key={product.id} className="h-full">
-                                            <ProductCard
-                                                {...product}
-                                                specs={product.specs.slice(0, 3)} // Ensure visual consistency
-                                            />
+                                            <ProductCard {...product} specs={product.specs.slice(0, 3)} />
                                         </div>
                                     ))}
                         </div>
 
-                        {/* Pagination */}
-                        <div className="mt-12 flex justify-center">
-                            <nav className="flex items-center gap-2">
-                                <button className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-500 disabled:opacity-50" disabled>
-                                    ←
-                                </button>
-                                <button className="w-10 h-10 flex items-center justify-center bg-orange-600 text-white rounded-lg font-bold shadow-sm">1</button>
-                                <button className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-700 font-medium">2</button>
-                                <button className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-700 font-medium">3</button>
-                                <span className="text-gray-400 px-2">...</span>
-                                <button className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-500">
-                                    →
-                                </button>
-                            </nav>
-                        </div>
+                        {/* Dynamic Pagination */}
+                        {totalPages > 1 && (
+                            <div className="mt-12 flex justify-center">
+                                <nav className="flex items-center gap-2">
+                                    <button
+                                        onClick={() => paginate(currentPage - 1)}
+                                        disabled={currentPage === 1}
+                                        className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-500 disabled:opacity-50"
+                                    >
+                                        ←
+                                    </button>
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <button
+                                            key={i + 1}
+                                            onClick={() => paginate(i + 1)}
+                                            className={`w-10 h-10 flex items-center justify-center rounded-lg font-bold transition-all ${currentPage === i + 1
+                                                ? 'bg-orange-600 text-white shadow-sm'
+                                                : 'border border-gray-200 text-gray-700 hover:bg-gray-50'
+                                                }`}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                    <button
+                                        onClick={() => paginate(currentPage + 1)}
+                                        disabled={currentPage === totalPages}
+                                        className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-500 disabled:opacity-50"
+                                    >
+                                        →
+                                    </button>
+                                </nav>
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>
