@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ReadyMadePCInfo = ({ title, useCase, rating, reviewsCount, price, originalPrice, discount, offers, status }) => {
+const ReadyMadePCInfo = ({ title, useCase, rating, reviewsCount, price, originalPrice, discount, offers, status, onAddToCart, onBuyNow }) => {
     const [pincode, setPincode] = useState('');
 
     return (
@@ -71,10 +71,16 @@ const ReadyMadePCInfo = ({ title, useCase, rating, reviewsCount, price, original
 
             {/* CTA Buttons */}
             <div className="flex space-x-4 mt-auto">
-                <button className="flex-1 bg-white border border-gray-300 text-gray-900 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition uppercase">
+                <button
+                    onClick={onAddToCart}
+                    className="flex-1 bg-white border border-gray-300 text-gray-900 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition uppercase"
+                >
                     Add to Cart
                 </button>
-                <button className="flex-1 bg-orange-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-orange-700 transition shadow-lg uppercase">
+                <button
+                    onClick={onBuyNow}
+                    className="flex-1 bg-orange-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-orange-700 transition shadow-lg uppercase"
+                >
                     Buy Now
                 </button>
             </div>

@@ -1,67 +1,97 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { api } from '../api';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
-import ProductFilters from '../components/ProductFilters.jsx';
 import ProductCard from '../components/ProductCard.jsx';
+import PCCard from '../components/PCCard.jsx';
+import gpuImg from '../assets/gpu.jpg'; // Fallback
+import heroPC from '../assets/hero-pc.png'; // Fallback
 
 const SearchResultsPage = () => {
     const [searchParams] = useSearchParams();
     const query = searchParams.get('q') || '';
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // Reuse mock products but filter based on query (simple check)
-    const allProducts = [
-        { title: "NVIDIA GeForce RTX 4090", price: "$1,599.00", rating: 4.9, reviews: 128, image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=1000" },
-        { title: "AMD Ryzen 9 7950X", price: "$599.00", rating: 4.8, reviews: 85, image: "https://images.unsplash.com/photo-1555616635-6409600315ac?auto=format&fit=crop&q=80&w=1000" },
-        { title: "ASUS ROG Swift OLED PG27AQDM", price: "$999.00", rating: 4.7, reviews: 42, image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1000" },
-        // ... more mock data
-    ];
+    useEffect(() => {
+        const fetchResults = async () => {
+            if (!query) return;
+            setLoading(true);
+            try {
+                const data = await api.search(query);
+                setResults(data.results || []);
+            } catch (err) {
+                console.error("Search fetch error:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    // Simple mock filter
-    const products = allProducts.filter(p => p.title.toLowerCase().includes(query.toLowerCase()) || query === '');
+        fetchResults();
+    }, [query]);
 
     return (
-        <div className="min-h-screen bg-[#eef2f2] font-sans">
+        <div className="min-h-screen bg-[#eef2f2] font-sans pb-12">
             <Navbar />
             <SubNavbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
-                    <div>
-                        <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-2">
-                            {query ? `Results for "${query}"` : 'All Products'}
-                        </h1>
-                        <p className="text-gray-500">Found {products.length} results</p>
-                    </div>
+                <div className="mb-8">
+                    <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-2">
+                        {query ? `Results for "${query}"` : 'Global Search'}
+                    </h1>
+                    <p className="text-gray-500">
+                        {loading ? 'Searching...' : `Found ${results.length} results`}
+                    </p>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-8">
-                    {/* Sidebar Filters */}
-                    <aside className="w-full lg:w-64 flex-shrink-0">
-                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
-                            <h2 className="text-lg font-bold text-gray-900 mb-6">Filters</h2>
-                            <ProductFilters />
-                        </div>
-                    </aside>
-
-                    {/* Product Grid */}
-                    <div className="flex-1">
-                        {products.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {products.map((product, index) => (
-                                    <ProductCard key={index} {...product} />
-                                ))}
-                            </div>
+                {loading ? (
+                    <div className="flex justify-center py-20">
+                        <div className="text-xl font-bold text-gray-400 animate-pulse">Loading amazing deals...</div>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {results.length > 0 ? (
+                            results.map((item, index) => {
+                                if (item.type === 'readymade-pc') {
+                                    return (
+                                        <PCCard
+                                            key={item.pc_id || index}
+                                            id={item.pc_id}
+                                            name={item.name}
+                                            image={item.image || heroPC}
+                                            price={`$${item.price}`}
+                                            useCase={item.category}
+                                            cpu="High Performance"
+                                            gpu="Optimized"
+                                            ram="Gaming Grade"
+                                        />
+                                    );
+                                }
+                                return (
+                                    <ProductCard
+                                        key={item.product_id || index}
+                                        id={item.product_id}
+                                        title={item.name}
+                                        price={`$${item.price || '---'}`}
+                                        image={item.image_url || gpuImg}
+                                        brand={item.brand?.name}
+                                    />
+                                );
+                            })
                         ) : (
-                            <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
-                                <svg className="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <div className="col-span-full text-center py-20 bg-white rounded-xl border border-gray-100">
+                                <svg className="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">No results found</h3>
-                                <p className="text-gray-500">Try checking your spelling or use different keywords.</p>
+                                <p className="text-gray-500 text-sm">Try checking your spelling or use different keywords like "RTX" or "RAM".</p>
                             </div>
                         )}
                     </div>
-                </div>
+                )}
             </main>
         </div>
     );

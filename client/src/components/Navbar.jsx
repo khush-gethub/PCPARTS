@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
     const { cartCount } = useCart();
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+            setIsOpen(false);
+        }
+    };
 
     return (
         <nav className="bg-white sticky top-0 z-50 py-4">
@@ -17,21 +27,24 @@ const Navbar = () => {
 
                     {/* Search Bar */}
                     <div className="flex-1 max-w-2xl mx-10 hidden md:block">
-                        <div className="relative">
+                        <form onSubmit={handleSearch} className="relative">
                             <input
                                 type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                                 className="block w-full pl-4 pr-10 py-2 border border-gray-200 rounded-md leading-5 bg-[#f5f7f7] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                                placeholder="Search"
+                                placeholder="Search products, brands, or categories..."
                             />
-                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <button type="submit" className="absolute inset-y-0 right-0 pr-3 flex items-center">
                                 <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                     </div>
 
                     {/* Right Actions */}
+                    {/* ... rest of actions ... */}
                     <div className="flex items-center space-x-6">
                         <div className="hidden md:flex items-center space-x-4">
                             <Link to="/login" className="bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 transition duration-150 text-sm">
@@ -72,11 +85,15 @@ const Navbar = () => {
             {/* Mobile menu */}
             {isOpen && (
                 <div className="md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-3 space-y-1">
-                    <input
-                        type="text"
-                        className="block w-full pl-3 pr-3 py-2 border border-gray-200 rounded-md leading-5 bg-[#f5f7f7] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm mb-4"
-                        placeholder="Search"
-                    />
+                    <form onSubmit={handleSearch} className="mb-4">
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="block w-full pl-3 pr-3 py-2 border border-gray-200 rounded-md leading-5 bg-[#f5f7f7] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                            placeholder="Search..."
+                        />
+                    </form>
                     <Link to="/login" className="w-full block text-center bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 mt-2">
                         Login Register
                     </Link>

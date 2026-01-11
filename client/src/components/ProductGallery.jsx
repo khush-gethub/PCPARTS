@@ -5,6 +5,19 @@ const ProductGallery = ({ images }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
+    // Update selectedImage when images prop changes (useful for async loading)
+    React.useEffect(() => {
+        if (images && images.length > 0) {
+            setSelectedImage(prev => {
+                // Only update if current selected isn't in new array, or array changed
+                if (!prev || !images.includes(prev)) {
+                    return images[0];
+                }
+                return prev;
+            });
+        }
+    }, [images]);
+
     const handleMouseMove = (e) => {
         const { left, top, width, height } = e.target.getBoundingClientRect();
         const x = ((e.pageX - left) / width) * 100;

@@ -29,7 +29,7 @@ app.use(cors());
 app.use(express.json());
 
 // --- Database Connection ---
-mongoose.connect('mongodb://127.0.0.1:27017/pcparts')
+mongoose.connect('mongodb://127.0.0.1:27017/Pcpart')
     .then(() => console.log('✅ MongoDB Connected to pcparts'))
     .catch(err => console.error('❌ Database Connection Error:', err));
 
@@ -79,19 +79,56 @@ app.get('/products', async (req, res) => {
         const products = await Product.find()
             .populate('category_id', 'name')
             .populate('brand_id', 'name');
-        res.json(products);
+        // Fetch primary images for all products in parallel
+        // Use suffix-based matching as IDs use different prefixes (prod_0_ vs prod_1_ etc)
+        const productsWithImages = await Promise.all(products.map(async (p) => {
+            const productSuffix = p._id.split('_').pop();
+
+            const image = await ProductImage.findOne({
+                product_id: { $regex: productSuffix + '$' }
+            }).sort('position');
+
+            return {
+                ...p.toObject(),
+                image_url: image ? image.image_url : null
+            };
+        }));
+
+        res.json(productsWithImages);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
+// Enhanced Get Single Product with Aggregation
 app.get('/products/:id', async (req, res) => {
     try {
-        const product = await Product.findOne({ product_id: req.params.id })
+        const product = await Product.findById(req.params.id)
             .populate('category_id')
             .populate('brand_id');
+
         if (!product) return res.status(404).json({ error: 'Product not found' });
-        res.json(product);
+
+        // Parallel fetch for related data
+        const productSuffix = req.params.id.split('_').pop();
+
+        const [variants, images, benchmarks] = await Promise.all([
+            ProductVariant.find({ product_id: req.params.id }),
+            ProductImage.find({
+                product_id: { $regex: productSuffix + '$' }
+            }).sort('position'),
+            Benchmark.find({ product_id: req.params.id })
+        ]);
+
+        // Construct response object
+        const responseData = {
+            ...product.toObject(),
+            variants,
+            images,
+            benchmarks
+        };
+
+        res.json(responseData);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -165,15 +202,27 @@ createGetAllRoute('/compatibility', PCBuilderCompatibility);
 createGetAllRoute('/readymade-pcs', ReadyMadePC);
 app.get('/readymade-pcs/:id', async (req, res) => {
     try {
-        const pc = await ReadyMadePC.findOne({ pc_id: req.params.id });
+        const pc = await ReadyMadePC.findById(req.params.id);
         if (!pc) return res.status(404).json({ error: 'PC not found' });
 
-        // Get items too
+        // Get items and populate details
         const items = await ReadyMadePCItem.find({ pc_id: req.params.id })
-            .populate('product_id', 'name')
+            .populate('product_id', 'name specs')
             .populate('variant_id', 'price');
 
-        res.json({ ...pc.toObject(), items });
+        // Construct detailed response
+        // Note: ReadyMadePC schema has image fields directly, but if we had a separate gallery table we'd fetch it here.
+        // We will format the images array from the flat fields
+        const images = [];
+        if (pc.image) images.push(pc.image);
+        if (pc.Image2) images.push(pc.Image2);
+        if (pc.Image3) images.push(pc.Image3);
+
+        res.json({
+            ...pc.toObject(),
+            items,
+            images // Explicitly sending as an array for the gallery
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -194,6 +243,84 @@ app.get('/cart/:user_id', async (req, res) => {
         const items = await CartItem.find({ cart_id: cart.cart_id });
         res.json({ ...cart.toObject(), items });
     } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 20. Unified Search
+app.get('/search', async (req, res) => {
+    const { q } = req.query;
+    if (!q) return res.json({ results: [], query: '' });
+
+    const regex = new RegExp(q, 'i');
+
+    try {
+        // Search Products with Category & Brand names
+        const products = await Product.aggregate([
+            {
+                $lookup: {
+                    from: 'categories',
+                    localField: 'category_id',
+                    foreignField: '_id',
+                    as: 'category'
+                }
+            },
+            { $unwind: { path: '$category', preserveNullAndEmptyArrays: true } },
+            {
+                $lookup: {
+                    from: 'brands',
+                    localField: 'brand_id',
+                    foreignField: '_id',
+                    as: 'brand'
+                }
+            },
+            { $unwind: { path: '$brand', preserveNullAndEmptyArrays: true } },
+            {
+                $match: {
+                    $or: [
+                        { name: regex },
+                        { description: regex },
+                        { 'category.name': regex },
+                        { 'brand.name': regex }
+                    ]
+                }
+            },
+            { $limit: 40 }
+        ]);
+
+        // Enrich products with primary image and basic variant for price
+        const enrichedProducts = await Promise.all(products.map(async (p) => {
+            const [image, variant] = await Promise.all([
+                ProductImage.findOne({ product_id: p._id }).sort('position'),
+                ProductVariant.findOne({ product_id: p._id })
+            ]);
+            return {
+                ...p,
+                image_url: image ? image.image_url : null,
+                price: variant ? variant.price : (p.price || 0),
+                type: 'product'
+            };
+        }));
+
+        // Search ReadyMadePCs
+        const pcs = await ReadyMadePC.find({
+            $or: [
+                { name: regex },
+                { category: regex }
+            ]
+        }).limit(20);
+
+        const enrichedPCs = pcs.map(pc => ({
+            ...pc.toObject(),
+            type: 'readymade-pc'
+        }));
+
+        res.json({
+            results: [...enrichedProducts, ...enrichedPCs],
+            query: q
+        });
+    } catch (err) {
+        console.error("Search error:", err);
         res.status(500).json({ error: err.message });
     }
 });
