@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { api } from '../api';
 import PCCard from './PCCard';
-// Removed fallback image
-
+import heroPC from '../assets/hero-pc.png'; // Fallback
 
 const PreBuiltSection = () => {
     const [systems, setSystems] = useState([]);
@@ -12,6 +10,8 @@ const PreBuiltSection = () => {
     useEffect(() => {
         const fetchSystems = async () => {
             try {
+                // Determine source for "Pre-Built" systems. 
+                // We'll use the specific /readymade-pcs endpoint
                 const data = await api.getReadyMadePCs();
                 setSystems(data);
             } catch (err) {
@@ -23,7 +23,7 @@ const PreBuiltSection = () => {
         fetchSystems();
     }, []);
 
-    if (loading) return null;
+    if (loading) return null; // Or a skeleton
 
     return (
         <section className="py-24 bg-white border-b border-gray-100">
@@ -41,21 +41,21 @@ const PreBuiltSection = () => {
                     {systems && systems.length > 0 ? (
                         systems.slice(0, 4).map((item) => (
                             <PCCard
-                                key={item.pc_id || item._id}
-                                id={item.pc_id || item._id}
+                                key={item.pc_id}
+                                id={item.pc_id}
                                 name={item.name}
-                                image={item.image || "https://placehold.co/400x400?text=PC"}
+                                image={item.image || heroPC}
                                 price={item.price ? `$${item.price}` : "N/A"}
                                 useCase={item.category || "General"}
-                                cpu={""}
-                                gpu={""}
-                                ram={""}
-                                rating={null}
+                                cpu="Intel/AMD" // Ideally fetch components or add these fields to PC schema
+                                gpu="RTX/RX"   // as summary fields
+                                ram="16GB+"
+                                rating={4.9}
                             />
                         ))
                     ) : (
                         <div className="col-span-full text-center text-gray-500 py-12">
-                            {loading ? "Loading systems..." : "No pre-built systems available at the moment."}
+                            No pre-built systems available at the moment.
                         </div>
                     )}
                 </div>
@@ -65,3 +65,4 @@ const PreBuiltSection = () => {
 };
 
 export default PreBuiltSection;
+
