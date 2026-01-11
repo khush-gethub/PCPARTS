@@ -16,7 +16,7 @@ const cors = require('cors');
 // Import all models
 const {
     User, Address, Category, Brand, Product, ProductVariant, Stock,
-    ProductImage, Benchmark, PCBuilderCompatibility, ReadyMadePC,
+    ProductImage, Benchmark, BenchmarkTable, PCBuilderCompatibility, ReadyMadePC,
     ReadyMadePCItem, Coupon, UserCoupon, Cart, CartItem, Order,
     OrderItem, PDFDownload
 } = require('./schema');
@@ -87,7 +87,7 @@ app.get('/products', async (req, res) => {
 
 app.get('/products/:id', async (req, res) => {
     try {
-        const product = await Product.findOne({ product_id: req.params.id })
+        const product = await Product.findOne({ _id: req.params.id })
             .populate('category_id')
             .populate('brand_id');
         if (!product) return res.status(404).json({ error: 'Product not found' });
@@ -136,10 +136,27 @@ app.get('/products/:id/images', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+createGetAllRoute('/product-images', ProductImage);
 
 // 9. Benchmarks
-// 9. Benchmarks
-createGetAllRoute('/benchmarks', Benchmark);
+app.get('/benchmarks', async (req, res) => {
+    try {
+        const benchmarks = await Benchmark.find().populate('product_id');
+        res.json(benchmarks);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/benchmark-table', async (req, res) => {
+    try {
+        const data = await BenchmarkTable.find();
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.post('/benchmarks', async (req, res) => {
     try {
         const newBench = new Benchmark(req.body);
@@ -165,15 +182,30 @@ createGetAllRoute('/compatibility', PCBuilderCompatibility);
 createGetAllRoute('/readymade-pcs', ReadyMadePC);
 app.get('/readymade-pcs/:id', async (req, res) => {
     try {
-        const pc = await ReadyMadePC.findOne({ pc_id: req.params.id });
+        const pc = await ReadyMadePC.findOne({ _id: req.params.id });
         if (!pc) return res.status(404).json({ error: 'PC not found' });
 
-        // Get items too
-        const items = await ReadyMadePCItem.find({ pc_id: req.params.id })
-            .populate('product_id', 'name')
-            .populate('variant_id', 'price');
+        // Get items with deep population
+        const itemsData = await ReadyMadePCItem.find({ pc_id: req.params.id })
+            .populate({
+                path: 'product_id',
+                populate: [
+                    { path: 'category_id', select: 'name' },
+                    { path: 'brand_id', select: 'name' }
+                ]
+            })
+            .populate('variant_id');
 
-        res.json({ ...pc.toObject(), items });
+        // Fetch stock for each item manually (or we could use aggregate if preferred, but this is simpler for now)
+        const itemsWithStock = await Promise.all(itemsData.map(async (item) => {
+            const stock = await Stock.findOne({ variant_id: item.variant_id?._id });
+            return {
+                ...item.toObject(),
+                stock: stock ? stock.quantity : 0
+            };
+        }));
+
+        res.json({ ...pc.toObject(), items: itemsWithStock });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

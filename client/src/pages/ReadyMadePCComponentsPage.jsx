@@ -1,23 +1,88 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
+import { api } from '../api';
 
 const ReadyMadePCComponentsPage = () => {
     const { id } = useParams();
+    const [pcData, setPcData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Mock Component Data
-    const components = [
-        { category: "Processor", name: "Core i9-13900K 24-Core", brand: "Intel", specs: "Up to 5.8 GHz", price: "₹55,000", status: "In Stock" },
-        { category: "Graphics Card", name: "GeForce RTX 4090 Gaming OC", brand: "Gigabyte", specs: "24GB GDDR6X", price: "₹1,85,000", status: "In Stock" },
-        { category: "Motherboard", name: "ROG Maximus Z790 Hero", brand: "ASUS", specs: "LGA1700, DDR5, WiFi 6E", price: "₹65,000", status: "In Stock" },
-        { category: "Memory", name: "Dominator Platinum RGB 64GB", brand: "Corsair", specs: "2x32GB DDR5 6000MHz", price: "₹32,000", status: "In Stock" },
-        { category: "Storage (Primary)", name: "990 Pro NVMe M.2 SSD", brand: "Samsung", specs: "2TB PCIe Gen 4", price: "₹18,000", status: "In Stock" },
-        { category: "Power Supply", name: "HX1200i Platinum", brand: "Corsair", specs: "1200W Fully Modular", price: "₹25,000", status: "Low Stock" },
-        { category: "CPU Cooler", name: "Kraken Z73 RGB", brand: "NZXT", specs: "360mm AIO Liquid Cooler", price: "₹26,000", status: "In Stock" },
-        { category: "Cabinet", name: "O11 Dynamic Evo", brand: "Lian Li", specs: "Mid Tower, Tempered Glass", price: "₹16,000", status: "In Stock" },
-    ];
+    useEffect(() => {
+        const fetchPCData = async () => {
+            try {
+                setLoading(true);
+                const data = await api.getReadyMadePCById(id);
+                setPcData(data);
+                setError(null);
+            } catch (err) {
+                console.error("Error fetching PC components:", err);
+                setError("Failed to load component details.");
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const total = "₹4,22,000"; // Sum of above approx
+        if (id) fetchPCData();
+    }, [id]);
+
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            maximumFractionDigits: 0
+        }).format(amount);
+    };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-[#eef2f2]">
+                <Navbar />
+                <div className="flex items-center justify-center h-[60vh]">
+                    <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error || !pcData) {
+        return (
+            <div className="min-h-screen bg-[#eef2f2]">
+                <Navbar />
+                <div className="max-w-7xl mx-auto px-4 py-12 text-center">
+                    <h2 className="text-xl font-bold text-red-600">{error || "PC Not Found"}</h2>
+                    <Link to="/ready-made-pcs" className="mt-4 inline-block text-blue-600 hover:underline">Back to All PCs</Link>
+                </div>
+            </div>
+        );
+    }
+
+    const components = pcData.items.map(item => {
+        const product = item.product_id;
+        const variant = item.variant_id;
+
+        // Extract specs into a string
+        let specString = "-";
+        if (product?.specs) {
+            specString = Object.entries(product.specs)
+                .slice(0, 2)
+                .map(([k, v]) => `${k}: ${v}`)
+                .join(', ');
+        }
+
+        return {
+            category: product?.category_id?.name || "Component",
+            name: product?.name || "Unknown Product",
+            brand: product?.brand_id?.name || "Generic",
+            specs: specString,
+            price: variant?.price || 0,
+            status: item.stock > 0 ? "In Stock" : "Out of Stock",
+            stock: item.stock
+        };
+    });
+
+    const individualTotal = components.reduce((sum, item) => sum + item.price, 0);
 
     return (
         <div className="min-h-screen bg-[#eef2f2] font-sans pb-12">
@@ -30,7 +95,7 @@ const ReadyMadePCComponentsPage = () => {
                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         Back to PC Details
                     </Link>
-                    <h1 className="text-xl font-bold text-gray-900">Hyperion X1 - Full Component List</h1>
+                    <h1 className="text-xl font-bold text-gray-900">{pcData.name} - Full Component List</h1>
                 </div>
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -53,9 +118,9 @@ const ReadyMadePCComponentsPage = () => {
                                         <td className="p-4 text-gray-800 font-medium">{item.name}</td>
                                         <td className="p-4 text-gray-600">{item.brand}</td>
                                         <td className="p-4 text-gray-500">{item.specs}</td>
-                                        <td className="p-4 text-gray-900 font-bold text-right">{item.price}</td>
+                                        <td className="p-4 text-gray-900 font-bold text-right">{formatCurrency(item.price)}</td>
                                         <td className="p-4 text-right">
-                                            <span className={`inline-block px-2 py-1 rounded text-xs font-bold ${item.status === 'In Stock' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                                            <span className={`inline-block px-2 py-1 rounded text-xs font-bold ${item.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                                                 }`}>
                                                 {item.status}
                                             </span>
@@ -66,7 +131,7 @@ const ReadyMadePCComponentsPage = () => {
                             <tfoot>
                                 <tr className="bg-gray-50">
                                     <td colSpan="4" className="p-4 text-right font-bold text-gray-600">Total System Value (Individual Parts)</td>
-                                    <td className="p-4 text-right font-black text-xl text-gray-900">{total}</td>
+                                    <td className="p-4 text-right font-black text-xl text-gray-900">{formatCurrency(individualTotal)}</td>
                                     <td></td>
                                 </tr>
                             </tfoot>
@@ -83,7 +148,7 @@ const ReadyMadePCComponentsPage = () => {
                     <div className="flex items-center gap-6">
                         <div className="text-right hidden md:block">
                             <span className="block text-gray-400 text-sm">Our Bundle Price</span>
-                            <span className="text-3xl font-black text-orange-500">₹3,45,999</span>
+                            <span className="text-3xl font-black text-orange-500">{formatCurrency(pcData.price)}</span>
                         </div>
                         <button className="bg-orange-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-orange-700 transition shadow-lg hover:shadow-orange-500/20 whitespace-nowrap">
                             Add Full System to Cart

@@ -34,6 +34,7 @@ export const api = {
 
     // Benchmarks
     getBenchmarks: () => fetchJson('/benchmarks'),
+    getBenchmarkTable: () => fetchJson('/benchmark-table'),
     getProductBenchmarks: (productId) => fetchJson(`/products/${productId}/benchmarks`),
 
     // ReadyMade PCs
@@ -46,9 +47,13 @@ export const api = {
 
     // Images
     getProductImages: (productId) => fetchJson(`/products/${productId}/images`),
+    getAllProductImages: () => fetchJson('/product-images'),
 
     // Stock
     getStock: (variantId) => fetchJson(`/stock/${variantId}`),
+
+    // Variants (General)
+    getAllVariants: () => fetchJson('/variants'),
 
     // Orders
     createOrder: (orderData) => fetchJson('/orders', {

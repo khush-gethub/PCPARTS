@@ -100,6 +100,26 @@ const benchmarkSchema = new Schema({
 }, schemaOptions);
 benchmarkSchema.virtual('benchmark_id').get(function () { return this._id; });
 
+// 9b. BenchmarkTable (Unified for Benchmarks Page)
+const benchmarkTableSchema = new Schema({
+    _id: { type: String, required: true },
+    product_id: { type: String, ref: 'Product' },
+    name: { type: String },
+    image: { type: String },
+    capacity: { type: String },
+    cache: { type: String },
+    type: { type: String },
+    interface: { type: String },
+    write_speed: { type: Number },
+    read_speed: { type: Number },
+    max_write: { type: Number, default: 14000 },
+    max_read: { type: Number, default: 14000 },
+    rating: { type: Number },
+    reviews: { type: Number },
+    price: { type: Number }
+}, schemaOptions);
+benchmarkTableSchema.virtual('bench_table_id').get(function () { return this._id; });
+
 // 10. PCBuilderCompatibility
 const pcBuilderCompatibilitySchema = new Schema({
     _id: { type: String, required: true },
@@ -215,6 +235,7 @@ module.exports = {
     Stock: mongoose.model('Stock', stockSchema),
     ProductImage: mongoose.model('ProductImage', productImageSchema),
     Benchmark: mongoose.model('Benchmark', benchmarkSchema),
+    BenchmarkTable: mongoose.model('BenchmarkTable', benchmarkTableSchema),
     PCBuilderCompatibility: mongoose.model('PCBuilderCompatibility', pcBuilderCompatibilitySchema),
     ReadyMadePC: mongoose.model('ReadyMadePC', readyMadePCSchema),
     ReadyMadePCItem: mongoose.model('ReadyMadePCItem', readyMadePCItemSchema),
