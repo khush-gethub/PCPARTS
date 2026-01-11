@@ -1,89 +1,67 @@
-import axios from 'axios';
+const BASE_URL = 'http://localhost:4080';
 
-const API_BASE_URL = 'http://localhost:4080';
+const fetchJson = async (endpoint, options = {}) => {
+    try {
+        const response = await fetch(`${BASE_URL}${endpoint}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers,
+            },
+            ...options,
+        });
 
-const apiClient = axios.create({
-    baseURL: API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error(`Error fetching ${endpoint}:`, error);
+        throw error;
+    }
+};
 
 export const api = {
     // Products
-    getProducts: async () => {
-        const response = await apiClient.get('/products');
-        return response.data;
-    },
-    getProductById: async (id) => {
-        // Just return the data, error handling is done in the component
-        const response = await apiClient.get(`/products/${id}`);
-        return response.data;
-    },
-
-    // Ready-Made PCs
-    getReadyMadePCs: async () => {
-        const response = await apiClient.get('/readymade-pcs');
-        return response.data;
-    },
-    getReadyMadePCById: async (id) => {
-        const response = await apiClient.get(`/readymade-pcs/${id}`);
-        return response.data;
-    },
+    getProducts: () => fetchJson('/products'),
+    getProductById: (id) => fetchJson(`/products/${id}`),
+    getProductsByCategory: (categoryId) => fetchJson(`/products?category=${categoryId}`), // Simplified, backend might need adjustment if filtering logic exists
+    getVariants: () => fetchJson('/variants'),
+    getVariantsByProductId: (productId) => fetchJson(`/products/${productId}/variants`),
 
     // Categories & Brands
-    getCategories: async () => {
-        const response = await apiClient.get('/categories');
-        return response.data;
-    },
-    getBrands: async () => {
-        const response = await apiClient.get('/brands');
-        return response.data;
-    },
-
-    // Variants & Stock
-    getVariants: async () => {
-        // Optimally, we should probably fetch variants by product ID, but keeping generic for now matching index.js
-        const response = await apiClient.get('/variants');
-        return response.data;
-    },
-    getVariantsByProductId: async (productId) => {
-        const response = await apiClient.get(`/products/${productId}/variants`);
-        return response.data;
-    },
-
-    // Images
-    getProductImages: async (productId) => {
-        const response = await apiClient.get(`/products/${productId}/images`);
-        return response.data;
-    },
+    getCategories: () => fetchJson('/categories'),
+    getBrands: () => fetchJson('/brands'),
 
     // Benchmarks
-    getBenchmarks: async () => {
-        const response = await apiClient.get('/benchmarks');
-        return response.data;
-    },
-    getProductBenchmarks: async (productId) => {
-        const response = await apiClient.get(`/products/${productId}/benchmarks`);
-        return response.data;
-    },
+    getBenchmarks: () => fetchJson('/benchmarks'),
+    getBenchmarkTable: () => fetchJson('/benchmark-table'),
+    getProductBenchmarks: (productId) => fetchJson(`/products/${productId}/benchmarks`),
 
-    // Search
-    search: async (query) => {
-        const response = await apiClient.get(`/search?q=${encodeURIComponent(query)}`);
-        return response.data;
-    },
+    // ReadyMade PCs
+    getReadyMadePCs: () => fetchJson('/readymade-pcs'),
+    getReadyMadePCById: (id) => fetchJson(`/readymade-pcs/${id}`),
 
-    // Cart
-    getCart: async (userId) => {
-        const response = await apiClient.get(`/cart/${userId}`);
-        return response.data;
-    },
-    addToCart: async (userId, item) => {
-        // Placeholder for future POST implementation matching backend
-        // const response = await apiClient.post(`/cart/${userId}/items`, item);
-        // return response.data;
-        console.warn("addToCart API not fully implemented on backend yet");
-        return Promise.resolve({});
-    }
+    // Users & Cart
+    getUsers: () => fetchJson('/users'),
+    getCart: (userId) => fetchJson(`/cart/${userId}`),
+
+    // Images
+    getProductImages: (productId) => fetchJson(`/products/${productId}/images`),
+    getAllProductImages: () => fetchJson('/product-images'),
+
+    // Stock
+    getStock: (variantId) => fetchJson(`/stock/${variantId}`),
+
+    // Variants (General)
+    getAllVariants: () => fetchJson('/variants'),
+
+    // Orders
+    createOrder: (orderData) => fetchJson('/orders', {
+        method: 'POST',
+        body: JSON.stringify(orderData),
+    }),
+
+    // Unified Search
+    search: (query) => fetchJson(`/search?q=${encodeURIComponent(query)}`),
 };

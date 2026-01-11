@@ -197,7 +197,7 @@ const BenchmarksPage = () => {
                                             </td>
                                             <td className="p-3 text-right pr-6">
                                                 <span className="font-bold text-slate-900">
-                                                    {product.price > 0 ? `$${product.price.toFixed(2)}` : "N/A"}
+                                                    {product.price > 0 ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(product.price) : "N/A"}
                                                 </span>
                                             </td>
                                             <td className="p-3 pr-6">

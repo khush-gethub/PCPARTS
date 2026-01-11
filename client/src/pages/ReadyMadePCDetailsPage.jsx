@@ -108,7 +108,7 @@ const ReadyMadePCDetailsPage = () => {
                             useCase={pcData.category}
                             rating={4.8}
                             reviewsCount={42}
-                            price={`$${pcData.price} `}
+                            price={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(pcData.price)}
                             originalPrice={null}
                             discount={null}
                             offers={[

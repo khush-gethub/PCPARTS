@@ -62,7 +62,7 @@ const SearchResultsPage = () => {
                                             id={item.pc_id}
                                             name={item.name}
                                             image={item.image || heroPC}
-                                            price={`$${item.price}`}
+                                            price={item.price ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(item.price) : '---'}
                                             useCase={item.category}
                                             cpu="High Performance"
                                             gpu="Optimized"
@@ -75,7 +75,7 @@ const SearchResultsPage = () => {
                                         key={item.product_id || index}
                                         id={item.product_id}
                                         title={item.name}
-                                        price={`$${item.price || '---'}`}
+                                        price={item.price ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(item.price) : '---'}
                                         image={item.image_url || gpuImg}
                                         brand={item.brand?.name}
                                     />

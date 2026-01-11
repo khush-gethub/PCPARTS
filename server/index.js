@@ -29,7 +29,7 @@ app.use(cors());
 app.use(express.json());
 
 // --- Database Connection ---
-mongoose.connect('mongodb://127.0.0.1:27017/Pcpart')
+mongoose.connect('mongodb://127.0.0.1:27017/pcparts')
     .then(() => console.log('✅ MongoDB Connected to pcparts'))
     .catch(err => console.error('❌ Database Connection Error:', err));
 

@@ -93,8 +93,9 @@ const CategoryPage = () => {
                         const variants = await api.getVariantsByProductId(p.product_id);
                         if (variants && variants.length > 0) {
                             const v = variants[0];
-                            price = `$${v.price}`;
-                            if (v.discount_price) originalPrice = `$${v.discount_price}`;
+                            const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+                            price = formatter.format(v.price);
+                            if (v.discount_price) originalPrice = formatter.format(v.discount_price);
                             stockStatus = v.stock_status === 'in_stock' ? "In Stock" : "Out of Stock";
                         }
                     } catch (e) { console.warn("Enrich error", p.name, e); }
