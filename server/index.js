@@ -12,6 +12,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const { v4: uuidv4 } = require('uuid');
+
+const JWT_SECRET = 'your_super_secret_key_123'; // In production, use environment variables
 
 // Import all models
 const {
@@ -54,18 +58,161 @@ const createGetAllRoute = (path, Model) => {
 
 // 1. Users
 createGetAllRoute('/users', User);
-app.post('/users', async (req, res) => {
+
+// Registration Route
+app.post('/api/register', async (req, res) => {
     try {
-        const newUser = new User(req.body);
+        const { name, email, password, phone } = req.body;
+
+        // Validation
+        if (!name || !email || !password || !phone) {
+            return res.status(400).json({ error: 'All fields are required (name, email, password, phone)' });
+        }
+
+        if (phone.length !== 10) {
+            return res.status(400).json({ error: 'Phone number must be exactly 10 digits' });
+        }
+
+        // Email format validation simple check
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Invalid email format' });
+        }
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
+
+        // Strong password validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[*#@!$%&])[A-Za-z\d*#@!$%&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({ error: 'Password must be 8+ chars and include uppercase, lowercase, number, and special character (*#@!$%&)' });
+        }
+
+        // Create new user (using plain text password as requested)
+        const newUser = new User({
+            _id: `user_${uuidv4()}`,
+            name,
+            email,
+            password_: password, // Using password_ field from schema
+            phone,
+            role: 'user'
+        });
+
         await newUser.save();
-        res.status(201).json(newUser);
+        res.status(201).json({ message: 'User registered successfully', user_id: newUser._id });
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Login Route
+app.post('/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Validation
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required' });
+        }
+
+        // Find user
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+
+        // Compare plain text password
+        if (user.password_ !== password) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+
+        // Generate JWT Token
+        const token = jwt.sign(
+            { user_id: user._id, role: user.role, name: user.name },
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.json({
+            message: 'Login successful',
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                role: user.role
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 
 // 2. Addresses
 createGetAllRoute('/addresses', Address);
+
+app.get('/api/addresses/:user_id', async (req, res) => {
+    try {
+        const addresses = await Address.find({ user_id: req.params.user_id });
+        res.json(addresses);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/addresses', async (req, res) => {
+    try {
+        const { user_id, line1, line2, city, state, pincode, country } = req.body;
+        if (!user_id || !line1 || !city || !state || !pincode || !country) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        const newAddress = new Address({
+            _id: `addr_${uuidv4()}`,
+            user_id,
+            line1,
+            line2,
+            city,
+            state,
+            pincode,
+            country
+        });
+
+        await newAddress.save();
+        res.status(201).json(newAddress);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.put('/api/addresses/:id', async (req, res) => {
+    try {
+        const { line1, line2, city, state, pincode, country } = req.body;
+        const updated = await Address.findByIdAndUpdate(
+            req.params.id,
+            { line1, line2, city, state, pincode, country },
+            { new: true }
+        );
+        if (!updated) return res.status(404).json({ error: 'Address not found' });
+        res.json(updated);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/addresses/:id', async (req, res) => {
+    try {
+        const deleted = await Address.findByIdAndDelete(req.params.id);
+        if (!deleted) return res.status(404).json({ error: 'Address not found' });
+        res.json({ message: 'Address deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // 3. Categories
 createGetAllRoute('/categories', Category);
@@ -347,6 +494,20 @@ app.get('/orders', async (req, res) => {
     try {
         const orders = await Order.find().populate('user_id', 'name email');
         res.json(orders);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/api/orders/user/:user_id', async (req, res) => {
+    try {
+        const orders = await Order.find({ user_id: req.params.user_id });
+        // Optionally populate items if needed
+        const enrichedOrders = await Promise.all(orders.map(async (order) => {
+            const items = await OrderItem.find({ order_id: order._id });
+            return { ...order.toObject(), items };
+        }));
+        res.json(enrichedOrders);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
