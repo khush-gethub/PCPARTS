@@ -58,8 +58,8 @@ const SearchResultsPage = () => {
                                 if (item.type === 'readymade-pc') {
                                     return (
                                         <PCCard
-                                            key={item.pc_id || index}
-                                            id={item.pc_id}
+                                            key={item.pc_id || item._id || index}
+                                            id={item.pc_id || item._id}
                                             name={item.name}
                                             image={item.image || heroPC}
                                             price={item.price ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(item.price) : '---'}
@@ -72,8 +72,8 @@ const SearchResultsPage = () => {
                                 }
                                 return (
                                     <ProductCard
-                                        key={item.product_id || index}
-                                        id={item.product_id}
+                                        key={item.product_id || item._id || index}
+                                        id={item.product_id || item._id}
                                         title={item.name}
                                         price={item.price ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(item.price) : '---'}
                                         image={item.image_url || gpuImg}

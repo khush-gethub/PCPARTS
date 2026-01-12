@@ -12,6 +12,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 
@@ -31,6 +32,8 @@ const PORT = process.env.PORT || 4080;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/public/assets', express.static(path.join(__dirname, 'public/assets')));
 
 // --- Database Connection ---
 mongoose.connect('mongodb://127.0.0.1:27017/pcparts')
@@ -454,12 +457,14 @@ app.get('/search', async (req, res) => {
 
         // Enrich products with primary image and basic variant for price
         const enrichedProducts = await Promise.all(products.map(async (p) => {
+            const productSuffix = p._id.split('_').pop();
             const [image, variant] = await Promise.all([
-                ProductImage.findOne({ product_id: p._id }).sort('position'),
+                ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position'),
                 ProductVariant.findOne({ product_id: p._id })
             ]);
             return {
                 ...p,
+                product_id: p._id, // Explicitly pass product_id for aggregation results
                 image_url: image ? image.image_url : null,
                 price: variant ? variant.price : (p.price || 0),
                 type: 'product'
@@ -476,6 +481,7 @@ app.get('/search', async (req, res) => {
 
         const enrichedPCs = pcs.map(pc => ({
             ...pc.toObject(),
+            pc_id: pc._id, // Explicitly pass pc_id just in case
             type: 'readymade-pc'
         }));
 
