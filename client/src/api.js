@@ -64,4 +64,31 @@ export const api = {
 
     // Unified Search
     search: (query) => fetchJson(`/search?q=${encodeURIComponent(query)}`),
+
+    // Auth
+    register: (userData) => fetchJson('/api/register', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+    }),
+    login: (credentials) => fetchJson('/api/login', {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+    }),
+
+    // Addresses
+    getAddressesByUserId: (userId) => fetchJson(`/api/addresses/${userId}`),
+    addAddress: (addressData) => fetchJson('/api/addresses', {
+        method: 'POST',
+        body: JSON.stringify(addressData),
+    }),
+    updateAddress: (id, addressData) => fetchJson(`/api/addresses/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(addressData),
+    }),
+    deleteAddress: (id) => fetchJson(`/api/addresses/${id}`, {
+        method: 'DELETE',
+    }),
+
+    // Orders (User Specific)
+    getOrdersByUserId: (userId) => fetchJson(`/api/orders/user/${userId}`),
 };

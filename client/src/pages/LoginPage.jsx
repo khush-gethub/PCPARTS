@@ -1,10 +1,52 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
+import { api } from '../api.js';
 
 const LoginPage = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[*#@!$%&])[A-Za-z\d*#@!$%&]{8,}$/;
+        if (!passwordRegex.test(formData.password)) {
+            setError('Invalid password format. Strong passwords are 8+ chars with mixed case, numbers, and (*#@!$%&)');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await api.login(formData);
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+
+            if (response.user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
+        } catch (err) {
+            setError(err.message || 'Login failed. Please check your credentials.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#eef2f2] flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900">
             <style>{`
@@ -64,12 +106,21 @@ const LoginPage = () => {
                             </div>
                         </div>
 
-                        <form className="space-y-5" action="#" method="POST">
+                        {error && (
+                            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm font-bold text-center">
+                                {error}
+                            </div>
+                        )}
+
+                        <form className="space-y-5" onSubmit={handleSubmit}>
                             <div className="space-y-4">
                                 <div>
                                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Email Address</label>
                                     <input
                                         type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
                                         required
                                         className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all text-gray-900 font-medium shadow-sm"
                                         placeholder="you@example.com"
@@ -84,6 +135,9 @@ const LoginPage = () => {
                                     </div>
                                     <input
                                         type="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
                                         required
                                         className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all text-gray-900 font-medium shadow-sm"
                                         placeholder="••••••••"
@@ -104,9 +158,10 @@ const LoginPage = () => {
 
                             <button
                                 type="submit"
-                                className="w-full py-4 bg-orange-600 text-white text-sm font-black rounded-2xl hover:bg-orange-700 hover:shadow-lg hover:shadow-orange-500/30 transition-all transform active:scale-[0.98] tracking-widest uppercase"
+                                disabled={loading}
+                                className="w-full py-4 bg-orange-600 text-white text-sm font-black rounded-2xl hover:bg-orange-700 hover:shadow-lg hover:shadow-orange-500/30 transition-all transform active:scale-[0.98] tracking-widest uppercase disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Login to Account
+                                {loading ? 'Logging in...' : 'Login to Account'}
                             </button>
                         </form>
 

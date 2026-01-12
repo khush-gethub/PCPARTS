@@ -5,8 +5,26 @@ import { useCart } from '../context/CartContext.jsx';
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
     const navigate = useNavigate();
     const { cartCount } = useCart();
+
+    React.useEffect(() => {
+        const handleStorageChange = () => {
+            setIsLoggedIn(!!localStorage.getItem('token'));
+        };
+        window.addEventListener('storage', handleStorageChange);
+        // Also check every time the component renders as storage event doesn't fire in the same tab
+        handleStorageChange();
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setIsLoggedIn(false);
+        navigate('/login');
+    };
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -47,13 +65,18 @@ const Navbar = () => {
                     {/* ... rest of actions ... */}
                     <div className="flex items-center space-x-6">
                         <div className="hidden md:flex items-center space-x-4">
-                            <Link to="/login" className="bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 transition duration-150 text-sm">
-                                Login Register
-                            </Link>
-
-                            <Link to="/admin" className="text-gray-700 hover:text-[#f06437] font-bold text-sm transition-colors border border-gray-200 px-3 py-2 rounded-md hover:border-[#f06437]">
-                                Admin Dashboard
-                            </Link>
+                            {isLoggedIn ? (
+                                <button
+                                    onClick={handleLogout}
+                                    className="bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 transition duration-150 text-sm"
+                                >
+                                    Logout
+                                </button>
+                            ) : (
+                                <Link to="/login" className="bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 transition duration-150 text-sm">
+                                    Login Register
+                                </Link>
+                            )}
 
                             {/* Profile Icon */}
                             <Link to="/profile" className="text-gray-700 hover:text-black transition-colors">
@@ -94,9 +117,18 @@ const Navbar = () => {
                             placeholder="Search..."
                         />
                     </form>
-                    <Link to="/login" className="w-full block text-center bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 mt-2">
-                        Login Register
-                    </Link>
+                    {isLoggedIn ? (
+                        <button
+                            onClick={handleLogout}
+                            className="w-full block text-center bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 mt-2"
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <Link to="/login" className="w-full block text-center bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 mt-2">
+                            Login Register
+                        </Link>
+                    )}
                     <Link to="/cart" className="flex items-center space-x-2 w-full px-3 py-3 text-gray-700 font-bold hover:bg-gray-50 rounded-lg">
                         <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
