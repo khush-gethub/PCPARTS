@@ -36,7 +36,15 @@ const ProductGallery = ({ images }) => {
                         className={`w-16 h-16 lg:w-20 lg:h-20 border-2 rounded-lg cursor-pointer overflow-hidden flex-shrink-0 transition-all ${selectedImage === img ? 'border-orange-500' : 'border-gray-200 hover:border-gray-300'
                             }`}
                     >
-                        <img src={img} alt={`Thumbnail ${index}`} className="w-full h-full object-contain bg-white p-1" />
+                        <img
+                            src={img?.startsWith('http') || img?.startsWith('data:') ? img : (img?.startsWith('/') ? `http://localhost:4080${img}` : img)}
+                            alt={`Thumbnail ${index}`}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "https://placehold.co/100x100?text=NA";
+                            }}
+                            className="w-full h-full object-contain bg-white p-1"
+                        />
                     </div>
                 ))}
             </div>
@@ -50,8 +58,12 @@ const ProductGallery = ({ images }) => {
                 onMouseMove={handleMouseMove}
             >
                 <img
-                    src={selectedImage}
+                    src={selectedImage?.startsWith('http') || selectedImage?.startsWith('data:') ? selectedImage : (selectedImage?.startsWith('/') ? `http://localhost:4080${selectedImage}` : selectedImage)}
                     alt="Main Product"
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://placehold.co/600x400?text=Product+Image";
+                    }}
                     className={`max-w-full max-h-[500px] object-contain transition-transform duration-200 ${isHovered ? 'scale-150 origin-center' : 'scale-100'}`}
                     style={isHovered ? {
                         transformOrigin: `${cursorPos.x}% ${cursorPos.y}%`

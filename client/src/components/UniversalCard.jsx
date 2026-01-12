@@ -69,8 +69,12 @@ const UniversalCard = ({
             {/* 2. Top Section: Image */}
             <div className="relative aspect-[5/4] bg-gray-50 border-b border-gray-50 overflow-hidden p-6">
                 <img
-                    src={image}
+                    src={image?.startsWith('http') || image?.startsWith('data:') ? image : (image?.startsWith('/') ? `http://localhost:4080${image}` : image)}
                     alt={title}
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://placehold.co/600x400?text=Product+Image";
+                    }}
                     className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                 />
 
