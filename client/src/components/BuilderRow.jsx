@@ -18,7 +18,15 @@ const BuilderRow = ({ label, icon, part, onAdd, onRemove, onEdit }) => {
                 {hasSelection ? (
                     <div className="flex items-start gap-4">
                         <div className="w-16 h-16 bg-white border border-gray-200 rounded-lg p-2 flex-shrink-0 shadow-sm">
-                            <img src={part.image} alt={part.name} className="w-full h-full object-contain mix-blend-multiply" />
+                            <img
+                                src={part.image?.startsWith('http') || part.image?.startsWith('data:') ? part.image : (part.image?.startsWith('/') ? `http://localhost:4080${part.image}` : part.image)}
+                                alt={part.name}
+                                className="w-full h-full object-contain mix-blend-multiply"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "https://placehold.co/200x200?text=Part";
+                                }}
+                            />
                         </div>
                         <div className="flex-1">
                             <div className="flex justify-between items-start">
@@ -80,10 +88,12 @@ const BuilderRow = ({ label, icon, part, onAdd, onRemove, onEdit }) => {
                 {hasSelection ? (
                     <div>
                         <span className="block text-xs font-bold text-gray-900 mb-1">Buy Online</span>
-                        {part.stockStatus === 'In Stock' ? (
-                            <span className="text-[10px] font-black uppercase text-green-600 bg-green-50 px-2 py-1 rounded inline-block tracking-wide">In Stock</span>
-                        ) : (
+                        {part.stock_status === 'out_of_stock' ? (
                             <span className="text-[10px] font-black uppercase text-red-600 bg-red-50 px-2 py-1 rounded inline-block tracking-wide">No Stock</span>
+                        ) : part.stock_status === 'low_stock' ? (
+                            <span className="text-[10px] font-black uppercase text-orange-600 bg-orange-50 px-2 py-1 rounded inline-block tracking-wide">Low Stock</span>
+                        ) : (
+                            <span className="text-[10px] font-black uppercase text-green-600 bg-green-50 px-2 py-1 rounded inline-block tracking-wide">In Stock</span>
                         )}
                     </div>
                 ) : (

@@ -23,7 +23,7 @@ const {
     User, Address, Category, Brand, Product, ProductVariant, Stock,
     ProductImage, Benchmark, BenchmarkTable, PCBuilderCompatibility, ReadyMadePC,
     ReadyMadePCItem, Coupon, UserCoupon, Cart, CartItem, Order,
-    OrderItem, PDFDownload
+    OrderItem, PDFDownload, PCBuild, PCBuildItem
 } = require('./schema');
 
 const app = express();
@@ -245,6 +245,35 @@ app.get('/products', async (req, res) => {
         }));
 
         res.json(productsWithImages);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// GET products by category
+app.get('/api/products/category/:category_id', async (req, res) => {
+    try {
+        const products = await Product.find({ category_id: req.params.category_id })
+            .populate('category_id', 'name')
+            .populate('brand_id', 'name');
+
+        const productsWithDetails = await Promise.all(products.map(async (p) => {
+            const productSuffix = p._id.split('_').pop();
+            const [image, variant] = await Promise.all([
+                ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position'),
+                ProductVariant.findOne({ product_id: p._id })
+            ]);
+
+            return {
+                ...p.toObject(),
+                id: p._id,
+                image: image ? image.image_url : null,
+                price: variant ? variant.price : 0,
+                variant_id: variant ? variant._id : null
+            };
+        }));
+
+        res.json(productsWithDetails);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -531,6 +560,55 @@ app.post('/orders', async (req, res) => {
 
 // 16. PDFDownloads
 createGetAllRoute('/pdfs', PDFDownload);
+
+// 22. PCBuilds Endpoints
+app.post('/api/pc-builds', async (req, res) => {
+    try {
+        const { user_id, name, total_price, items } = req.body;
+        if (!items || !Array.isArray(items)) {
+            return res.status(400).json({ error: 'Items array is required' });
+        }
+
+        const buildId = `build_${uuidv4()}`;
+        const newBuild = new PCBuild({
+            _id: buildId,
+            user_id,
+            name,
+            total_price
+        });
+
+        await newBuild.save();
+
+        const buildItems = items.map(item => ({
+            _id: `bitem_${uuidv4()}`,
+            build_id: buildId,
+            product_id: item.product_id,
+            category_id: item.category_id,
+            variant_id: item.variant_id
+        }));
+
+        await PCBuildItem.insertMany(buildItems);
+
+        res.status(201).json({ message: 'Build saved successfully', build_id: buildId });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/api/pc-builds/user/:user_id', async (req, res) => {
+    try {
+        const builds = await PCBuild.find({ user_id: req.params.user_id }).sort({ created_at: -1 });
+        const detailedBuilds = await Promise.all(builds.map(async (build) => {
+            const items = await PCBuildItem.find({ build_id: build._id })
+                .populate('product_id')
+                .populate('variant_id');
+            return { ...build.toObject(), items };
+        }));
+        res.json(detailedBuilds);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // --- Server Start ---
 app.listen(PORT, () => {

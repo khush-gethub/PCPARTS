@@ -1,96 +1,72 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 import BuilderRow from '../components/BuilderRow.jsx';
 import PartSelectionModal from '../components/PartSelectionModal.jsx';
+import { useCart } from '../context/CartContext.jsx';
 
-// --- MOCK DATA ---
-const MOCK_PRODUCTS = {
-    cpu: [
-        { id: 'cpu1', name: 'Intel Core i9-13900K', price: 49999, image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=200', specs: { 'Core Count': '24', 'Boost Clock': '5.8 GHz', 'TDP': '125W', 'Socket': 'LGA1700' }, stockStatus: 'In Stock', wattage: 125 },
-        { id: 'cpu2', name: 'AMD Ryzen 9 7950X', price: 52999, image: 'https://images.unsplash.com/photo-1555618568-96041067d5ce?auto=format&fit=crop&q=80&w=200', specs: { 'Core Count': '16', 'Boost Clock': '5.7 GHz', 'TDP': '170W', 'Socket': 'AM5' }, stockStatus: 'In Stock', wattage: 170 },
-        { id: 'cpu3', name: 'Intel Core i5-13600K', price: 28999, image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=200', specs: { 'Core Count': '14', 'Boost Clock': '5.1 GHz', 'TDP': '125W', 'Socket': 'LGA1700' }, stockStatus: 'In Stock', wattage: 125 },
-    ],
-    cooler: [
-        { id: 'clr1', name: 'NZXT Kraken Z73 RGB', price: 24999, image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=200', specs: { 'Radiator Size': '360mm', 'Fan Noise': '22-33 dBA', 'RGB': 'Yes' }, stockStatus: 'In Stock', wattage: 10 },
-        { id: 'clr2', name: 'Noctua NH-D15', price: 8999, image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=200', specs: { 'Type': 'Air Cooler', 'Fan Noise': '19-24 dBA', 'Height': '165mm' }, stockStatus: 'In Stock', wattage: 5 },
-    ],
-    motherboard: [
-        { id: 'mb1', name: 'ASUS ROG Maximus Z790 Hero', price: 58999, image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=200', specs: { 'Socket': 'LGA1700', 'Form Factor': 'ATX', 'Memory': 'DDR5', 'WiFi': 'Yes' }, stockStatus: 'In Stock', wattage: 50 },
-        { id: 'mb2', name: 'MSI MAG B650 Tomahawk WiFi', price: 21999, image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=200', specs: { 'Socket': 'AM5', 'Form Factor': 'ATX', 'Memory': 'DDR5', 'WiFi': 'Yes' }, stockStatus: 'In Stock', wattage: 45 },
-    ],
-    ram: [
-        { id: 'ram1', name: 'Corsair Vengeance RGB 32GB (2x16GB)', price: 12499, image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=200', specs: { 'Speed': 'DDR5-6000', 'Latency': 'CL36', 'Capacity': '32GB' }, stockStatus: 'In Stock', wattage: 5 },
-        { id: 'ram2', name: 'G.Skill Trident Z5 Neo 64GB (2x32GB)', price: 24999, image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=200', specs: { 'Speed': 'DDR5-6000', 'Latency': 'CL30', 'Capacity': '64GB' }, stockStatus: 'Low Stock', wattage: 8 },
-    ],
-    storage: [
-        { id: 'ssd1', name: 'Samsung 990 Pro 2TB', price: 16999, image: 'https://images.unsplash.com/photo-1628557672631-1a890e0c0c7e?auto=format&fit=crop&q=80&w=200', specs: { 'Type': 'NVMe Gen4', 'Read Speed': '7450 MB/s', 'Capacity': '2TB' }, stockStatus: 'In Stock', wattage: 5 },
-        { id: 'ssd2', name: 'WD Black SN850X 1TB', price: 9999, image: 'https://images.unsplash.com/photo-1628557672631-1a890e0c0c7e?auto=format&fit=crop&q=80&w=200', specs: { 'Type': 'NVMe Gen4', 'Read Speed': '7300 MB/s', 'Capacity': '1TB' }, stockStatus: 'In Stock', wattage: 5 },
-    ],
-    gpu: [
-        { id: 'gpu1', name: 'ASUS ROG Strix RTX 4090 OC', price: 185000, image: 'https://images.unsplash.com/photo-1624705024411-db5267b2d396?auto=format&fit=crop&q=80&w=200', specs: { 'VRAM': '24GB GDDR6X', 'Boost Clock': '2640 MHz', 'Length': '358mm' }, stockStatus: 'In Stock', wattage: 450 },
-        { id: 'gpu2', name: 'Gigabyte GeForce RTX 4070 Ti Gaming OC', price: 78999, image: 'https://images.unsplash.com/photo-1624705024411-db5267b2d396?auto=format&fit=crop&q=80&w=200', specs: { 'VRAM': '12GB GDDR6X', 'Boost Clock': '2640 MHz', 'Length': '336mm' }, stockStatus: 'In Stock', wattage: 285 },
-    ],
-    case: [
-        { id: 'case1', name: 'Lian Li O11 Dynamic EVO', price: 14999, image: 'https://images.unsplash.com/photo-1587202372616-b4345bb655a6?auto=format&fit=crop&q=80&w=200', specs: { 'Type': 'ATX Mid Tower', 'Side Panel': 'Tempered Glass', 'Color': 'Black' }, stockStatus: 'In Stock', wattage: 0 },
-        { id: 'case2', name: 'Corsair 4000D Airflow', price: 7499, image: 'https://images.unsplash.com/photo-1587202372616-b4345bb655a6?auto=format&fit=crop&q=80&w=200', specs: { 'Type': 'ATX Mid Tower', 'Side Panel': 'Tempered Glass', 'Color': 'White' }, stockStatus: 'In Stock', wattage: 0 },
-    ],
-    psu: [
-        { id: 'psu1', name: 'Corsair RM1000x', price: 15499, image: 'https://images.unsplash.com/photo-1587202372634-32705e3bf42c?auto=format&fit=crop&q=80&w=200', specs: { 'Wattage': '1000W', 'Rating': '80+ Gold', 'Modular': 'Full' }, stockStatus: 'In Stock', wattage: 0 },
-        { id: 'psu2', name: 'MSI MPG A850G', price: 11999, image: 'https://images.unsplash.com/photo-1587202372634-32705e3bf42c?auto=format&fit=crop&q=80&w=200', specs: { 'Wattage': '850W', 'Rating': '80+ Gold', 'Modular': 'Full' }, stockStatus: 'In Stock', wattage: 0 },
-    ],
-    os: [
-        { id: 'os1', name: 'Windows 11 Home', price: 11999, image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=200', specs: { 'Type': '64-bit', 'Media': 'USB Flash Drive' }, stockStatus: 'In Stock', wattage: 0 },
-    ],
-    monitor: [
-        { id: 'mon1', name: 'LG 27GP850-B', price: 32999, image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&q=80&w=200', specs: { 'Size': '27"', 'Resolution': '2560x1440', 'Refresh': '165Hz' }, stockStatus: 'In Stock', wattage: 35 },
-    ]
-};
+// --- CONFIGURATION ---
+const COMPONENT_ROWS = [
+    { id: 'cat_cpu', label: 'CPU', icon: '💻' },
+    { id: 'cat_cpu_cooler', label: 'CPU Cooler', icon: '❄️' },
+    { id: 'cat_motherboard', label: 'Motherboard', icon: '🔌' },
+    { id: 'cat_ram', label: 'Memory', icon: '🧠' },
+    { id: 'cat_storage_ssd', label: 'Storage', icon: '💾' },
+    { id: 'cat_graphic_card', label: 'Video Card', icon: '🎮' },
+    { id: 'cat_cabinet', label: 'Case', icon: '📦' },
+    { id: 'cat_power_supply', label: 'Power Supply', icon: '⚡' },
+    { id: 'cat_operating_system', label: 'Operating System', icon: '💿' },
+    { id: 'cat_monitor', label: 'Monitor', icon: '🖥️' },
+    { id: 'cat_accessories', label: 'Accessories', icon: '🎧' },
+];
 
 const ConfiguratorPage = () => {
+    const { addToCart } = useCart();
+    const navigate = useNavigate();
+
     // --- STATE ---
     const [selectedParts, setSelectedParts] = useState({
-        cpu: null,
-        cooler: null,
-        motherboard: null,
-        ram: null,
-        storage: null,
-        gpu: null,
-        case: null,
-        psu: null,
-        os: null,
-        monitor: null,
-        expansion: null,
-        peripherals: null,
-        accessories: null,
+        cat_cpu: null,
+        cat_cpu_cooler: null,
+        cat_motherboard: null,
+        cat_ram: null,
+        cat_storage_ssd: null,
+        cat_graphic_card: null,
+        cat_cabinet: null,
+        cat_power_supply: null,
+        cat_operating_system: null,
+        cat_monitor: null,
+        cat_accessories: null,
     });
 
     const [modalOpen, setModalOpen] = useState(false);
     const [currentCategoryID, setCurrentCategoryID] = useState(null);
     const [currentCategoryName, setCurrentCategoryName] = useState('');
+    const [categoryProducts, setCategoryProducts] = useState([]);
+    const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
-    // --- CONFIGURATION ---
-    const componentRows = [
-        { id: 'cpu', label: 'CPU', icon: '💻' },
-        { id: 'cooler', label: 'CPU Cooler', icon: '❄️' },
-        { id: 'motherboard', label: 'Motherboard', icon: '🔌' },
-        { id: 'ram', label: 'Memory', icon: '🧠' },
-        { id: 'storage', label: 'Storage', icon: '💾' },
-        { id: 'gpu', label: 'Video Card', icon: '🎮' },
-        { id: 'case', label: 'Case', icon: '📦' },
-        { id: 'psu', label: 'Power Supply', icon: '⚡' },
-        { id: 'os', label: 'Operating System', icon: '💿' },
-        { id: 'monitor', label: 'Monitor', icon: '🖥️' },
-        { id: 'expansion', label: 'Expansion Cards', icon: '📶' },
-        { id: 'peripherals', label: 'Peripherals', icon: '⌨️' },
-        { id: 'accessories', label: 'Accessories', icon: '🎧' },
-    ];
+    // --- FETCHING ---
+    const fetchProductsForCategory = async (categoryId) => {
+        setIsLoadingProducts(true);
+        try {
+            const response = await fetch(`http://localhost:4080/api/products/category/${categoryId}`);
+            const data = await response.json();
+            setCategoryProducts(data);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        } finally {
+            setIsLoadingProducts(false);
+        }
+    };
 
     // --- HANDLERS ---
     const openSelectionModal = (id, name) => {
         setCurrentCategoryID(id);
         setCurrentCategoryName(name);
+        fetchProductsForCategory(id);
         setModalOpen(true);
     };
 
@@ -102,13 +78,72 @@ const ConfiguratorPage = () => {
         setSelectedParts(prev => ({ ...prev, [id]: null }));
     };
 
+    const handleBuyAll = () => {
+        const partsToBuy = Object.values(selectedParts).filter(p => p !== null);
+        partsToBuy.forEach(part => {
+            addToCart({
+                ...part,
+                id: part.id || part._id // Ensure consistent ID for cart
+            });
+        });
+        alert(`${partsToBuy.length} items added to cart!`);
+    };
+
+    const handleSaveBuild = async () => {
+        const userStr = localStorage.getItem('user');
+        if (!userStr) {
+            alert('Please login to save your build');
+            return;
+        }
+        const user = JSON.parse(userStr);
+        const buildItems = Object.entries(selectedParts)
+            .filter(([_, part]) => part !== null)
+            .map(([catId, part]) => ({
+                product_id: part._id,
+                category_id: catId,
+                variant_id: part.variant_id
+            }));
+
+        if (buildItems.length === 0) {
+            alert('Please select at least one component to save');
+            return;
+        }
+
+        setIsSaving(true);
+        try {
+            const response = await fetch('http://localhost:4080/api/pc-builds', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: user.id || user._id,
+                    name: `My Custom Build - ${new Date().toLocaleDateString()}`,
+                    total_price: totalPrice,
+                    items: buildItems
+                })
+            });
+            if (response.ok) {
+                alert('Build saved successfully!');
+            } else {
+                alert('Failed to save build');
+            }
+        } catch (error) {
+            console.error('Save build error:', error);
+            alert('An error occurred while saving');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     // --- CALCULATIONS ---
     const calculateTotal = () => {
         return Object.values(selectedParts).reduce((acc, part) => acc + (part?.price || 0), 0);
     };
 
     const calculateWattage = () => {
-        return Object.values(selectedParts).reduce((acc, part) => acc + (part?.wattage || 0), 0);
+        return Object.values(selectedParts).reduce((acc, part) => {
+            const wattage = part?.specs?.Wattage || 0;
+            return acc + (typeof wattage === 'number' ? wattage : parseInt(wattage) || 0);
+        }, 0);
     };
 
     const totalWattage = calculateWattage();
@@ -117,17 +152,47 @@ const ConfiguratorPage = () => {
     // Basic Compatibility Logic
     const getCompatibilityStatus = () => {
         const issues = [];
-        if (selectedParts.cpu && selectedParts.motherboard) {
-            // Mock check: e.g. if CPU is AMD and Mobo is Intel (based on name for now)
-            const cpuName = selectedParts.cpu.name.toLowerCase();
-            const moboSpecs = selectedParts.motherboard.specs.Socket;
+        if (selectedParts.cat_cpu && selectedParts.cat_motherboard) {
+            const cpu = selectedParts.cat_cpu;
+            const mobo = selectedParts.cat_motherboard;
+            const cpuSocket = cpu.specs?.Socket;
+            const moboSocket = mobo.specs?.Socket;
 
-            if (cpuName.includes('intel') && moboSpecs !== 'LGA1700') issues.push("Incompatible CPU Socket");
-            if (cpuName.includes('ryzen') && moboSpecs !== 'AM5') issues.push("Incompatible CPU Socket");
+            // Socket Check (Mandatory)
+            if (cpuSocket && moboSocket && cpuSocket !== moboSocket) {
+                issues.push(`Socket Mismatch: ${cpuSocket} vs ${moboSocket}`);
+            }
+
+            // Brand & Chipset Logic (Mandatory)
+            const cpuName = (cpu.name || '').toLowerCase();
+            const cpuBrandAttr = (cpu.brand_id?.name || '').toLowerCase();
+            const isIntel = cpuBrandAttr.includes('intel') || cpuName.includes('intel');
+            const isAMD = cpuBrandAttr.includes('amd') || cpuName.includes('amd') || cpuName.includes('ryzen');
+
+            const moboName = (mobo.name || '').toUpperCase();
+            const moboChipsetAttr = (mobo.specs?.Chipset || '').toUpperCase();
+
+            // Check if it's H-series or B-series from specs or name
+            const isHSeries = moboChipsetAttr.startsWith('H') || /\bH\d{3}\b/.test(moboName);
+            const isBSeries = moboChipsetAttr.startsWith('B') || /\bB\d{3}\b/.test(moboName);
+
+            if (isIntel) {
+                if (!isHSeries) {
+                    issues.push("Incompatible Selection: Intel CPU requires an H-series motherboard");
+                }
+            } else if (isAMD) {
+                if (!isBSeries) {
+                    issues.push("Incompatible Selection: AMD CPU requires a B-series motherboard");
+                }
+            }
         }
 
-        if (selectedParts.psu && totalWattage > parseInt(selectedParts.psu.specs.Wattage?.replace('W', '') || 0)) {
-            issues.push("PSU Wattage Insufficient");
+        // PSU Check
+        if (selectedParts.cat_power_supply) {
+            const psuWattage = parseInt(selectedParts.cat_power_supply.specs?.Wattage) || 0;
+            if (totalWattage > psuWattage && psuWattage > 0) {
+                issues.push("Power Warning: Estimated system wattage exceeds selected PSU capacity");
+            }
         }
 
         return issues.length > 0 ? { status: "Issues Found", color: "bg-red-500", issues } : { status: "Compatible", color: "bg-green-500", issues: [] };
@@ -182,7 +247,7 @@ const ConfiguratorPage = () => {
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                             <table className="w-full text-left border-collapse">
                                 <tbody className="divide-y divide-gray-100">
-                                    {componentRows.map(row => (
+                                    {COMPONENT_ROWS.map(row => (
                                         <BuilderRow
                                             key={row.id}
                                             label={row.label}
@@ -228,11 +293,19 @@ const ConfiguratorPage = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <button className="w-full bg-orange-600 text-white py-3.5 rounded-lg font-bold shadow-lg shadow-orange-600/20 hover:bg-orange-700 transform hover:scale-[1.02] transition-all">
+                                <button
+                                    onClick={handleBuyAll}
+                                    className="w-full bg-orange-600 text-white py-3.5 rounded-lg font-bold shadow-lg shadow-orange-600/20 hover:bg-orange-700 transform hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    disabled={totalPrice === 0}
+                                >
                                     Buy All
                                 </button>
-                                <button className="w-full bg-white border-2 border-orange-100 text-orange-600 py-3.5 rounded-lg font-bold hover:bg-orange-50 transition-colors">
-                                    Save List
+                                <button
+                                    onClick={handleSaveBuild}
+                                    disabled={isSaving || totalPrice === 0}
+                                    className="w-full bg-white border-2 border-orange-100 text-orange-600 py-3.5 rounded-lg font-bold hover:bg-orange-50 transition-colors disabled:opacity-50"
+                                >
+                                    {isSaving ? 'Saving...' : 'Save List'}
                                 </button>
                             </div>
 
@@ -256,8 +329,9 @@ const ConfiguratorPage = () => {
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}
                 componentType={currentCategoryName}
-                products={MOCK_PRODUCTS[currentCategoryID] || []}
+                products={categoryProducts}
                 onSelect={handleSelectProduct}
+                isLoading={isLoadingProducts}
             />
         </div>
     );

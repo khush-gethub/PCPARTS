@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UniversalCard from './UniversalCard.jsx';
 
-const PartSelectionModal = ({ isOpen, onClose, componentType, onSelect, products = [] }) => {
+const PartSelectionModal = ({ isOpen, onClose, componentType, onSelect, products = [], isLoading = false }) => {
     if (!isOpen) return null;
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -9,10 +9,10 @@ const PartSelectionModal = ({ isOpen, onClose, componentType, onSelect, products
 
     // Filter products
     const filteredProducts = products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        (product.name || '').toLowerCase().includes(searchTerm.toLowerCase())
     ).sort((a, b) => {
-        if (sortBy === 'price_low') return a.price - b.price;
-        if (sortBy === 'price_high') return b.price - a.price;
+        if (sortBy === 'price_low') return (a.price || 0) - (b.price || 0);
+        if (sortBy === 'price_high') return (b.price || 0) - (a.price || 0);
         return 0;
     });
 
@@ -61,25 +61,31 @@ const PartSelectionModal = ({ isOpen, onClose, componentType, onSelect, products
 
                 {/* Product List Grid */}
                 <div className="flex-1 overflow-y-auto p-6 bg-gray-50/50">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {filteredProducts.map(product => (
-                            <UniversalCard
-                                key={product.id}
-                                image={product.image}
-                                title={product.name}
-                                specs={Object.entries(product.specs).map(([key, value]) => `${key}: ${value}`)}
-                                price={`₹${product.price ? product.price.toLocaleString() : '0'}`}
-                                stockStatus={product.stockStatus}
-                                primaryAction={{
-                                    label: "Select",
-                                    onClick: () => { onSelect(product); onClose(); }
-                                }}
-                            />
-                        ))}
-                    </div>
-                    {filteredProducts.length === 0 && (
+                    {isLoading ? (
+                        <div className="flex flex-col items-center justify-center h-full gap-4">
+                            <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-600 rounded-full animate-spin"></div>
+                            <p className="text-gray-500 font-bold animate-pulse">Loading {componentType}s...</p>
+                        </div>
+                    ) : filteredProducts.length === 0 ? (
                         <div className="text-center py-20 text-gray-400">
-                            <p className="text-lg">No products found.</p>
+                            <p className="text-lg">No products found for {componentType}.</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {filteredProducts.map(product => (
+                                <UniversalCard
+                                    key={product.id || product._id}
+                                    image={product.image}
+                                    title={product.name}
+                                    specs={Object.entries(product.specs || {}).map(([key, value]) => `${key}: ${value}`)}
+                                    price={`₹${product.price ? product.price.toLocaleString() : '0'}`}
+                                    stockStatus={product.stock_status === 'out_of_stock' ? 'Out of Stock' : (product.stock_status === 'low_stock' ? 'Low Stock' : 'In Stock')}
+                                    primaryAction={{
+                                        label: "Select",
+                                        onClick: () => { onSelect(product); onClose(); }
+                                    }}
+                                />
+                            ))}
                         </div>
                     )}
                 </div>

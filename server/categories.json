@@ -1,0 +1,68 @@
+[
+  {
+    "_id": "cat_cpu",
+    "name": "CPU",
+    "__v": 0,
+    "category_id": "cat_cpu"
+  },
+  {
+    "_id": "cat_motherboard",
+    "name": "Motherboard",
+    "__v": 0,
+    "category_id": "cat_motherboard"
+  },
+  {
+    "_id": "cat_ram",
+    "name": "RAM",
+    "__v": 0,
+    "category_id": "cat_ram"
+  },
+  {
+    "_id": "cat_cabinet",
+    "name": "Cabinet",
+    "__v": 0,
+    "category_id": "cat_cabinet"
+  },
+  {
+    "_id": "cat_power_supply",
+    "name": "Power Supply",
+    "__v": 0,
+    "category_id": "cat_power_supply"
+  },
+  {
+    "_id": "cat_graphic_card",
+    "name": "Graphic Card",
+    "__v": 0,
+    "category_id": "cat_graphic_card"
+  },
+  {
+    "_id": "cat_monitor",
+    "name": "Monitor",
+    "__v": 0,
+    "category_id": "cat_monitor"
+  },
+  {
+    "_id": "cat_storage_ssd",
+    "name": "Storage SSD",
+    "__v": 0,
+    "category_id": "cat_storage_ssd"
+  },
+  {
+    "_id": "cat_cpu_cooler",
+    "name": "CPU Cooler",
+    "__v": 0,
+    "category_id": "cat_cpu_cooler"
+  },
+  {
+    "_id": "cat_operating_system",
+    "name": "Operating System",
+    "__v": 0,
+    "category_id": "cat_operating_system"
+  },
+  {
+    "_id": "cat_accessories",
+    "name": "Accessories",
+    "__v": 0,
+    "category_id": "cat_accessories"
+  }
+]
