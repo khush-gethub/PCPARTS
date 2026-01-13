@@ -224,6 +224,26 @@ const pdfDownloadSchema = new Schema({
 }, schemaOptions);
 pdfDownloadSchema.virtual('pdf_id').get(function () { return this._id; });
 
+// 20. PCBuilds
+const pcBuildSchema = new Schema({
+    _id: { type: String, required: true },
+    user_id: { type: String, ref: 'User' },
+    name: { type: String, default: 'Untitled Build' },
+    total_price: { type: Number, default: 0 },
+    created_at: { type: Date, default: Date.now }
+}, schemaOptions);
+pcBuildSchema.virtual('build_id').get(function () { return this._id; });
+
+// 21. PCBuildItems
+const pcBuildItemSchema = new Schema({
+    _id: { type: String, required: true },
+    build_id: { type: String, ref: 'PCBuild' },
+    product_id: { type: String, ref: 'Product' },
+    category_id: { type: String, ref: 'Category' }, // To keep track of which slot it fills
+    variant_id: { type: String, ref: 'ProductVariant' }
+}, schemaOptions);
+pcBuildItemSchema.virtual('build_item_id').get(function () { return this._id; });
+
 // Exports
 module.exports = {
     User: mongoose.model('User', userSchema),
@@ -245,5 +265,7 @@ module.exports = {
     CartItem: mongoose.model('CartItem', cartItemSchema),
     Order: mongoose.model('Order', orderSchema),
     OrderItem: mongoose.model('OrderItem', orderItemSchema),
-    PDFDownload: mongoose.model('PDFDownload', pdfDownloadSchema)
+    PDFDownload: mongoose.model('PDFDownload', pdfDownloadSchema),
+    PCBuild: mongoose.model('PCBuild', pcBuildSchema),
+    PCBuildItem: mongoose.model('PCBuildItem', pcBuildItemSchema)
 };
