@@ -83,7 +83,9 @@ const ReadyMadePCDetailsPage = () => {
         category: "System Components",
         items: pcData.items ? pcData.items.map(item => ({
             label: item.product_id?.name || "Component",
-            value: item.variant_id?.name || "Standard"
+            value: item.variant_id?.price
+                ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(item.variant_id.price)
+                : "Included"
         })) : []
     };
 
