@@ -28,19 +28,36 @@ const ReadyMadePCsPage = () => {
                 const data = await api.getReadyMadePCs();
 
                 // Format for PCCard if needed
-                const formattedPCs = data.map(pc => ({
-                    id: pc.pc_id,
-                    name: pc.name,
-                    image: pc.image,
-                    cpu: pc.category === "High-End" ? "Core i9 / Ryzen 9" : "Core i5 / Ryzen 5",
-                    gpu: pc.category === "High-End" ? "RTX 4090 / 4080" : "RTX 4060",
-                    ram: pc.category === "High-End" ? "64GB DDR5" : "16GB DDR5",
-                    price: pc.price, // Numeric price for filtering/sorting
-                    formattedPrice: new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(pc.price),
-                    useCase: pc.category,
-                    rating: (Math.random() * 0.5 + 4.5).toFixed(1),
-                    inStock: Math.random() > 0.1 // Mock stock since API might not provide it yet
-                }));
+                const formattedPCs = data.map(pc => {
+                    // Map Admin Category to Frontend Use Case
+                    let mappedUseCase = "Gaming";
+                    if (pc.category === "Entry-Level") mappedUseCase = "Budget";
+                    else if (pc.category === "Workstation") mappedUseCase = "Workstation";
+                    else if (pc.category === "High-End") mappedUseCase = "Content Creation";
+
+                    // Specs Heuristic (Make sure to include brands for filtering compatibility)
+                    const cpuSpec = pc.category === "High-End" || pc.category === "Workstation"
+                        ? "Intel Core i9 / AMD Ryzen 9"
+                        : "Intel Core i5 / AMD Ryzen 5";
+
+                    const gpuSpec = pc.category === "High-End" || pc.category === "Workstation"
+                        ? "NVIDIA RTX 4090 / 4080"
+                        : "NVIDIA RTX 4060 / AMD RX 7600";
+
+                    return {
+                        id: pc.pc_id || pc._id,
+                        name: pc.name,
+                        image: pc.image || "https://placehold.co/600x400?text=System",
+                        cpu: cpuSpec,
+                        gpu: gpuSpec,
+                        ram: (pc.category === "High-End" || pc.category === "Workstation") ? "64GB DDR5" : "16GB DDR5",
+                        price: Number(pc.price) || 0,
+                        formattedPrice: new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(pc.price || 0),
+                        useCase: mappedUseCase,
+                        rating: (Math.random() * 0.5 + 4.5).toFixed(1),
+                        inStock: true
+                    };
+                });
 
                 setPcs(formattedPCs);
             } catch (err) {
@@ -136,6 +153,17 @@ const ReadyMadePCsPage = () => {
                     {/* Left Filters - Sticky */}
                     <div className="w-full lg:w-72 flex-shrink-0">
                         <PCFilters filters={filters} onFilterChange={handleFilterChange} />
+
+                        {/* DEBUG DATA */}
+                        <div className="mt-4 p-4 bg-red-100 border border-red-300 text-xs text-red-800 rounded">
+                            <p><strong>Debug Info:</strong></p>
+                            <p>Loading: {loading ? 'Yes' : 'No'}</p>
+                            <p>Total PCs Fetched: {pcs.length}</p>
+                            <p>Filtered PCs: {filteredPCs.length}</p>
+                            <p>First PC Name: {pcs[0]?.name || 'N/A'}</p>
+                            <p>First PC Price: {pcs[0]?.price || 'N/A'}</p>
+                            <p>Mapped UseCase: {pcs[0]?.useCase || 'N/A'}</p>
+                        </div>
                     </div>
 
                     {/* Right Product Grid */}

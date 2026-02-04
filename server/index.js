@@ -424,6 +424,113 @@ app.get('/readymade-pcs/:id', async (req, res) => {
     }
 });
 
+app.post('/readymade-pcs', async (req, res) => {
+    try {
+        const { name, price, category, image, Image2, Image3, items } = req.body;
+        const pcId = `pc_${uuidv4()}`;
+        const newPC = new ReadyMadePC({
+            _id: pcId,
+            name,
+            price,
+            category,
+            image,
+            Image2,
+            Image3
+        });
+        await newPC.save();
+
+        if (items && Array.isArray(items)) {
+            const pcItems = items.map(item => ({
+                _id: `pcitem_${uuidv4()}`,
+                pc_id: pcId,
+                product_id: item.product_id,
+                variant_id: item.variant_id
+            }));
+            await ReadyMadePCItem.insertMany(pcItems);
+        }
+
+        // Fetch back with items
+        const populatedPC = await ReadyMadePC.findById(pcId);
+        const savedItems = await ReadyMadePCItem.find({ pc_id: pcId });
+
+        res.status(201).json({ ...populatedPC.toObject(), items: savedItems });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+app.put('/readymade-pcs/:id', async (req, res) => {
+    try {
+        const { items, ...pcData } = req.body;
+        const updated = await ReadyMadePC.findByIdAndUpdate(req.params.id, pcData, { new: true });
+        if (!updated) return res.status(404).json({ error: 'PC not found' });
+
+        if (items && Array.isArray(items)) {
+            // Replace all items
+            await ReadyMadePCItem.deleteMany({ pc_id: req.params.id });
+            const pcItems = items.map(item => ({
+                _id: `pcitem_${uuidv4()}`,
+                pc_id: req.params.id,
+                product_id: item.product_id,
+                variant_id: item.variant_id
+            }));
+            await ReadyMadePCItem.insertMany(pcItems);
+        }
+
+        res.json(updated);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+app.delete('/readymade-pcs/:id', async (req, res) => {
+    try {
+        const deleted = await ReadyMadePC.findByIdAndDelete(req.params.id);
+        if (!deleted) return res.status(404).json({ error: 'PC not found' });
+
+        // Optionally delete associated items
+        await ReadyMadePCItem.deleteMany({ pc_id: req.params.id });
+
+        res.json({ message: 'PC deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Add Item to ReadyMadePC
+app.post('/readymade-pcs/:id/items', async (req, res) => {
+    try {
+        const { product_id, variant_id } = req.body;
+        const newItem = new ReadyMadePCItem({
+            _id: `pcitem_${uuidv4()}`,
+            pc_id: req.params.id,
+            product_id,
+            variant_id
+        });
+        await newItem.save();
+
+        // Return populated item
+        const populatedItem = await ReadyMadePCItem.findById(newItem._id)
+            .populate('product_id', 'name')
+            .populate('variant_id', 'price');
+
+        res.status(201).json(populatedItem);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+// Remove Item from ReadyMadePC
+app.delete('/readymade-pcs/items/:item_id', async (req, res) => {
+    try {
+        const deleted = await ReadyMadePCItem.findByIdAndDelete(req.params.item_id);
+        if (!deleted) return res.status(404).json({ error: 'Item not found' });
+        res.json({ message: 'Item removed successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // 12. Coupons
 createGetAllRoute('/coupons', Coupon);
 

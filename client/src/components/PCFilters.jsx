@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PCFilters = ({ filters, onFilterChange }) => {
+const PCFilters = ({ filters, onFilterChange, maxPrice = 1500000 }) => {
     const handleCheckboxChange = (category, value) => {
         const currentValues = filters[category] || [];
         const newValues = currentValues.includes(value)
@@ -50,14 +50,14 @@ const PCFilters = ({ filters, onFilterChange }) => {
                         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Price Range</h3>
                         <div className="flex justify-between text-xs text-gray-500 mb-2 font-medium">
                             <span>₹30k</span>
-                            <span>₹{(filters.priceRange || 500000).toLocaleString()}</span>
+                            <span>₹{(filters.priceRange || maxPrice).toLocaleString()}</span>
                         </div>
                         <input
                             type="range"
                             min="30000"
-                            max="500000"
+                            max={maxPrice}
                             step="5000"
-                            value={filters.priceRange || 500000}
+                            value={filters.priceRange || maxPrice}
                             onChange={(e) => handleValueChange('priceRange', parseInt(e.target.value))}
                             className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
                         />

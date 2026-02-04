@@ -41,6 +41,24 @@ export const api = {
     // ReadyMade PCs
     getReadyMadePCs: () => fetchJson('/readymade-pcs'),
     getReadyMadePCById: (id) => fetchJson(`/readymade-pcs/${id}`),
+    createReadyMadePC: (data) => fetchJson('/readymade-pcs', {
+        method: 'POST',
+        body: JSON.stringify(data)
+    }),
+    updateReadyMadePC: (id, data) => fetchJson(`/readymade-pcs/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data)
+    }),
+    deleteReadyMadePC: (id) => fetchJson(`/readymade-pcs/${id}`, {
+        method: 'DELETE'
+    }),
+    addReadyMadePCItem: (pcId, data) => fetchJson(`/readymade-pcs/${pcId}/items`, {
+        method: 'POST',
+        body: JSON.stringify(data)
+    }),
+    removeReadyMadePCItem: (itemId) => fetchJson(`/readymade-pcs/items/${itemId}`, {
+        method: 'DELETE'
+    }),
 
     // Users & Cart
     getUsers: () => fetchJson('/users'),
