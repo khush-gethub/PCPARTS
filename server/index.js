@@ -223,28 +223,191 @@ createGetAllRoute('/categories', Category);
 // 4. Brands
 createGetAllRoute('/brands', Brand);
 
-// 5. Products
+// 5. Products (Enhanced CRUD)
+
+// GET All Products (Admin/List View)
 app.get('/products', async (req, res) => {
     try {
-        const products = await Product.find()
+        const { category, brand } = req.query;
+        let query = {};
+        if (category) query.category_id = category;
+        if (brand) query.brand_id = brand;
+
+        const products = await Product.find(query)
             .populate('category_id', 'name')
-            .populate('brand_id', 'name');
-        // Fetch primary images for all products in parallel
-        // Use suffix-based matching as IDs use different prefixes (prod_0_ vs prod_1_ etc)
-        const productsWithImages = await Promise.all(products.map(async (p) => {
+            .populate('brand_id', 'name')
+            .sort({ _id: -1 }); // Newest first
+
+        // Fetch primary variant/stock/image for list view
+        const productsWithDetails = await Promise.all(products.map(async (p) => {
             const productSuffix = p._id.split('_').pop();
 
-            const image = await ProductImage.findOne({
-                product_id: { $regex: productSuffix + '$' }
-            }).sort('position');
+            const [image, variant] = await Promise.all([
+                ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position'),
+                ProductVariant.findOne({ product_id: p._id }).sort({ price: 1 }) // Get cheapest variant or primary
+            ]);
+
+            let stock = null;
+            if (variant) {
+                stock = await Stock.findOne({ variant_id: variant._id });
+            }
 
             return {
                 ...p.toObject(),
-                image_url: image ? image.image_url : null
+                image_url: image ? image.image_url : null,
+                price: variant ? variant.price : 0,
+                stock: stock ? stock.quantity : 0,
+                status: stock && stock.quantity > 0 ? (stock.quantity < 5 ? 'Low Stock' : 'In Stock') : 'Out of Stock',
+                variant_id: variant ? variant._id : null
             };
         }));
 
-        res.json(productsWithImages);
+        res.json(productsWithDetails);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// POST Create Product (Transactional-ish)
+app.post('/products', async (req, res) => {
+    try {
+        const { name, description, category_id, brand_id, price, stock, image_url, specs } = req.body;
+
+        // 1. Create Product
+        const productId = `prod_${uuidv4()}`;
+        const newProduct = new Product({
+            _id: productId,
+            name,
+            description,
+            category_id,
+            brand_id,
+            specs
+        });
+        await newProduct.save();
+
+        // 2. Create Default Variant
+        const variantId = `var_${uuidv4()}`;
+        const newVariant = new ProductVariant({
+            _id: variantId,
+            product_id: productId,
+            name: 'Standard',
+            sku: `SKU-${Date.now()}`,
+            price: Number(price),
+            stock_status: Number(stock) > 0 ? 'in_stock' : 'out_of_stock'
+        });
+        await newVariant.save();
+
+        // 3. Create Stock
+        const newStock = new Stock({
+            _id: `stk_${uuidv4()}`,
+            variant_id: variantId,
+            quantity: Number(stock)
+        });
+        await newStock.save();
+
+        // 4. Create Image
+        if (image_url) {
+            const newImage = new ProductImage({
+                _id: `img_${uuidv4()}`,
+                product_id: productId, // Using product_id directly as per schema, but schema implies loose regex matching sometimes? 
+                // Actually schema says product_id ref Product. Regex was for existing data flexibility.
+                // Let's stick to exact match for new data.
+                image_url: image_url,
+                position: 1
+            });
+            await newImage.save();
+        }
+
+        res.status(201).json({ message: 'Product created successfully', product_id: productId });
+    } catch (err) {
+        console.error("Create Product Error:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// PUT Update Product
+app.put('/products/:id', async (req, res) => {
+    try {
+        const { name, description, category_id, brand_id, price, stock, image_url, specs } = req.body;
+
+        // 1. Update Product
+        await Product.findByIdAndUpdate(req.params.id, {
+            name, description, category_id, brand_id, specs
+        });
+
+        // 2. Update Primary Variant (Assuming single variant for simple admin)
+        // Find existing variant or create? For now assume existing.
+        const variant = await ProductVariant.findOne({ product_id: req.params.id });
+        if (variant) {
+            variant.price = Number(price);
+            variant.stock_status = Number(stock) > 0 ? 'in_stock' : 'out_of_stock';
+            await variant.save();
+
+            // 3. Update Stock
+            const stockRecord = await Stock.findOne({ variant_id: variant._id });
+            if (stockRecord) {
+                stockRecord.quantity = Number(stock);
+                await stockRecord.save();
+            } else {
+                // Create if missing
+                const newStock = new Stock({
+                    _id: `stk_${uuidv4()}`,
+                    variant_id: variant._id,
+                    quantity: Number(stock)
+                });
+                await newStock.save();
+            }
+        }
+
+        // 4. Update Image (Simplistic: Update first image or insert)
+        const productSuffix = req.params.id.split('_').pop();
+        const image = await ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position');
+
+        if (image) {
+            if (image_url) {
+                image.image_url = image_url;
+                await image.save();
+            }
+        } else if (image_url) {
+            const newImage = new ProductImage({
+                _id: `img_${uuidv4()}`,
+                product_id: req.params.id,
+                image_url: image_url,
+                position: 1
+            });
+            await newImage.save();
+        }
+
+        res.json({ message: 'Product updated successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// DELETE Product
+app.delete('/products/:id', async (req, res) => {
+    try {
+        const productId = req.params.id;
+
+        // Delete Product
+        await Product.findByIdAndDelete(productId);
+
+        // Find Variants to delete stock
+        const variants = await ProductVariant.find({ product_id: productId });
+        for (const variant of variants) {
+            await Stock.deleteMany({ variant_id: variant._id });
+        }
+        await ProductVariant.deleteMany({ product_id: productId });
+
+        // Delete Images
+        // Handle regex matching for images if legacy data exists
+        const productSuffix = productId.split('_').pop();
+        await ProductImage.deleteMany({ product_id: { $regex: productSuffix + '$' } });
+
+        // Delete Benchmarks? 
+        await Benchmark.deleteMany({ product_id: productId });
+
+        res.json({ message: 'Product deleted successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

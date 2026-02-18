@@ -1,0 +1,419 @@
+
+
+SMT.Z.S. PATEL COLLEGE OF COMPUTER APPLICATIO
+Affiliated to
+VEER NARMAD SOUTH GUJARAT UNIVERSITY, SURAT
+
+Project Report on
+Horaistion
+As a partial Requirement for Degree Of 
+BACHELOR OF COMPUTER APPLICATION (BCA) 2025-2026
+
+Guided By:
+SUBMITTED BY:
+Punam Patel
+Shrivastav Vansh Ajay
+
+
+ACKNOWLEDGEMENT
+The reason of completing the project work successfully is not just our efforts but efforts of many people. The people, who trusted, guided and encouraged us with every means. Guide is a person who provides you the direction towards success, so we feel great pleasure to express our gratitude to all our guides, our faculty members as well as every person who helped me directly or indirectly with our project. 
+
+We would like to thank Prof Priyanka Parmar (In-charge Principal at SMT.Z.S.PATEL College)for granting us an opportunity to work on this project. Their skills and experience was a guiding path in this learning process. She made constant efforts to shape up our skills as per the industry Standards. She provided us a very homely and friendly environment which made it the best place to work. Their guidance was really priceless and will always be a guiding light in Industry. 
+
+We are also indebted to our Faculty Miss Punam Patel who provided constant encouragement, support & valuable guidance before and during our project. It was her effort who led us to this place for project work. Her guidance and suggestions were invaluable. 
+
+Thank you very much
+Sr. No
+Title
+Page no
+!.
+Introduction
+
+
+1.1.Project Profile
+
+
+1.2.Overview of Project
+
+
+
+
+2.
+Proposed System
+
+
+2.1 Aim and Objectives
+
+
+2.2 Hardware and Software Platforms
+
+
+2.3 Scope
+
+
+
+
+3.
+System Design
+
+
+3.1 Data Flow diagram
+
+
+3.2 UML Diagram
+
+
+3.3 Data Dictionary
+
+
+3.4 Interface Design (Screenshots)
+
+
+
+
+4.
+TESTING
+
+
+4.1. Test Cases
+
+
+
+
+5.
+FUTURE ENHANCEMENTS
+
+
+
+
+6.
+BIBLIOGRAPHY
+
+
+
+Introduction
+Project Profile:
+
+Horaistion is a modern, full-stack web application designed as a comprehensive portal for discovering and exploring a vast library of movies, TV series, and anime. The project, named "Horaistion," leverages a robust client-server architecture to deliver a seamless and interactive user experience. The frontend is a dynamic single-page application (SPA) built with React, designed to be both responsive and intuitive for the end-user. 
+
+The backend is a powerful RESTful API service built on Node.js and Express, responsible for handling all business logic, data processing, and database interactions. This separation of concerns between the client and server allows for greater scalability, easier maintenance, and the potential for the API to be consumed by other clients in the future, such as a mobile application. The project name itself, a creative blend that might suggest "horizon" and "station," evokes the idea of a central hub for exploring the vast world of entertainment.
+
+At its core, Horaistion aims to be the go-to destination for users to find detailed information about their favorite media. From cast and crew to plot summaries and trailers, the application provides a rich set of data. The project also includes user authentication, allowing for personalized experiences and future features like watchlists and ratings. The overall profile is that of a sophisticated, content-rich media browser with a solid technical foundation.
+
+Overview of Project:
+
+The Horaistion application offers a rich and engaging user experience centered around the discovery of media content. Upon entering the site, users are greeted with a visually appealing homepage that likely showcases trending, popular, or recently added movies and TV shows, possibly through dynamic carousels and card-based layouts. The user interface is designed to be intuitive, allowing for easy navigation between different sections such as Movies, TV Shows, and Anime. A prominent navigation bar provides access to all major pages, as well as login and registration portals.
+
+Key features of the project include a detailed media page that provides comprehensive information for each title. This includes high-resolution posters, synopses, genre tags, episode lists, and character details with voice actor information. The application also features a trailer viewer, allowing users to watch promotional videos directly within the platform. The inclusion of user authentication (signup and login) suggests that users can create and manage their own accounts, which opens the door for personalized features.
+
+A significant component of the project is the dashboard, which could serve multiple purposes. For a standard user, it might be a place to manage their profile, view their watchlist, or track their viewing history. For an administrator, the dashboard would be a powerful tool for managing the application's content, including adding, updating, or removing media titles from the database. The overall system is designed to be a one-stop-shop for media enthusiasts, combining a rich database of content with a user-friendly interface.
+Proposed System
+The proposed system aims to achieve several key technical objectives. First and foremost is the successful implementation of a client-server architecture where the front-end and back-end are decoupled. This allows for independent development and deployment of the two components. The communication between the client and server will be handled through a well-defined RESTful API, ensuring a standardized way of exchanging data.
+
+Another objective is to create a responsive and performant user interface. By using React and a component-based architecture, the UI will be modular and easy to update. The use of a fast build tool like Vite will contribute to a smooth development workflow and an optimized user experience in production. The system will also implement client-side routing to create a seamless single-page application experience.
+
+On the back-end, the objective is to build a scalable and secure API server. This includes implementing robust error handling, data validation, and secure user authentication. The server will be responsible for all business logic and database interactions, ensuring that the client-side remains focused on presentation. The database schema will be carefully designed to efficiently store and retrieve media and user data
+
+2.1. Aim and Objectives 
+The Horaistion project is designed to provide users with a centralized, user-friendly web platform where they can easily browse, search, and discover entertainment media such as movies, TV series, and anime. Its main aim is to deliver a seamless and engaging experience through a clean, intuitive interface that promotes effortless exploration and access to well-organized information. By focusing on simplicity and smooth navigation, the platform ensures users can enjoy discovering content across multiple devices without any hassle.
+
+To achieve this, the project emphasizes several core objectives: developing an attractive and responsive frontend with React and Tailwind CSS, building a secure and efficient backend using Node.js and Express, and integrating a structured MongoDB database for managing media and user data. Additionally, it incorporates user authentication to provide secure login and registration, laying the groundwork for personalized features like watchlists, user profiles, and ratings. Together, these components create a robust system that not only serves as a media database but also enhances user engagement and interaction.
+
+
+2.2. Hardware and Software Requirements:
+
+Development Environment
+       Minimum: 
+Dual-core CPU,
+4 GB RAM, 
+40 GB Storage
+       Recommended: 
+Quad-core CPU, 
+1 GB RAM, 
+60 GB SSD Storage
+
+  Software Requirements
+   Development Environment:
+OS: Windows 10/11, macOS 10.15+, or Linux (e.g., Ubuntu 20.04+)
+Code Editor: Visual Studio Code (Recommended)
+Version Control: Git
+Runtime: Node.js (v14.x or later) & npm
+Database: MongoDB (Local or Atlas)
+Browser: Chrome, Firefox, or Edge
+
+2.3. Scope:
+The scope of the "Horaistion" project is to deliver a fully functional web application that serves as a comprehensive information hub for movies, TV shows, and anime. The application will provide users with the ability to browse through a catalog of media, view detailed information about each title, and utilize a search functionality to find specific content. The core features within the scope of this project include a dynamic homepage showcasing featured or trending media, dedicated pages for movies, TV shows, and anime with filtering and sorting options, and detailed media pages that display information such as synopses, cast and crew, release dates, genres, and trailers. The user interface will be designed to be responsive, ensuring a consistent and accessible experience across various devices, including desktops, tablets, and smartphones. The backend development will focus on creating a robust API to handle data retrieval and management, with a well-defined data schema for storing media information in a MongoDB database.
+
+While the project aims to be comprehensive, it is also important to define its limitations to maintain a clear focus. The initial version of the application will not include user authentication or user-generated content, such as reviews, ratings, or comments. The platform will be primarily for informational purposes, and as such, it will not support media streaming or downloads. The data for the application will be pre-populated and managed by an administrator, so there will be no public-facing content management system for users to add or edit media information. Furthermore, advanced features like personalized recommendations, user profiles, and social media integration are considered outside the scope of the current project but may be considered for future development. The primary focus is on building a solid foundation for a media information platform that is both reliable and scalable, with the potential for future expansion.
+
+SYSTEM DESIGN
+3.1. Data Flow Diagram:
+LEVEL 0:
+	
+
+LEVEL 1:
+DFD Level 1:
+
+
+
+
+
+DFD Level 2:
+Information Manage:
+
+
+User Manage:
+
+
+
+Anime Manage:
+
+
+3.2. UML Diagram :
+Use Case Diagram Admin Flow : 
+
+
+Use Case Diagram User Flow :
+
+
+Activity diagram:
+Admin:
+
+User:
+
+
+ER Diagram 
+
+
+Data Dictionary
+Media (MediaSchema, MovieSchema):
+Field
+Type
+Description
+Example
+id
+Number
+Unique identifier for the media.
+1
+type
+String
+Type of media (TV Series, Movie, OVA, etc.).
+TV Series
+name
+String
+Anime title.
+Attack on Titan
+image
+String
+URL of the anime’s cover image.
+https://i.pinimg.com/...jpg
+duration
+String
+Runtime per episode or movie.
+24 min
+total_episodes
+Number
+Total planned episodes.
+87
+aired_episodes
+Number
+Episodes aired so far.
+87
+genres
+Array<String>
+List of genres.
+['Action', 'Drama']
+status
+String
+Current status (Airing, Complete, Upcoming).
+Complete
+rating
+String
+User/critic rating (out of 10).
+9.1
+studios
+Array<String>
+Studios that produced the anime.
+['MAPPA', 'Wit Studio']
+producers
+Array<String>
+Production companies.
+['Production I.G']
+aired
+String
+Airing start and end date (or ongoing).
+April 7, 2013 – March 28, 2021
+synopsis
+String
+Summary of the anime’s plot.
+In a world where Titans...
+animeTrailer
+Array<Object>
+Trailer list with title and URL.
+[{'title':'Trailer 1','url':'...'}]
+characters
+Array<Object>
+List of main characters.
+[{'name':'Eren Yeager','...'}]
+
+
+Character (CharacterSchema):
+Field
+Type
+Description
+Example
+name
+String
+Character’s name.
+Eren Yeager
+character_image
+String
+Character image URL.
+https://i.pinimg.com/...jpg
+japanese_va
+String
+Japanese voice actor.
+Yuki Kaji
+english_va
+String
+English voice actor.
+Bryce Papenbrook
+va_image
+String
+Voice actor’s image.
+https://i.pinimg.com/...jpg
+
+User (userSchema):
+Field
+Type
+Description
+Example
+fullname
+String
+User’s full name.
+Vansh Shrivastav
+email
+String
+User’s email address (unique).
+vansh@gmail.com
+password
+String
+Hashed password.
+********
+
+
+
+Spotlight (spotcard.json):
+Field
+Type
+Description
+Example
+spotlight
+String
+Unique spotlight identifier.
+#Spotlight1
+title
+String
+Title of the featured anime.
+One Piece
+description
+String
+Short description/teaser.
+Gold Roger was known as...
+details
+String
+Additional metadata (format, runtime, date).
+TV • 24m • Date
+image
+String
+Spotlight image URL.
+https://i.pinimg.com/...jpg
+
+
+
+
+
+3.4. Interface Design:
+Register page:
+
+
+Login page:
+
+
+Home page:
+
+
+Movie page:
+
+
+Tv Show page:
+
+
+Top Airing:
+
+
+Contact Us page:
+
+
+Details page:
+
+
+Admin Dashboard:
+
+
+Admin Add Media:
+
+
+TESTING
+4.1. Test Cases
+To ensure the Horaistion application is functional, reliable, and user-friendly, a structured validation strategy was implemented. This process was broken down into three main layers of validation, supported by manual testing across different environments.
+1. Frontend (Client-Side) Validation
+This validation takes place in the browser to ensure that the interface behaves as expected and provides a seamless experience for the user.
+What it checks:
+Component Rendering: Confirms that all React components load properly with the correct data.
+Navigation: Ensures that links and buttons direct users to the right pages.
+Responsiveness: Validates that the layout adjusts smoothly across desktops, tablets, and mobile devices.
+Data Display: Checks that media details (titles, summaries, and images) are displayed accurately.
+Example: If a user searches for a specific movie or anime, the system displays accurate results along with correct titles and images.
+2. Backend (Server-Side) Validation
+This layer validates the reliability and accuracy of server-side operations, focusing on the APIs that power the application. Testing was carried out using tools like Postman
+What it checks:
+Endpoint Accessibility: Ensures all API endpoints are reachable and return proper status codes.
+Data Retrieval: Verifies that requests (e.g., fetching a movie by ID) return the correct details from the database.
+Error Handling: Confirms that invalid requests are handled gracefully with proper error messages.
+
+  3. Authentication & Authorization Validation
+This layer ensures that only authenticated and authorized users can access protected features of the application.
+
+What it checks:
+ User Authentication: Verifies that users must log in before accessing their dashboard or watchlist.
+ Session Management: Ensures that session tokens are valid and securely maintained.
+ User Permissions: Differentiates between standard users and admins, granting elevated privileges only where necessary.
+ Content Ownership: Prevents users from modifying or deleting watchlist items or profiles they do not own.
+
+Manual Testing
+In addition to these validation layers, the entire application was manually tested on multiple devices and browsers. Features such as browsing media, searching, and interacting with the dashboard were carefully checked to ensure smooth functionality and a reliable user experience.
+Future Enhancements
+The "Horaistion" application, in its current state, provides a solid foundation for media browsing and discovery. However, there are several opportunities to expand its functionality and deliver an even richer experience for users. This section outlines potential future enhancements that could be implemented to take the platform to the next level.
+1. Recommendation and Discovery
+To make content discovery more personalized and engaging, a recommendation engine could be introduced.
+Personalized Recommendations: 
+By analyzing a user’s viewing history and watchlist, the system could suggest movies and shows that align with their interests.
+Enhanced Discovery:
+Recommendations would not only surface popular content but also highlight hidden gems, ensuring users find something new and enjoyable.
+2. Social Features and Community
+Transforming Horaistion into a community-driven platform would increase user engagement.
+User Reviews and Ratings: 
+Allowing users to rate movies and shows, as well as write reviews, would provide valuable insights for other viewers.
+Commenting System:
+ A discussion feature would let users share opinions, fostering interaction around specific titles.
+
+Social Feed: 
+A personalized feed on the dashboard could showcase what friends are watching and discussing, turning the app into a vibrant hub for entertainment fans.
+
+3. Integration with External Services
+Connecting Horaistion with third-party services would enhance its utility and content richness.
+Streaming Service Integration: 
+The app could show users where a movie or show is currently available to stream.
+API Integration (IMDb, TMDb, etc.):
+ Leveraging external APIs would enrich the catalog with additional metadata, ratings, and high-quality images.
