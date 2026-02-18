@@ -2,12 +2,16 @@ const BASE_URL = 'http://localhost:4080';
 
 const fetchJson = async (endpoint, options = {}) => {
     try {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+            ...options.headers,
+        };
+
         const response = await fetch(`${BASE_URL}${endpoint}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers,
-            },
             ...options,
+            headers,
         });
 
         if (!response.ok) {
@@ -23,8 +27,12 @@ const fetchJson = async (endpoint, options = {}) => {
 
 export const api = {
     // Products
-    getProducts: () => fetchJson('/products'),
+    // Products
+    getProducts: (params = {}) => fetchJson('/products' + (params.category ? `?category=${params.category}` : '')),
     getProductById: (id) => fetchJson(`/products/${id}`),
+    createProduct: (data) => fetchJson('/products', { method: 'POST', body: JSON.stringify(data) }),
+    updateProduct: (id, data) => fetchJson(`/products/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+    deleteProduct: (id) => fetchJson(`/products/${id}`, { method: 'DELETE' }),
     getProductsByCategory: (categoryId) => fetchJson(`/products?category=${categoryId}`), // Simplified, backend might need adjustment if filtering logic exists
     getVariants: () => fetchJson('/variants'),
     getVariantsByProductId: (productId) => fetchJson(`/products/${productId}/variants`),

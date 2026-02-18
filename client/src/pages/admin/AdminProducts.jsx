@@ -1,62 +1,285 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AdminPageHeader from '../../components/admin/AdminPageHeader';
 import AdminTable from '../../components/admin/AdminTable';
 import AdminBadge from '../../components/admin/AdminBadge';
+import { api } from '../../api';
 
 const AdminProducts = () => {
-    // Mock Data
-    const [products] = useState([
-        { id: 'PROD-001', name: 'NVIDIA GeForce RTX 4090', category: 'GPU', brand: 'NVIDIA', price: '$1,599.00', stock: 12, status: 'In Stock' },
-        { id: 'PROD-002', name: 'Intel Core i9-13900K', category: 'CPU', brand: 'Intel', price: '$589.00', stock: 4, status: 'Low Stock' },
-        { id: 'PROD-003', name: 'Samsung 980 PRO 2TB', category: 'Storage', brand: 'Samsung', price: '$169.99', stock: 0, status: 'Out of Stock' },
-        { id: 'PROD-004', name: 'Corsair Vengeance DDR5 32GB', category: 'RAM', brand: 'Corsair', price: '$129.99', stock: 45, status: 'In Stock' },
-        { id: 'PROD-005', name: 'ASUS ROG Swift Monitor', category: 'Monitor', brand: 'ASUS', price: '$799.00', stock: 8, status: 'In Stock' },
-    ]);
+    const location = useLocation();
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentProduct, setCurrentProduct] = useState(null);
 
-    const getStatusType = (status) => {
-        if (status === 'In Stock') return 'success';
-        if (status === 'Low Stock') return 'warning';
+    // Form State
+    const [categories, setCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
+    const [formData, setFormData] = useState({
+        name: '',
+        description: '',
+        category_id: '',
+        brand_id: '',
+        price: '',
+        stock: '',
+        image_url: '',
+        specs: '{}'
+    });
+
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            const [productsData, categoriesData, brandsData] = await Promise.all([
+                api.getProducts(),
+                api.getCategories(),
+                api.getBrands()
+            ]);
+            setProducts(productsData);
+            setCategories(categoriesData);
+            setBrands(brandsData);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const navigate = useNavigate();
+
+    // Handle deep-link from notifications (restock)
+    useEffect(() => {
+        if (location.state?.editProductId && products.length > 0) {
+            const productToEdit = products.find(p => p._id === location.state.editProductId);
+            if (productToEdit) {
+                console.log('Restock triggered for:', productToEdit.name);
+                handleOpenModal(productToEdit, true);
+                // Clear state using router to avoid re-opening
+                navigate(location.pathname, { replace: true, state: {} });
+            }
+        }
+    }, [location.key, products, location.state]);
+
+    const handleOpenModal = (product = null, isRestock = false) => {
+        if (product) {
+            setCurrentProduct(product);
+            setFormData({
+                name: product.name,
+                description: product.description || '',
+                category_id: product.category_id?._id || product.category_id || '',
+                brand_id: product.brand_id?._id || product.brand_id || '',
+                price: product.price,
+                stock: product.stock,
+                image_url: product.image_url || '',
+                specs: JSON.stringify(product.specs || {}, null, 2)
+            });
+        } else {
+            setCurrentProduct(null);
+            setFormData({
+                name: '',
+                description: '',
+                category_id: '',
+                brand_id: '',
+                price: '',
+                stock: '',
+                image_url: '',
+                specs: '{}'
+            });
+        }
+        setIsModalOpen(true);
+        if (isRestock) {
+            // Give it a tiny timeout to ensure DOM is ready
+            setTimeout(() => {
+                const stockInput = document.getElementsByName('stock')[0];
+                if (stockInput) {
+                    stockInput.focus();
+                    stockInput.select();
+                }
+            }, 100);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setCurrentProduct(null);
+    };
+
+    const [submitting, setSubmitting] = useState(false);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        try {
+            let specsJson = {};
+            try {
+                specsJson = JSON.parse(formData.specs || '{}');
+            } catch (jsonErr) {
+                alert('Invalid JSON in Specs field. Please fix before saving.');
+                setSubmitting(false);
+                return;
+            }
+
+            const payload = {
+                ...formData,
+                price: Number(formData.price) || 0,
+                stock: Number(formData.stock) || 0,
+                specs: specsJson
+            };
+
+            if (currentProduct) {
+                await api.updateProduct(currentProduct._id, payload);
+            } else {
+                await api.createProduct(payload);
+            }
+            fetchData();
+            handleCloseModal();
+        } catch (err) {
+            alert('Failed to save product: ' + err.message);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm('Are you sure you want to delete this product?')) {
+            try {
+                await api.deleteProduct(id);
+                fetchData();
+            } catch (err) {
+                alert('Failed to delete product: ' + err.message);
+            }
+        }
+    };
+
+    const getStatusType = (stock) => {
+        if (stock > 10) return 'success';
+        if (stock > 0) return 'warning';
         return 'danger';
     };
+
+    const getStatusText = (stock) => {
+        if (stock > 10) return 'In Stock';
+        if (stock > 0) return 'Low Stock';
+        return 'Out of Stock';
+    };
+
+    if (loading) return <div className="p-8 text-center text-gray-500">Loading products...</div>;
+    if (error) return <div className="p-8 text-center text-red-500">Error: {error}</div>;
 
     return (
         <div>
             <AdminPageHeader
                 title="Product Management"
                 breadcrumbs={['Dashboard', 'Products']}
-                primaryAction={{ label: 'Add Product', icon: 'M12 4v16m8-8H4', onClick: () => console.log('Add clicked') }}
+                primaryAction={{ label: 'Add Product', icon: 'M12 4v16m8-8H4', onClick: () => handleOpenModal() }}
             />
 
             <AdminTable
-                headers={['Product Name', 'Category', 'Brand', 'Price', 'Stock', 'Status']}
+                headers={['Product', 'Category', 'Brand', 'Price', 'Stock', 'Status']}
                 actions={true}
             >
                 {products.map((product) => (
-                    <tr key={product.id} className="hover:bg-gray-50/50 transition-colors">
+                    <tr key={product._id} className="hover:bg-gray-50/50 transition-colors">
                         <td className="px-6 py-4">
-                            <div className="flex flex-col">
-                                <span className="text-sm font-bold text-gray-900">{product.name}</span>
-                                <span className="text-[10px] text-gray-400 font-medium">{product.id}</span>
+                            <div className="flex items-center space-x-3">
+                                {product.image_url && (
+                                    <img src={product.image_url} alt={product.name} className="w-10 h-10 object-cover rounded-lg border border-gray-100" />
+                                )}
+                                <div className="flex flex-col">
+                                    <span className="text-sm font-bold text-gray-900">{product.name}</span>
+                                    <span className="text-[10px] text-gray-400 font-medium">SKU: {product.variant_id}</span>
+                                </div>
                             </div>
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-600">{product.category}</td>
-                        <td className="px-6 py-4 text-sm text-gray-600">{product.brand}</td>
-                        <td className="px-6 py-4 text-sm font-bold text-gray-900">{product.price}</td>
+                        <td className="px-6 py-4 text-sm text-gray-600">{product.category_id?.name || 'N/A'}</td>
+                        <td className="px-6 py-4 text-sm text-gray-600">{product.brand_id?.name || 'N/A'}</td>
+                        <td className="px-6 py-4 text-sm font-bold text-gray-900">${product.price?.toLocaleString()}</td>
                         <td className="px-6 py-4 text-sm font-bold text-gray-900">{product.stock}</td>
                         <td className="px-6 py-4">
-                            <AdminBadge type={getStatusType(product.status)} text={product.status} />
+                            <AdminBadge type={getStatusType(product.stock)} text={getStatusText(product.stock)} />
                         </td>
                         <td className="px-6 py-4 text-right space-x-2">
-                            <button className="text-gray-400 hover:text-blue-600 transition-colors">
+                            <button onClick={() => handleOpenModal(product)} className="text-gray-400 hover:text-blue-600 transition-colors">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                             </button>
-                            <button className="text-gray-400 hover:text-red-600 transition-colors">
+                            <button onClick={() => handleDelete(product._id)} className="text-gray-400 hover:text-red-600 transition-colors">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                             </button>
                         </td>
                     </tr>
                 ))}
             </AdminTable>
+
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-2xl font-bold text-gray-900">{currentProduct ? 'Edit Product' : 'Add Product'}</h2>
+                            <button onClick={handleCloseModal} className="text-gray-400 hover:text-gray-600">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="col-span-2">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                                    <input required name="name" value={formData.name} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                    <textarea name="description" value={formData.description} onChange={handleInputChange} rows="3" className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                                    <select required name="category_id" value={formData.category_id} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all">
+                                        <option value="">Select Category</option>
+                                        {categories.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Brand</label>
+                                    <select required name="brand_id" value={formData.brand_id} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all">
+                                        <option value="">Select Brand</option>
+                                        {brands.map(b => <option key={b._id} value={b._id}>{b.name}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Price ($)</label>
+                                    <input required type="number" name="price" value={formData.price} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Stock Quantity</label>
+                                    <input required type="number" name="stock" value={formData.stock} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                                    <input name="image_url" value={formData.image_url} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Specs (as JSON)</label>
+                                    <textarea name="specs" value={formData.specs} onChange={handleInputChange} rows="4" className="w-full px-4 py-2 border border-gray-200 rounded-xl font-mono text-sm focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                                </div>
+                            </div>
+                            <div className="flex justify-end space-x-3 pt-6 border-t border-gray-100">
+                                <button type="button" onClick={handleCloseModal} disabled={submitting} className="px-6 py-2 rounded-xl text-gray-600 font-bold hover:bg-gray-50 transition-colors disabled:opacity-50">Cancel</button>
+                                <button type="submit" disabled={submitting} className="px-6 py-2 rounded-xl bg-orange-600 text-white font-bold hover:bg-orange-700 transition-colors shadow-lg shadow-orange-200 disabled:opacity-50 min-w-[120px]">
+                                    {submitting ? 'Saving...' : (currentProduct ? 'Update Product' : 'Create Product')}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
