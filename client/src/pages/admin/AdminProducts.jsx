@@ -202,7 +202,7 @@ const AdminProducts = () => {
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-600">{product.category_id?.name || 'N/A'}</td>
                         <td className="px-6 py-4 text-sm text-gray-600">{product.brand_id?.name || 'N/A'}</td>
-                        <td className="px-6 py-4 text-sm font-bold text-gray-900">${product.price?.toLocaleString()}</td>
+                        <td className="px-6 py-4 text-sm font-bold text-gray-900">₹{product.price?.toLocaleString('en-IN')}</td>
                         <td className="px-6 py-4 text-sm font-bold text-gray-900">{product.stock}</td>
                         <td className="px-6 py-4">
                             <AdminBadge type={getStatusType(product.stock)} text={getStatusText(product.stock)} />

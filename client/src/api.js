@@ -115,6 +115,12 @@ export const api = {
         method: 'DELETE',
     }),
 
-    // Orders (User Specific)
+    // Orders (User Specific & Admin)
     getOrdersByUserId: (userId) => fetchJson(`/api/orders/user/${userId}`),
+    getOrderById: (orderId) => fetchJson(`/api/orders/${orderId}`),
+    getAllOrders: () => fetchJson('/api/orders'),
+    updateOrderStatus: (orderId, status) => fetchJson(`/api/orders/${orderId}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status })
+    }),
 };

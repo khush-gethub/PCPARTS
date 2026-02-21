@@ -72,7 +72,7 @@ const CartPage = () => {
                                                     <span className="font-black text-gray-900 w-4 text-center">{item.quantity}</span>
                                                     <button onClick={() => updateQuantity(item.id, 1)} className="w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm font-bold text-gray-600 hover:text-orange-600 transition-colors">+</button>
                                                 </div>
-                                                <p className="text-xl font-black text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
+                                                <p className="text-xl font-black text-gray-900">₹{(item.price * item.quantity).toLocaleString('en-IN')}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -103,15 +103,15 @@ const CartPage = () => {
                             <div className="space-y-4 py-4 border-y border-gray-100">
                                 <div className="flex justify-between text-gray-600 font-bold">
                                     <span>Subtotal</span>
-                                    <span className="text-gray-900">${subtotal.toFixed(2)}</span>
+                                    <span className="text-gray-900">₹{subtotal.toLocaleString('en-IN')}</span>
                                 </div>
                                 <div className="flex justify-between text-gray-600 font-bold">
                                     <span>Estimated Shipping</span>
-                                    <span className="text-gray-900">${shipping.toFixed(2)}</span>
+                                    <span className="text-gray-900">₹{shipping.toLocaleString('en-IN')}</span>
                                 </div>
                                 <div className="flex justify-between text-gray-600 font-bold">
                                     <span>Estimated Tax</span>
-                                    <span className="text-gray-900">${tax.toFixed(2)}</span>
+                                    <span className="text-gray-900">₹{tax.toLocaleString('en-IN')}</span>
                                 </div>
                             </div>
 
@@ -126,7 +126,7 @@ const CartPage = () => {
                             <div className="pt-4">
                                 <div className="flex justify-between items-end mb-6">
                                     <span className="text-gray-600 font-black uppercase tracking-widest text-sm">Total</span>
-                                    <span className="text-3xl font-black text-gray-900">${total.toFixed(2)}</span>
+                                    <span className="text-3xl font-black text-gray-900">₹{total.toLocaleString('en-IN')}</span>
                                 </div>
                                 <button
                                     onClick={() => navigate('/checkout/shipping')}

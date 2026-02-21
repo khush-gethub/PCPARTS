@@ -168,7 +168,7 @@ const ReadyMadePCDetailsPage = () => {
                                     key={pc.pc_id}
                                     id={pc.pc_id}
                                     name={pc.name}
-                                    price={`$${pc.price}`}
+                                    price={`₹${pc.price}`}
                                     image={pc.image || heroPC}
                                     useCase={pc.category}
                                     cpu="See Details"

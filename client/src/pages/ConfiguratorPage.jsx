@@ -271,7 +271,7 @@ const ConfiguratorPage = () => {
                             <div className="space-y-4 mb-8">
                                 <div className="flex justify-between items-center text-sm">
                                     <span className="text-gray-600">Base Total</span>
-                                    <span className="font-mono text-gray-900">₹{totalPrice.toLocaleString()}</span>
+                                    <span className="font-mono text-gray-900">₹{totalPrice.toLocaleString('en-IN')}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
                                     <span className="text-gray-600">Shipping</span>
@@ -286,7 +286,7 @@ const ConfiguratorPage = () => {
                                     <div className="flex justify-between items-end">
                                         <span className="font-bold text-gray-900">Total</span>
                                         <span className="text-3xl font-black text-orange-600 tracking-tight">
-                                            ₹{totalPrice.toLocaleString()}
+                                            ₹{totalPrice.toLocaleString('en-IN')}
                                         </span>
                                     </div>
                                 </div>

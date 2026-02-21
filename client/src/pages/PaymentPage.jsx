@@ -1,27 +1,112 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { api } from '../api.js';
+import { useCart } from '../context/CartContext.jsx';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 
 const PaymentPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { cartItems, cartCount, clearCart } = useCart();
+
+    // Get shipping data from previous step
+    const shippingData = location.state?.shippingData;
+
     const [selectedMethod, setSelectedMethod] = useState('card');
+    const [cardDetails, setCardDetails] = useState({
+        name: '',
+        number: '',
+        expiry: '',
+        cvv: ''
+    });
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState('');
 
-    const handlePayment = () => {
-        setIsProcessing(true);
-        // Simulate payment processing
-        setTimeout(() => {
-            setIsProcessing(false);
-            setIsSuccess(true);
-            // Navigate after showing success message for a bit
-            setTimeout(() => {
-                navigate('/checkout/confirmation');
-            }, 2000);
-        }, 1500);
+    // Redirect if no shipping data
+    useEffect(() => {
+        if (!shippingData) {
+            navigate('/checkout/shipping');
+        }
+    }, [shippingData, navigate]);
+
+    const handleCardChange = (e) => {
+        const { name, value } = e.target;
+        setCardDetails(prev => ({ ...prev, [name]: value }));
     };
+
+    const validatePayment = () => {
+        if (selectedMethod === 'card') {
+            if (!cardDetails.name || !cardDetails.number || !cardDetails.expiry || !cardDetails.cvv) {
+                setError('Please fill in all card details');
+                return false;
+            }
+            // Basic format checks could go here
+        }
+        return true;
+    };
+
+    const handlePayment = async () => {
+        setError('');
+        if (!validatePayment()) return;
+
+        setIsProcessing(true);
+
+        try {
+            // Get User from LocalStorage
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            const userId = storedUser ? storedUser.id : 'guest_user';
+
+            // Calculate total
+            const subtotal = cartItems.reduce((sum, item) => sum + (Number(item.price) * item.quantity), 0);
+            const shippingCost = shippingData.shippingMethod === 'express' ? 500 : 0;
+            const total = subtotal + shippingCost;
+
+            // Constuct Order Payload
+            const orderData = {
+                user_id: userId,
+                address_data: {
+                    firstName: shippingData.firstName,
+                    lastName: shippingData.lastName,
+                    line1: shippingData.address,
+                    city: shippingData.city,
+                    state: shippingData.state,
+                    pincode: shippingData.zip,
+                    country: 'India', // Defaulting to India as per schema requirements
+                    phone: shippingData.phone
+                },
+                items: cartItems.map(item => ({
+                    variant_id: item.variant_id || item.id,
+                    name: item.title || item.name, // Use title from CartContext
+                    price: item.price,
+                    quantity: item.quantity
+                })),
+                payment_method: selectedMethod,
+                total_price: total,
+                payment_id: selectedMethod === 'cod' ? `cod_${Date.now()}_${Math.random().toString(36).substr(2, 5)}` : `pay_${Date.now()}`
+            };
+
+            // Call API
+            const response = await api.createOrder(orderData);
+
+            if (response && response.order_id) {
+                setIsSuccess(true);
+                clearCart();
+                setTimeout(() => {
+                    navigate('/checkout/confirmation', { state: { orderId: response.order_id } });
+                }, 2000);
+            }
+        } catch (err) {
+            console.error("Order Failed:", err);
+            setError(err.message || 'Payment failed. Please try again.');
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
+    if (!shippingData) return null;
 
     return (
         <div className="min-h-screen bg-[#eef2f2] flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900">
@@ -51,6 +136,13 @@ const PaymentPage = () => {
                     </div>
 
                     <div className="glass-card p-10 rounded-3xl shadow-xl space-y-10">
+                        {/* Error Message */}
+                        {error && (
+                            <div className="bg-red-50 text-red-600 p-4 rounded-xl text-center font-bold text-sm">
+                                {error}
+                            </div>
+                        )}
+
                         {/* Payment Selection */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <label className={`relative flex flex-col items-center p-6 rounded-2xl border-2 cursor-pointer transition-all group ${selectedMethod === 'card' ? 'border-orange-500 bg-orange-50/10' : 'border-orange-500/10 bg-white/50 hover:bg-white'}`}>
@@ -111,11 +203,25 @@ const PaymentPage = () => {
                                 <div className="space-y-4 animate-scaleUp">
                                     <div className="space-y-2">
                                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Cardholder Name</label>
-                                        <input type="text" placeholder="JOHN DOE" className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm" />
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            onChange={handleCardChange}
+                                            value={cardDetails.name}
+                                            placeholder="JOHN DOE"
+                                            className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm"
+                                        />
                                     </div>
                                     <div className="space-y-2 relative">
                                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Card Number</label>
-                                        <input type="text" placeholder="•••• •••• •••• ••••" className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm" />
+                                        <input
+                                            type="text"
+                                            name="number"
+                                            onChange={handleCardChange}
+                                            value={cardDetails.number}
+                                            placeholder="•••• •••• •••• ••••"
+                                            className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm"
+                                        />
                                         <div className="absolute right-5 bottom-4">
                                             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MC" className="h-6" />
                                         </div>
@@ -123,11 +229,25 @@ const PaymentPage = () => {
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Expiry Date</label>
-                                            <input type="text" placeholder="MM / YY" className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm" />
+                                            <input
+                                                type="text"
+                                                name="expiry"
+                                                onChange={handleCardChange}
+                                                value={cardDetails.expiry}
+                                                placeholder="MM / YY"
+                                                className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm"
+                                            />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ml-1">CVV</label>
-                                            <input type="password" placeholder="•••" className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm" />
+                                            <input
+                                                type="password"
+                                                name="cvv"
+                                                onChange={handleCardChange}
+                                                value={cardDetails.cvv}
+                                                placeholder="•••"
+                                                className="w-full px-5 py-4 bg-white/50 border border-transparent rounded-2xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm"
+                                            />
                                         </div>
                                     </div>
                                 </div>

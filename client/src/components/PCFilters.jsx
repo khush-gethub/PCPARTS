@@ -50,7 +50,7 @@ const PCFilters = ({ filters, onFilterChange, maxPrice = 1500000 }) => {
                         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Price Range</h3>
                         <div className="flex justify-between text-xs text-gray-500 mb-2 font-medium">
                             <span>₹30k</span>
-                            <span>₹{(filters.priceRange || maxPrice).toLocaleString()}</span>
+                            <span>₹{(filters.priceRange || maxPrice).toLocaleString('en-IN')}</span>
                         </div>
                         <input
                             type="range"

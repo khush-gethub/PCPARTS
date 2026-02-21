@@ -78,7 +78,7 @@ const PartSelectionModal = ({ isOpen, onClose, componentType, onSelect, products
                                     image={product.image}
                                     title={product.name}
                                     specs={Object.entries(product.specs || {}).map(([key, value]) => `${key}: ${value}`)}
-                                    price={`₹${product.price ? product.price.toLocaleString() : '0'}`}
+                                    price={`₹${product.price ? product.price.toLocaleString('en-IN') : '0'}`}
                                     stockStatus={product.stock_status === 'out_of_stock' ? 'Out of Stock' : (product.stock_status === 'low_stock' ? 'Low Stock' : 'In Stock')}
                                     primaryAction={{
                                         label: "Select",

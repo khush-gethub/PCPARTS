@@ -95,8 +95,8 @@ const ProductDetailsPage = () => {
         </div>
     );
 
-    const price = selectedVariant ? `$${selectedVariant.price}` : 'N/A';
-    const originalPrice = selectedVariant?.discount_price ? `$${selectedVariant.price + 50}` : null; // Mock logic for orig price
+    const price = selectedVariant ? `₹${selectedVariant.price.toLocaleString('en-IN')}` : 'N/A';
+    const originalPrice = selectedVariant?.discount_price ? `₹${(selectedVariant.price + 50).toLocaleString('en-IN')}` : null; // Mock logic for orig price
     const discount = selectedVariant?.discount_price ? Math.floor(((selectedVariant.price + 50 - selectedVariant.price) / (selectedVariant.price + 50)) * 100) : null;
 
     // Construct specs for Info component
@@ -185,7 +185,7 @@ const ProductDetailsPage = () => {
                                     key={rel.product_id}
                                     id={rel.product_id}
                                     title={rel.name}
-                                    price={`$${rel.price || '999'}`} // Ideally fetch variant price
+                                    price={`₹${rel.price ? rel.price.toLocaleString('en-IN') : '999'}`} // Ideally fetch variant price
                                     image={rel.image_url || gpuImg}
                                     brand={rel.brand_id?.name}
                                 />
