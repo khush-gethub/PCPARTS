@@ -13,6 +13,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 
@@ -169,7 +170,7 @@ app.get('/api/addresses/:user_id', async (req, res) => {
 
 app.post('/api/addresses', async (req, res) => {
     try {
-        const { user_id, line1, line2, city, state, pincode, country } = req.body;
+        const { user_id, firstName, lastName, line1, line2, city, state, pincode, country, phone } = req.body;
         if (!user_id || !line1 || !city || !state || !pincode || !country) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
@@ -177,12 +178,15 @@ app.post('/api/addresses', async (req, res) => {
         const newAddress = new Address({
             _id: `addr_${uuidv4()}`,
             user_id,
+            firstName,
+            lastName,
             line1,
             line2,
             city,
             state,
             pincode,
-            country
+            country,
+            phone
         });
 
         await newAddress.save();
@@ -194,10 +198,10 @@ app.post('/api/addresses', async (req, res) => {
 
 app.put('/api/addresses/:id', async (req, res) => {
     try {
-        const { line1, line2, city, state, pincode, country } = req.body;
+        const { firstName, lastName, line1, line2, city, state, pincode, country, phone } = req.body;
         const updated = await Address.findByIdAndUpdate(
             req.params.id,
-            { line1, line2, city, state, pincode, country },
+            { firstName, lastName, line1, line2, city, state, pincode, country, phone },
             { new: true }
         );
         if (!updated) return res.status(404).json({ error: 'Address not found' });
@@ -806,8 +810,10 @@ app.get('/orders', async (req, res) => {
 
 app.get('/api/orders/user/:user_id', async (req, res) => {
     try {
-        const orders = await Order.find({ user_id: req.params.user_id });
-        // Optionally populate items if needed
+        const orders = await Order.find({ user_id: req.params.user_id })
+            .populate('address_id')
+            .sort({ created_at: -1 });
+
         const enrichedOrders = await Promise.all(orders.map(async (order) => {
             const items = await OrderItem.find({ order_id: order._id });
             return { ...order.toObject(), items };
@@ -818,12 +824,143 @@ app.get('/api/orders/user/:user_id', async (req, res) => {
     }
 });
 
+// Admin: Get all orders
+app.get('/api/orders', async (req, res) => {
+    try {
+        const orders = await Order.find()
+            .populate('user_id', 'full_name email') // Populate basic user info
+            .populate('address_id')
+            .sort({ created_at: -1 });
+
+        const enrichedOrders = await Promise.all(orders.map(async (order) => {
+            const items = await OrderItem.find({ order_id: order._id });
+            return { ...order.toObject(), items };
+        }));
+
+        res.json(enrichedOrders);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/api/orders/:id', async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id).populate('address_id');
+        if (!order) return res.status(404).json({ error: 'Order not found' });
+
+        const items = await OrderItem.find({ order_id: order._id });
+        res.json({ ...order.toObject(), items });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Admin: Update order status
+app.put('/api/orders/:id/status', async (req, res) => {
+    try {
+        const { status } = req.body;
+        const updatedOrder = await Order.findByIdAndUpdate(
+            req.params.id,
+            { order_status: status },
+            { new: true }
+        );
+        if (!updatedOrder) return res.status(404).json({ error: 'Order not found' });
+        res.json(updatedOrder);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.post('/orders', async (req, res) => {
     try {
-        const newOrder = new Order(req.body);
+        const { user_id, address_data, items, payment_method, total_price, payment_id } = req.body;
+
+        if (!items || items.length === 0) {
+            throw new Error('Order must contain items');
+        }
+
+        // 1. Create Address if provided (or use existing ID)
+        let addressId = address_data?._id;
+        if (!addressId && address_data) {
+            addressId = `addr_${uuidv4()}`;
+            const newAddress = new Address({
+                _id: addressId,
+                user_id,
+                ...address_data
+            });
+            await newAddress.save();
+        }
+
+        // 2. Create Order
+        const orderId = `ord_${uuidv4()}`;
+        const newOrder = new Order({
+            _id: orderId,
+            user_id,
+            address_id: addressId,
+            total_price,
+            payment_method: payment_method || 'card',
+            payment_status: payment_method === 'cod' ? 'pending' : 'paid',
+            order_status: 'processing',
+            payment_id: payment_id || (payment_method === 'cod' ? `cod_${uuidv4()}` : `pay_${uuidv4()}`),
+            created_at: new Date()
+        });
         await newOrder.save();
-        res.status(201).json(newOrder);
+
+        // 3. Process Items & Update Stock
+        const orderItems = [];
+        for (const item of items) {
+            const variant_id = item.variant_id || item.id;
+
+            // 3.1 Try to find as ProductVariant first
+            let variant = await ProductVariant.findById(variant_id);
+            let isReadyMade = false;
+
+            if (!variant) {
+                // 3.2 If not found as variant, try to find as ReadyMadePC
+                const pc = await ReadyMadePC.findById(variant_id);
+                if (pc) {
+                    isReadyMade = true;
+                } else {
+                    throw new Error(`Product or PC not found: ${variant_id}`);
+                }
+            }
+
+            // 3.3 Check and Update Stock (only for individual components for now)
+            if (!isReadyMade) {
+                const stock = await Stock.findOne({ variant_id: variant_id });
+                if (!stock || stock.quantity < item.quantity) {
+                    throw new Error(`Insufficient stock for item: ${item.name || (variant ? variant.name : 'Item')}`);
+                }
+
+                // Decrement Stock
+                stock.quantity -= item.quantity;
+                await stock.save();
+            }
+
+            // 3.4 Create Order Item
+            const orderItemId = `orditem_${uuidv4()}`;
+            orderItems.push({
+                _id: orderItemId,
+                order_id: orderId,
+                variant_id: variant_id,
+                product_name: item.name || (variant ? variant.name : 'Unknown Product'),
+                price: item.price,
+                quantity: item.quantity
+            });
+        }
+        await OrderItem.insertMany(orderItems);
+
+        // 4. Clear Cart
+        if (user_id) {
+            const cart = await Cart.findOne({ user_id });
+            if (cart) {
+                await CartItem.deleteMany({ cart_id: cart._id });
+            }
+        }
+
+        res.status(201).json({ message: 'Order placed successfully', order_id: orderId });
     } catch (err) {
+        console.error("Order Creation Logic Error:", err.message);
         res.status(400).json({ error: err.message });
     }
 });

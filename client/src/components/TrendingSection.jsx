@@ -27,7 +27,7 @@ const TrendingSection = () => {
                         ]);
 
                         if (variants.length > 0) {
-                            price = `$${variants[0].price}`;
+                            price = `₹${variants[0].price.toLocaleString('en-IN')}`;
                             stockStatus = variants[0].stock_status === 'in_stock' ? "In Stock" : "Out of Stock";
                         }
                     } catch (e) {

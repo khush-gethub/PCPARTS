@@ -45,7 +45,7 @@ const PreBuiltSection = () => {
                                 id={item.pc_id}
                                 name={item.name}
                                 image={item.image || heroPC}
-                                price={item.price ? `$${item.price}` : "N/A"}
+                                price={item.price ? `₹${item.price.toLocaleString('en-IN')}` : "N/A"}
                                 useCase={item.category || "General"}
                                 cpu="Intel/AMD" // Ideally fetch components or add these fields to PC schema
                                 gpu="RTX/RX"   // as summary fields

@@ -21,6 +21,7 @@ const ProfilePage = () => {
         pincode: '',
         country: 'India'
     });
+    const [selectedOrder, setSelectedOrder] = useState(null);
     const navigate = useNavigate();
 
     const stateCityData = {
@@ -151,14 +152,14 @@ const ProfilePage = () => {
         {
             id: 1,
             name: 'AMD Ryzen 9 7950X',
-            price: '$549.00',
+            price: '₹549.00',
             image: 'https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=200',
             inStock: true
         },
         {
             id: 2,
             name: 'ASUS ROG Swift 27"',
-            price: '$699.00',
+            price: '₹699.00',
             image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&q=80&w=200',
             inStock: false
         }
@@ -363,26 +364,33 @@ const ProfilePage = () => {
                                     <div key={order._id} className="border border-gray-100 rounded-xl p-6 hover:border-orange-200 transition-colors">
                                         <div className="flex flex-wrap justify-between items-center gap-4 mb-4">
                                             <div>
-                                                <p className="text-sm font-bold text-orange-600">{order._id}</p>
-                                                <p className="text-xs text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
+                                                <p className="text-sm font-bold text-orange-600">ID: {order._id}</p>
+                                                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{new Date(order.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                                             </div>
                                             <div className="flex items-center gap-4">
-                                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${order.order_status === 'delivered' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'
+                                                <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${order.order_status === 'completed' ? 'bg-green-100 text-green-700' :
+                                                    order.order_status === 'shipped' ? 'bg-blue-100 text-blue-700' :
+                                                        order.order_status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                                                            'bg-orange-100 text-orange-700'
                                                     }`}>
                                                     {order.order_status}
                                                 </span>
-                                                <p className="font-bold text-gray-900">${order.total_price}</p>
+                                                <p className="font-black text-gray-900 text-lg">₹{order.total_price}</p>
                                             </div>
                                         </div>
-                                        <div className="flex flex-wrap gap-2">
-                                            {order.items?.map((item, idx) => (
-                                                <span key={idx} className="bg-gray-50 px-3 py-1 rounded-lg text-xs text-gray-600 font-medium">
+                                        <div className="flex flex-wrap gap-2 mb-4">
+                                            {order.items?.slice(0, 3).map((item, idx) => (
+                                                <span key={idx} className="bg-gray-50 px-3 py-1.5 rounded-lg text-[10px] text-gray-500 font-black uppercase tracking-tighter border border-gray-100">
                                                     {item.product_name} x {item.quantity}
                                                 </span>
                                             ))}
+                                            {order.items?.length > 3 && <span className="text-[10px] text-gray-400 font-bold self-center">+{order.items.length - 3} more</span>}
                                         </div>
-                                        <div className="mt-4 pt-4 border-t border-gray-50">
-                                            <button className="text-sm font-bold text-orange-600 hover:text-orange-700">
+                                        <div className="pt-4 border-t border-gray-50 flex justify-end">
+                                            <button
+                                                onClick={() => setSelectedOrder(order)}
+                                                className="text-xs font-black text-white bg-orange-600 px-6 py-2.5 rounded-xl hover:bg-orange-700 transition-all uppercase tracking-widest shadow-md shadow-orange-500/20"
+                                            >
                                                 View Order Details
                                             </button>
                                         </div>
@@ -390,6 +398,92 @@ const ProfilePage = () => {
                                 ))
                             )}
                         </div>
+
+                        {/* Order Detail Modal */}
+                        {selectedOrder && (
+                            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+                                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedOrder(null)}></div>
+                                <div className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden animate-scaleUp max-h-[90vh] flex flex-col">
+                                    <div className="p-8 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                                        <div>
+                                            <h2 className="text-2xl font-black text-gray-900 leading-none mb-2">Order <span className="text-orange-600">Summary</span></h2>
+                                            <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{selectedOrder._id}</p>
+                                        </div>
+                                        <button onClick={() => setSelectedOrder(null)} className="p-2 hover:bg-gray-200 rounded-full transition-colors text-gray-400">
+                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <div className="flex-grow overflow-y-auto p-8 custom-scrollbar space-y-8">
+                                        {/* Delivery Info */}
+                                        <section className="space-y-4">
+                                            <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Shipping Details</h3>
+                                            <div className="flex items-start gap-4 p-5 bg-orange-50/50 rounded-2xl border border-orange-100/50">
+                                                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-orange-600 shadow-sm flex-shrink-0">
+                                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <p className="font-black text-gray-900 leading-tight">
+                                                        {selectedOrder.address_id?.firstName} {selectedOrder.address_id?.lastName}
+                                                    </p>
+                                                    <p className="text-sm text-gray-600 leading-relaxed font-medium">
+                                                        {selectedOrder.address_id?.line1}, {selectedOrder.address_id?.city}<br />
+                                                        {selectedOrder.address_id?.state} - {selectedOrder.address_id?.pincode}<br />
+                                                        Phone: {selectedOrder.address_id?.phone}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                        {/* Items List */}
+                                        <section className="space-y-4">
+                                            <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Order Items</h3>
+                                            <div className="space-y-3">
+                                                {selectedOrder.items?.map((item, idx) => (
+                                                    <div key={idx} className="flex justify-between items-center py-3 border-b border-gray-50 last:border-0">
+                                                        <div className="flex-grow">
+                                                            <p className="font-bold text-gray-900 leading-tight">{item.product_name}</p>
+                                                            <p className="text-xs text-gray-400 font-bold uppercase mt-1">
+                                                                Qty: {item.quantity} × ₹{item.price}
+                                                            </p>
+                                                        </div>
+                                                        <div className="text-right ml-4">
+                                                            <p className="font-black text-gray-900">₹{Number(item.price) * item.quantity}</p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </section>
+
+                                        {/* Totals */}
+                                        <section className="pt-6 border-t border-gray-100 space-y-3">
+                                            <div className="flex justify-between items-center text-sm font-medium text-gray-500 uppercase tracking-widest">
+                                                <span>Payment Method</span>
+                                                <span className="text-gray-900 font-black">{selectedOrder.payment_method?.toUpperCase()}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-gray-900 font-black uppercase tracking-widest text-sm">Grand Total</span>
+                                                <span className="text-3xl font-black text-orange-600">₹{selectedOrder.total_price}</span>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    <div className="p-8 bg-gray-50/50 border-t border-gray-100">
+                                        <button
+                                            onClick={() => setSelectedOrder(null)}
+                                            className="w-full py-4 bg-gray-900 text-white text-xs font-black rounded-2xl hover:bg-black transition-all uppercase tracking-[0.2em] shadow-lg shadow-gray-200"
+                                        >
+                                            Close Summary
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 );
             case 'wishlist':
@@ -444,8 +538,15 @@ const ProfilePage = () => {
                     from { opacity: 0; transform: translateY(10px); }
                     to { opacity: 1; transform: translateY(0); }
                 }
+                @keyframes scaleUp {
+                    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+                    to { opacity: 1; transform: scale(1) translateY(0); }
+                }
                 .animate-fadeIn {
                     animation: fadeIn 0.4s ease-out forwards;
+                }
+                .animate-scaleUp {
+                    animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
                 }
             `}</style>
             <Navbar />

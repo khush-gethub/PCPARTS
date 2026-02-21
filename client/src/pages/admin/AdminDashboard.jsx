@@ -14,7 +14,7 @@ const AdminDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <AdminStatCard
                     title="Total Revenue"
-                    value="$48,294"
+                    value="₹48,294"
                     change="+12.5%"
                     trend="up"
                     icon="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
                                     <td className="px-6 py-4 text-sm font-bold text-gray-900">#ORD-00{i}</td>
                                     <td className="px-6 py-4 text-sm text-gray-600">Jane Doe</td>
                                     <td className="px-6 py-4 text-sm text-gray-500">Oct 24, 2023</td>
-                                    <td className="px-6 py-4 text-sm font-bold text-gray-900">$1,299.00</td>
+                                    <td className="px-6 py-4 text-sm font-bold text-gray-900">₹1,299.00</td>
                                     <td className="px-6 py-4">
                                         <span className="bg-green-50 text-green-700 text-[10px] font-black uppercase px-2 py-1 rounded border border-green-100">Completed</span>
                                     </td>

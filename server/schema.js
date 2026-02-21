@@ -25,12 +25,15 @@ userSchema.virtual('user_id').get(function () { return this._id; });
 const addressSchema = new Schema({
     _id: { type: String, required: true },
     user_id: { type: String, ref: 'User' },
+    firstName: { type: String },
+    lastName: { type: String },
     line1: { type: String },
     line2: { type: String },
     city: { type: String },
     state: { type: String },
     pincode: { type: String },
-    country: { type: String }
+    country: { type: String },
+    phone: { type: String }
 }, schemaOptions);
 addressSchema.virtual('address_id').get(function () { return this._id; });
 
@@ -196,6 +199,7 @@ const orderSchema = new Schema({
     user_id: { type: String, ref: 'User' },
     address_id: { type: String, ref: 'Address' },
     total_price: { type: Number },
+    payment_method: { type: String },
     payment_status: { type: String, enum: ['pending', 'paid', 'failed'] },
     order_status: { type: String, enum: ['processing', 'shipped', 'delivered', 'cancelled'] },
     payment_id: { type: String },

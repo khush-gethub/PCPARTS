@@ -76,7 +76,7 @@ const BuilderRow = ({ label, icon, part, onAdd, onRemove, onEdit }) => {
             <td className="py-6 px-4 align-top w-[15%] text-right">
                 {hasSelection ? (
                     <div className="font-mono font-bold text-gray-900 text-lg">
-                        ₹{part.price.toLocaleString()}
+                        ₹{part.price.toLocaleString('en-IN')}
                     </div>
                 ) : (
                     <span className="text-gray-300 font-mono">-</span>

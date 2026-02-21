@@ -187,7 +187,7 @@ const AdminReadyMadePCs = () => {
                 ) : pcs.map((pc) => (
                     <tr key={pc._id || pc.pc_id} className="hover:bg-gray-50/50 transition-colors">
                         <td className="px-6 py-4 font-bold text-gray-900">{pc.name}</td>
-                        <td className="px-6 py-4 text-orange-600 font-bold">₹{pc.price?.toLocaleString()}</td>
+                        <td className="px-6 py-4 text-orange-600 font-bold">₹{pc.price?.toLocaleString('en-IN')}</td>
                         <td className="px-6 py-4 text-xs text-gray-500">
                             {/* Static summary for now, could be dynamic if we processed items */}
                             {pc.category === 'High-End' ? 'Extreme Performance' : pc.category === 'Mid-Range' ? 'Balanced Build' : 'Starter Kit'}
@@ -234,7 +234,7 @@ const AdminReadyMadePCs = () => {
                                 </div>
                                 <div className="p-4 bg-orange-50 rounded-lg border border-orange-100">
                                     <label className="block text-xs font-bold text-orange-800 uppercase">Total System Price</label>
-                                    <div className="text-3xl font-black text-orange-600 mt-1">₹{formData.price?.toLocaleString()}</div>
+                                    <div className="text-3xl font-black text-orange-600 mt-1">₹{formData.price?.toLocaleString('en-IN')}</div>
                                     <p className="text-xs text-orange-600 mt-2">Auto-calculated from selected parts.</p>
                                 </div>
                             </div>
@@ -266,7 +266,7 @@ const AdminReadyMadePCs = () => {
                                                             <optgroup label={prod.name} key={prod._id}>
                                                                 {prodVariants.map(v => (
                                                                     <option key={v._id || v.variant_id} value={v._id || v.variant_id}>
-                                                                        {v.name || 'Standard'} (+₹{v.price.toLocaleString()})
+                                                                        {v.name || 'Standard'} (+₹{v.price.toLocaleString('en-IN')})
                                                                     </option>
                                                                 ))}
                                                             </optgroup>

@@ -75,7 +75,7 @@ const AdvancedFilters = ({ categoryId, filters, onFilterChange }) => {
                         <div className="mt-3">
                             <div className="flex justify-between text-xs text-gray-500 mb-2">
                                 <span>₹0</span>
-                                <span>₹{filters.priceRange?.toLocaleString()}</span>
+                                <span>₹{filters.priceRange?.toLocaleString('en-IN')}</span>
                             </div>
                             <input
                                 type="range"
