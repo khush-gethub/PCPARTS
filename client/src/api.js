@@ -123,4 +123,19 @@ export const api = {
         method: 'PUT',
         body: JSON.stringify({ status })
     }),
+
+    // Coupons
+    getCoupons: () => fetchJson('/api/coupons'),
+    createCoupon: (data) => fetchJson('/api/coupons', {
+        method: 'POST',
+        body: JSON.stringify(data)
+    }),
+    updateCoupon: (id, data) => fetchJson(`/api/coupons/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data)
+    }),
+    deleteCoupon: (id) => fetchJson(`/api/coupons/${id}`, {
+        method: 'DELETE'
+    }),
+    getUserCoupons: (userId) => fetchJson(`/api/user/coupons/${userId}`),
 };

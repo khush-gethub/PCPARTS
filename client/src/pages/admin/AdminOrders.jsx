@@ -38,6 +38,7 @@ const AdminOrders = () => {
     const getStatusType = (status) => {
         switch (status?.toLowerCase()) {
             case 'completed':
+            case 'delivered':
             case 'confirmed': return 'success';
             case 'shipped': return 'blue';
             case 'processing': return 'warning';
@@ -144,7 +145,7 @@ const AdminOrders = () => {
                                     )}
                                     {(order.order_status === 'shipped') && (
                                         <button
-                                            onClick={() => handleStatusUpdate(order._id, 'completed')}
+                                            onClick={() => handleStatusUpdate(order._id, 'delivered')}
                                             className="px-3 py-1.5 bg-gray-900 text-white text-[10px] font-black rounded-lg hover:bg-black transition-all uppercase tracking-widest"
                                         >
                                             Complete

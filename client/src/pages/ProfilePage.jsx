@@ -10,6 +10,7 @@ const ProfilePage = () => {
     const [user, setUser] = useState(null);
     const [addresses, setAddresses] = useState([]);
     const [userOrders, setUserOrders] = useState([]);
+    const [userCoupons, setUserCoupons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [editingAddressId, setEditingAddressId] = useState(null);
@@ -69,15 +70,22 @@ const ProfilePage = () => {
         fetchUserData(userData.id);
     }, [navigate]);
 
+    const handleCopyCode = (code) => {
+        navigator.clipboard.writeText(code);
+        alert('Coupon code copied to clipboard!');
+    };
+
     const fetchUserData = async (userId) => {
         try {
             setLoading(true);
-            const [addrData, orderData] = await Promise.all([
+            const [addrData, orderData, couponData] = await Promise.all([
                 api.getAddressesByUserId(userId),
-                api.getOrdersByUserId(userId)
+                api.getOrdersByUserId(userId),
+                api.getUserCoupons(userId)
             ]);
             setAddresses(addrData);
             setUserOrders(orderData);
+            setUserCoupons(couponData);
         } catch (err) {
             console.error("Error fetching profile data:", err);
         } finally {
@@ -526,6 +534,60 @@ const ProfilePage = () => {
                         </div>
                     </div>
                 );
+            case 'coupons':
+                return (
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 animate-fadeIn">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-6">My Rewards & Coupons</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {userCoupons.length === 0 ? (
+                                <p className="text-gray-500 col-span-2 text-center py-8">No coupons available yet. Keep shopping to earn rewards!</p>
+                            ) : (
+                                userCoupons.map((coupon) => (
+                                    <div key={coupon._id} className={`p-6 rounded-2xl border-2 transition-all relative overflow-hidden ${coupon.user_status === 'eligible' ? 'border-orange-500 bg-orange-50/10' : 'border-gray-100 bg-gray-50/50 opacity-60'}`}>
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div>
+                                                <h3 className="font-black text-gray-900 leading-tight mb-1">{coupon.name || 'Discount Reward'}</h3>
+                                                <p className="text-[10px] font-black text-orange-600 uppercase tracking-widest font-mono">{coupon.code}</p>
+                                            </div>
+                                            <div className="bg-white px-3 py-1 rounded-full shadow-sm border border-gray-50">
+                                                <span className="text-xs font-black text-orange-600">
+                                                    {coupon.discount_type === 'percentage' ? `${coupon.discount_value}% OFF` : `₹${coupon.discount_value} OFF`}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-xs text-gray-500 font-bold mb-4 leading-relaxed">
+                                            {coupon.user_status === 'eligible' ? 'Available to use at checkout for your next hardware upgrade.' : `Used on ${new Date(coupon.used_at).toLocaleDateString()}`}
+                                        </p>
+
+                                        <div className="flex justify-between items-center relative z-10">
+                                            <div className="flex items-center gap-2">
+                                                <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-lg ${coupon.user_status === 'eligible' ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}>
+                                                    {coupon.user_status}
+                                                </span>
+                                                {coupon.user_status === 'eligible' && (
+                                                    <button
+                                                        onClick={() => handleCopyCode(coupon.code)}
+                                                        className="text-[10px] bg-orange-600 text-white font-black px-3 py-1 rounded-lg hover:bg-orange-700 transition-all uppercase tracking-widest flex items-center gap-1"
+                                                    >
+                                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                                                        Copy Code
+                                                    </button>
+                                                )}
+                                            </div>
+                                            {coupon.expires_at && (
+                                                <span className="text-[10px] text-gray-400 font-bold">Expires: {new Date(coupon.expires_at).toLocaleDateString()}</span>
+                                            )}
+                                        </div>
+                                        {/* Decorative ticket look */}
+                                        <div className="absolute top-1/2 -left-3 w-6 h-6 bg-[#eef2f2] rounded-full -translate-y-1/2 border-r border-gray-100"></div>
+                                        <div className="absolute top-1/2 -right-3 w-6 h-6 bg-[#eef2f2] rounded-full -translate-y-1/2 border-l border-gray-100"></div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                );
             default:
                 return null;
         }
@@ -572,6 +634,7 @@ const ProfilePage = () => {
                                 {[
                                     { id: 'profile', label: 'My Profile', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
                                     { id: 'addresses', label: 'Addresses', icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z' },
+                                    { id: 'coupons', label: 'My Coupons', icon: 'M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7' },
                                     { id: 'orders', label: 'Orders', icon: 'M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z' },
                                     { id: 'wishlist', label: 'Wishlist', icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z' }
                                 ].map((tab) => (

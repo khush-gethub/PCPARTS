@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
+import { api } from '../api.js';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,12 +20,35 @@ const Navbar = () => {
         return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
 
+    const [couponCount, setCouponCount] = useState(0);
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setIsLoggedIn(false);
+        setCouponCount(0);
         navigate('/login');
     };
+
+    useEffect(() => {
+        const fetchCouponCount = async () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && user.id) {
+                try {
+                    const coupons = await api.getUserCoupons(user.id);
+                    setCouponCount(coupons.filter(c => c.user_status === 'eligible').length);
+                } catch (err) {
+                    console.error("Error fetching coupon count:", err);
+                }
+            }
+        };
+
+        if (isLoggedIn) {
+            fetchCouponCount();
+        } else {
+            setCouponCount(0);
+        }
+    }, [isLoggedIn]);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -79,10 +103,15 @@ const Navbar = () => {
                             )}
 
                             {/* Profile Icon */}
-                            <Link to="/profile" className="text-gray-700 hover:text-black transition-colors">
+                            <Link to="/profile" className="text-gray-700 hover:text-black transition-colors relative group">
                                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
+                                {couponCount > 0 && (
+                                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full group-hover:scale-110 transition-transform shadow-sm ring-2 ring-white">
+                                        {couponCount}
+                                    </span>
+                                )}
                             </Link>
 
                             <Link to="/cart" className="p-2 text-gray-700 hover:text-black relative group">

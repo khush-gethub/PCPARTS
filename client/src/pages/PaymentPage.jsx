@@ -9,7 +9,7 @@ import Footer from '../components/Footer.jsx';
 const PaymentPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { cartItems, cartCount, clearCart } = useCart();
+    const { cartItems, cartCount, clearCart, appliedCoupon } = useCart();
 
     // Get shipping data from previous step
     const shippingData = location.state?.shippingData;
@@ -29,6 +29,7 @@ const PaymentPage = () => {
     useEffect(() => {
         if (!shippingData) {
             navigate('/checkout/shipping');
+            return;
         }
     }, [shippingData, navigate]);
 
@@ -43,7 +44,6 @@ const PaymentPage = () => {
                 setError('Please fill in all card details');
                 return false;
             }
-            // Basic format checks could go here
         }
         return true;
     };
@@ -62,9 +62,20 @@ const PaymentPage = () => {
             // Calculate total
             const subtotal = cartItems.reduce((sum, item) => sum + (Number(item.price) * item.quantity), 0);
             const shippingCost = shippingData.shippingMethod === 'express' ? 500 : 0;
-            const total = subtotal + shippingCost;
+            // Note: Tax calculation logic should be consistent with CartPage if tax is applied here too.
+            // In CartPage: tax = subtotal * 0.08
+            const tax = subtotal * 0.08;
+            let total = subtotal + shippingCost + tax;
 
-            // Constuct Order Payload
+            if (appliedCoupon) {
+                if (appliedCoupon.discount_type === 'percentage') {
+                    total -= (total * (appliedCoupon.discount_value / 100));
+                } else {
+                    total -= appliedCoupon.discount_value;
+                }
+            }
+
+            // Construct Order Payload
             const orderData = {
                 user_id: userId,
                 address_data: {
@@ -74,17 +85,18 @@ const PaymentPage = () => {
                     city: shippingData.city,
                     state: shippingData.state,
                     pincode: shippingData.zip,
-                    country: 'India', // Defaulting to India as per schema requirements
+                    country: 'India',
                     phone: shippingData.phone
                 },
                 items: cartItems.map(item => ({
                     variant_id: item.variant_id || item.id,
-                    name: item.title || item.name, // Use title from CartContext
+                    name: item.title || item.name,
                     price: item.price,
                     quantity: item.quantity
                 })),
                 payment_method: selectedMethod,
-                total_price: total,
+                total_price: Math.round(total),
+                coupon_id: appliedCoupon ? appliedCoupon._id : null,
                 payment_id: selectedMethod === 'cod' ? `cod_${Date.now()}_${Math.random().toString(36).substr(2, 5)}` : `pay_${Date.now()}`
             };
 
@@ -277,6 +289,15 @@ const PaymentPage = () => {
                                 </div>
                             )}
                         </div>
+
+                        {appliedCoupon && (
+                            <div className="pt-6 border-t border-gray-100">
+                                <p className="text-sm text-green-600 font-bold flex items-center gap-2">
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                    Coupon Applied: {appliedCoupon.name} (-{appliedCoupon.discount_type === 'percentage' ? `${appliedCoupon.discount_value}%` : `₹${appliedCoupon.discount_value}`})
+                                </p>
+                            </div>
+                        )}
 
                         <div className="pt-4">
                             {!isSuccess ? (
