@@ -4,19 +4,52 @@ import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 import { useCart } from '../context/CartContext.jsx';
+import { api } from '../api.js';
 
 const CartPage = () => {
     const navigate = useNavigate();
-    const { cartItems, updateQuantity, removeFromCart } = useCart();
-
-    const removeItem = (id) => {
-        removeFromCart(id);
-    };
+    const { cartItems, updateQuantity, removeFromCart, appliedCoupon, applyCoupon, removeCoupon } = useCart();
+    const [couponCode, setCouponCode] = useState('');
+    const [error, setError] = useState('');
 
     const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const shipping = 15.00;
     const tax = subtotal * 0.08;
-    const total = subtotal + shipping + tax;
+
+    let total = subtotal + shipping + tax;
+    if (appliedCoupon) {
+        if (appliedCoupon.discount_type === 'percentage') {
+            total -= (total * (appliedCoupon.discount_value / 100));
+        } else {
+            total -= appliedCoupon.discount_value;
+        }
+    }
+
+    const handleApplyCoupon = async () => {
+        try {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                setError('Please login to apply coupons');
+                return;
+            }
+            const userCoupons = await api.getUserCoupons(user.id);
+            const coupon = userCoupons.find(c => c.code.toUpperCase() === couponCode.trim().toUpperCase() && c.user_status === 'eligible');
+
+            if (coupon) {
+                applyCoupon(coupon);
+                setCouponCode('');
+                setError('');
+            } else {
+                setError('Invalid or ineligible coupon code');
+            }
+        } catch (err) {
+            setError('Failed to apply coupon');
+        }
+    };
+
+    const removeItem = (id) => {
+        removeFromCart(id);
+    };
 
     return (
         <div className="min-h-screen bg-[#eef2f2] flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900">
@@ -51,14 +84,22 @@ const CartPage = () => {
                             <div className="space-y-4">
                                 {cartItems.map((item) => (
                                     <div key={item.id} className="glass-card p-6 rounded-3xl shadow-xl flex items-center gap-6 transition-all hover:shadow-2xl hover:scale-[1.01]">
-                                        <div className="w-24 h-24 bg-gray-100 rounded-2xl overflow-hidden flex-shrink-0">
-                                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                        <div className="w-24 h-24 bg-gray-100 rounded-2xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                            <img
+                                                src={item.image?.startsWith('http') || item.image?.startsWith('data:') ? item.image : (item.image?.startsWith('/') ? `http://localhost:4080${item.image}` : item.image)}
+                                                alt={item.title || item.name}
+                                                className="w-full h-full object-contain p-2"
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = "https://placehold.co/100x100?text=NA";
+                                                }}
+                                            />
                                         </div>
                                         <div className="flex-grow">
                                             <div className="flex justify-between items-start">
                                                 <div>
-                                                    <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1">{item.category}</p>
-                                                    <h3 className="text-lg font-bold text-gray-900 leading-tight">{item.name}</h3>
+                                                    <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1">{item.category || (item.product_id?.category_id?.name) || 'Hardware'}</p>
+                                                    <h3 className="text-lg font-bold text-gray-900 leading-tight">{item.title || item.name || 'Component'}</h3>
                                                 </div>
                                                 <button onClick={() => removeItem(item.id)} className="text-gray-400 hover:text-red-500 transition-colors">
                                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,9 +159,37 @@ const CartPage = () => {
                             <div className="space-y-4">
                                 <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Promo Code</label>
                                 <div className="flex gap-2">
-                                    <input type="text" placeholder="GAMER20" className="flex-grow px-4 py-3 bg-white/50 border border-transparent rounded-xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm" />
-                                    <button className="px-6 py-3 bg-gray-900 text-white text-xs font-black rounded-xl hover:bg-black transition-all">Apply</button>
+                                    <input
+                                        type="text"
+                                        placeholder="GAMER20"
+                                        className="flex-grow px-4 py-3 bg-white/50 border border-transparent rounded-xl focus:bg-white focus:border-orange-500 outline-none transition-all font-bold text-gray-900 shadow-sm"
+                                        value={couponCode}
+                                        onChange={(e) => setCouponCode(e.target.value)}
+                                        disabled={!!appliedCoupon}
+                                    />
+                                    {appliedCoupon ? (
+                                        <button
+                                            onClick={removeCoupon}
+                                            className="px-6 py-3 bg-gray-100 text-gray-400 text-xs font-black rounded-xl hover:bg-gray-200 transition-all"
+                                        >
+                                            Remove
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={handleApplyCoupon}
+                                            className="px-6 py-3 bg-gray-900 text-white text-xs font-black rounded-xl hover:bg-black transition-all"
+                                        >
+                                            Apply
+                                        </button>
+                                    )}
                                 </div>
+                                {error && <p className="text-red-500 text-xs font-bold ml-1">{error}</p>}
+                                {appliedCoupon && (
+                                    <p className="text-green-600 text-xs font-bold ml-1 flex items-center gap-1">
+                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                        Coupon Applied: {appliedCoupon.name} (-{appliedCoupon.discount_type === 'percentage' ? `${appliedCoupon.discount_value}%` : `₹${appliedCoupon.discount_value}`})
+                                    </p>
+                                )}
                             </div>
 
                             <div className="pt-4">

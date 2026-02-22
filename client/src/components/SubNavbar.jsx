@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 const SubNavbar = () => {
     const navItems = [
         { name: 'Categories', path: '/category/all' },
-        { name: 'Brands', path: '#' },
+
         { name: 'PC Builder', path: '/configurator' },
         { name: 'Pre Buillt PCs', path: '/ready-made-pcs' },
         { name: 'Benchmarks', path: '/benchmarks' },
         { name: 'Saved Builds', path: '/saved-builds' },
-        { name: 'Support', path: '#' }
+
     ];
 
     return (

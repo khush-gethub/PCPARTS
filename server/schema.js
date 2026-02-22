@@ -156,11 +156,14 @@ readyMadePCItemSchema.virtual('item_id').get(function () { return this._id; });
 // 13. Coupons
 const couponSchema = new Schema({
     _id: { type: String, required: true },
+    name: { type: String },
     code: { type: String, unique: true },
+    discount_type: { type: String, enum: ['percentage', 'fixed'], default: 'percentage' },
     discount_value: { type: Number },
-    min_order_amount: { type: Number },
+    min_completed_orders: { type: Number, default: 0 },
+    min_order_amount: { type: Number, default: 0 }, // Optional: kept for flexibility
     expires_at: { type: Date },
-    usage_limit: { type: Number },
+    status: { type: String, enum: ['active', 'inactive'], default: 'active' },
     created_at: { type: Date, default: Date.now }
 }, schemaOptions);
 couponSchema.virtual('coupon_id').get(function () { return this._id; });
@@ -170,6 +173,8 @@ const userCouponSchema = new Schema({
     _id: { type: String, required: true },
     user_id: { type: String, ref: 'User' },
     coupon_id: { type: String, ref: 'Coupon' },
+    status: { type: String, enum: ['eligible', 'used', 'expired'], default: 'eligible' },
+    earned_at: { type: Date, default: Date.now },
     used_at: { type: Date }
 }, schemaOptions);
 userCouponSchema.virtual('user_coupon_id').get(function () { return this._id; });
@@ -201,8 +206,9 @@ const orderSchema = new Schema({
     total_price: { type: Number },
     payment_method: { type: String },
     payment_status: { type: String, enum: ['pending', 'paid', 'failed'] },
-    order_status: { type: String, enum: ['processing', 'shipped', 'delivered', 'cancelled'] },
+    order_status: { type: String, enum: ['processing', 'confirmed', 'shipped', 'delivered', 'cancelled', 'denied'], default: 'processing' },
     payment_id: { type: String },
+    coupon_id: { type: String, ref: 'Coupon' },
     created_at: { type: Date, default: Date.now }
 }, schemaOptions);
 orderSchema.virtual('order_id').get(function () { return this._id; });

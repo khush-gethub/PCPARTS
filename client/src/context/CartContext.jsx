@@ -16,9 +16,22 @@ export const CartProvider = ({ children }) => {
         return savedCart ? JSON.parse(savedCart) : [];
     });
 
+    const [appliedCoupon, setAppliedCoupon] = useState(() => {
+        const savedCoupon = localStorage.getItem('appliedCoupon');
+        return savedCoupon ? JSON.parse(savedCoupon) : null;
+    });
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems]);
+
+    useEffect(() => {
+        if (appliedCoupon) {
+            localStorage.setItem('appliedCoupon', JSON.stringify(appliedCoupon));
+        } else {
+            localStorage.removeItem('appliedCoupon');
+        }
+    }, [appliedCoupon]);
 
     const addToCart = (product) => {
         setCartItems(prevItems => {
@@ -44,6 +57,15 @@ export const CartProvider = ({ children }) => {
 
     const clearCart = () => {
         setCartItems([]);
+        setAppliedCoupon(null);
+    };
+
+    const applyCoupon = (coupon) => {
+        setAppliedCoupon(coupon);
+    };
+
+    const removeCoupon = () => {
+        setAppliedCoupon(null);
     };
 
     const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -55,7 +77,10 @@ export const CartProvider = ({ children }) => {
             removeFromCart,
             updateQuantity,
             clearCart,
-            cartCount
+            cartCount,
+            appliedCoupon,
+            applyCoupon,
+            removeCoupon
         }}>
             {children}
         </CartContext.Provider>

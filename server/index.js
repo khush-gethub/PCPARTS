@@ -698,11 +698,131 @@ app.delete('/readymade-pcs/items/:item_id', async (req, res) => {
     }
 });
 
-// 12. Coupons
-createGetAllRoute('/coupons', Coupon);
+// 12. Coupons (Admin & User)
+app.get('/api/coupons', async (req, res) => {
+    try {
+        const coupons = await Coupon.find().sort({ created_at: -1 });
+        res.json(coupons);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
-// 13. UserCoupons
-createGetAllRoute('/user-coupons', UserCoupon);
+app.post('/api/coupons', async (req, res) => {
+    try {
+        const { name, code, discount_type, discount_value, min_completed_orders, min_order_amount, expires_at, status } = req.body;
+        const newCoupon = new Coupon({
+            _id: `cpn_${uuidv4()}`,
+            name, code, discount_type, discount_value, min_completed_orders, min_order_amount, expires_at, status
+        });
+        await newCoupon.save();
+        res.status(201).json(newCoupon);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+app.put('/api/coupons/:id', async (req, res) => {
+    try {
+        const updated = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updated);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+app.delete('/api/coupons/:id', async (req, res) => {
+    try {
+        await Coupon.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Coupon deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// User Coupons (Unified: Shows earned/used coupons only, hidden until requirement met)
+app.get('/api/user/coupons/:user_id', async (req, res) => {
+    try {
+        const userId = req.params.user_id;
+
+        // 1. Get all active coupons
+        const allCoupons = await Coupon.find({ status: 'active' }).sort({ created_at: -1 });
+
+        // 2. Get user's specific coupon usage/earnings
+        const userCoupons = await UserCoupon.find({ user_id: userId });
+
+        // 3. Get user's completed order count
+        const completedOrdersCount = await Order.countDocuments({
+            user_id: userId,
+            order_status: 'delivered'
+        });
+
+        // 4. Merge data (Only keep eligible or used coupons)
+        const enrichedCoupons = allCoupons.map(coupon => {
+            const userRecord = userCoupons.find(uc => uc.coupon_id === coupon._id);
+
+            let status = 'locked';
+            let earned_at = null;
+            let used_at = null;
+
+            if (userRecord) {
+                status = userRecord.status;
+                earned_at = userRecord.earned_at;
+                used_at = userRecord.used_at;
+            } else if (completedOrdersCount >= coupon.min_completed_orders) {
+                status = 'eligible';
+            }
+
+            if (status === 'locked') return null; // Hide from user until earned
+
+            return {
+                ...coupon.toObject(),
+                user_status: status,
+                earned_at,
+                used_at,
+                requirements_met: true,
+                orders_needed: 0
+            };
+        }).filter(Boolean);
+
+        res.json(enrichedCoupons);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Helper: Check and assign coupons to user based on completed orders
+async function checkAndAssignCoupons(userId) {
+    try {
+        // Count completed orders for this user
+        const completedOrdersCount = await Order.countDocuments({
+            user_id: userId,
+            order_status: 'delivered'
+        });
+
+        // Find active coupons the user doesn't already have (eligible or used)
+        const userCouponIds = (await UserCoupon.find({ user_id: userId })).map(uc => uc.coupon_id);
+
+        const eligibleCoupons = await Coupon.find({
+            status: 'active',
+            _id: { $nin: userCouponIds },
+            min_completed_orders: { $lte: completedOrdersCount }
+        });
+
+        if (eligibleCoupons.length > 0) {
+            const newUserCoupons = eligibleCoupons.map(coupon => ({
+                _id: `ucpn_${uuidv4()}`,
+                user_id: userId,
+                coupon_id: coupon._id,
+                status: 'eligible',
+                earned_at: new Date()
+            }));
+            await UserCoupon.insertMany(newUserCoupons);
+        }
+    } catch (err) {
+        console.error("Error in checkAndAssignCoupons:", err);
+    }
+}
 
 // 14. Cart
 app.get('/cart/:user_id', async (req, res) => {
@@ -865,6 +985,12 @@ app.put('/api/orders/:id/status', async (req, res) => {
             { new: true }
         );
         if (!updatedOrder) return res.status(404).json({ error: 'Order not found' });
+
+        // Trigger Coupon Logic if delivered
+        if (status === 'delivered' && updatedOrder.user_id) {
+            await checkAndAssignCoupons(updatedOrder.user_id);
+        }
+
         res.json(updatedOrder);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -873,22 +999,36 @@ app.put('/api/orders/:id/status', async (req, res) => {
 
 app.post('/orders', async (req, res) => {
     try {
-        const { user_id, address_data, items, payment_method, total_price, payment_id } = req.body;
+        const { user_id, address_data, items, payment_method, total_price, payment_id, coupon_id } = req.body;
 
         if (!items || items.length === 0) {
             throw new Error('Order must contain items');
         }
 
-        // 1. Create Address if provided (or use existing ID)
+        // 1. Create Address if provided (or use existing, or check for duplicate)
         let addressId = address_data?._id;
         if (!addressId && address_data) {
-            addressId = `addr_${uuidv4()}`;
-            const newAddress = new Address({
-                _id: addressId,
+            // Check if user already has an address with identical details to prevent duplicates
+            const existingAddress = await Address.findOne({
                 user_id,
-                ...address_data
+                street_address: address_data.street_address,
+                city: address_data.city,
+                state: address_data.state,
+                country: address_data.country,
+                zip_code: address_data.zip_code
             });
-            await newAddress.save();
+
+            if (existingAddress) {
+                addressId = existingAddress._id;
+            } else {
+                addressId = `addr_${uuidv4()}`;
+                const newAddress = new Address({
+                    _id: addressId,
+                    user_id,
+                    ...address_data
+                });
+                await newAddress.save();
+            }
         }
 
         // 2. Create Order
@@ -902,9 +1042,18 @@ app.post('/orders', async (req, res) => {
             payment_status: payment_method === 'cod' ? 'pending' : 'paid',
             order_status: 'processing',
             payment_id: payment_id || (payment_method === 'cod' ? `cod_${uuidv4()}` : `pay_${uuidv4()}`),
+            coupon_id: coupon_id,
             created_at: new Date()
         });
         await newOrder.save();
+
+        // 2.1 Mark Coupon as Used
+        if (coupon_id && user_id) {
+            await UserCoupon.findOneAndUpdate(
+                { user_id, coupon_id, status: 'eligible' },
+                { status: 'used', used_at: new Date() }
+            );
+        }
 
         // 3. Process Items & Update Stock
         const orderItems = [];
