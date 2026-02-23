@@ -386,6 +386,14 @@ const ProfilePage = () => {
                                                 <p className="font-black text-gray-900 text-lg">₹{order.total_price}</p>
                                             </div>
                                         </div>
+                                        {order.coupon_id && (
+                                            <div className="mb-4">
+                                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-[10px] font-bold rounded-lg border border-green-100">
+                                                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd"></path></svg>
+                                                    Coupon Applied: {order.coupon_id.code} ({order.coupon_id.name})
+                                                </span>
+                                            </div>
+                                        )}
                                         <div className="flex flex-wrap gap-2 mb-4">
                                             {order.items?.slice(0, 3).map((item, idx) => (
                                                 <span key={idx} className="bg-gray-50 px-3 py-1.5 rounded-lg text-[10px] text-gray-500 font-black uppercase tracking-tighter border border-gray-100">
@@ -473,6 +481,18 @@ const ProfilePage = () => {
                                             <div className="flex justify-between items-center text-sm font-medium text-gray-500 uppercase tracking-widest">
                                                 <span>Payment Method</span>
                                                 <span className="text-gray-900 font-black">{selectedOrder.payment_method?.toUpperCase()}</span>
+                                            </div>
+                                            {selectedOrder.coupon_id && (
+                                                <div className="flex justify-between items-center text-sm font-medium text-green-600 uppercase tracking-widest">
+                                                    <span>Coupon Applied</span>
+                                                    <span className="font-black">{selectedOrder.coupon_id.code}</span>
+                                                </div>
+                                            )}
+                                            <div className="flex justify-between items-center text-sm font-medium text-gray-500 uppercase tracking-widest">
+                                                <span>Total Savings</span>
+                                                <span className="text-green-600 font-black">
+                                                    {selectedOrder.coupon_id ? (selectedOrder.coupon_id.discount_type === 'percentage' ? `${selectedOrder.coupon_id.discount_value}%` : `₹${selectedOrder.coupon_id.discount_value}`) : '₹0'}
+                                                </span>
                                             </div>
                                             <div className="flex justify-between items-center">
                                                 <span className="text-gray-900 font-black uppercase tracking-widest text-sm">Grand Total</span>

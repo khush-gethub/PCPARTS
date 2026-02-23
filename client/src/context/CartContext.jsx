@@ -34,14 +34,22 @@ export const CartProvider = ({ children }) => {
     }, [appliedCoupon]);
 
     const addToCart = (product) => {
+        // Sanitize price: Convert to number, removing currency symbols and commas
+        let sanitizedPrice = product.price;
+        if (typeof sanitizedPrice === 'string') {
+            sanitizedPrice = parseFloat(sanitizedPrice.replace(/[^0-9.]/g, ''));
+        }
+
+        const preparedProduct = { ...product, price: sanitizedPrice || 0 };
+
         setCartItems(prevItems => {
-            const existingItem = prevItems.find(item => item.id === product.id);
+            const existingItem = prevItems.find(item => item.id === preparedProduct.id);
             if (existingItem) {
                 return prevItems.map(item =>
-                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+                    item.id === preparedProduct.id ? { ...item, quantity: item.quantity + 1 } : item
                 );
             }
-            return [...prevItems, { ...product, quantity: 1 }];
+            return [...prevItems, { ...preparedProduct, quantity: 1 }];
         });
     };
 

@@ -932,6 +932,7 @@ app.get('/api/orders/user/:user_id', async (req, res) => {
     try {
         const orders = await Order.find({ user_id: req.params.user_id })
             .populate('address_id')
+            .populate('coupon_id')
             .sort({ created_at: -1 });
 
         const enrichedOrders = await Promise.all(orders.map(async (order) => {
@@ -950,6 +951,7 @@ app.get('/api/orders', async (req, res) => {
         const orders = await Order.find()
             .populate('user_id', 'full_name email') // Populate basic user info
             .populate('address_id')
+            .populate('coupon_id')
             .sort({ created_at: -1 });
 
         const enrichedOrders = await Promise.all(orders.map(async (order) => {
@@ -965,7 +967,9 @@ app.get('/api/orders', async (req, res) => {
 
 app.get('/api/orders/:id', async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id).populate('address_id');
+        const order = await Order.findById(req.params.id)
+            .populate('address_id')
+            .populate('coupon_id');
         if (!order) return res.status(404).json({ error: 'Order not found' });
 
         const items = await OrderItem.find({ order_id: order._id });

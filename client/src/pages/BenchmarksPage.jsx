@@ -51,22 +51,19 @@ const BenchmarksPage = () => {
         fetchData();
     }, []);
 
-    const handleAddToCart = (build) => {
-        if (!build.items || build.items.length === 0) return;
+    const handleAddToCart = (product) => {
+        if (!product) return;
 
-        build.items.forEach(item => {
-            if (item.product_id) {
-                addToCart({
-                    ...item.product_id,
-                    id: item.product_id._id,
-                    title: item.product_id.name,
-                    price: item.variant_id?.price || item.product_id.price || 0,
-                    image: item.product_id.image_url || item.product_id.image,
-                    category: item.category_id?.replace('cat_', '').replace('_', ' ').toUpperCase()
-                });
-            }
+        addToCart({
+            id: product.id,
+            title: product.name,
+            price: product.price,
+            image: product.image,
+            category: 'Storage' // Benchmarks page specifically shows storage currently
         });
-        alert(`All components from "${build.name}" added to cart!`);
+
+        setNotification(`${product.name} added to cart!`);
+        setTimeout(() => setNotification(null), 3000);
     };
 
     const filteredProducts = useMemo(() => {
