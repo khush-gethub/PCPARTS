@@ -1,0 +1,51 @@
+[{
+  "_id": "cpn_ac41aecd-dab2-4cc8-b62c-8705e246b95d",
+  "name": "ooo",
+  "code": "123456",
+  "discount_type": "percentage",
+  "discount_value": 10,
+  "min_completed_orders": 3,
+  "min_order_amount": 0,
+  "expires_at": {
+    "$date": "2026-02-24T00:00:00.000Z"
+  },
+  "status": "active",
+  "created_at": {
+    "$date": "2026-02-22T05:07:59.623Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "cpn_698d6783-18e3-4a9d-bcbe-24d00b656b6b",
+  "name": "didvadi",
+  "code": "741852",
+  "discount_type": "percentage",
+  "discount_value": 20,
+  "min_completed_orders": 6,
+  "min_order_amount": 0,
+  "expires_at": {
+    "$date": "2026-02-25T00:00:00.000Z"
+  },
+  "status": "active",
+  "created_at": {
+    "$date": "2026-02-22T05:46:48.800Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "cpn_52d3a31d-0125-42e2-8366-6b43b65bff0f",
+  "name": "hello",
+  "code": "121212",
+  "discount_type": "percentage",
+  "discount_value": 25,
+  "min_completed_orders": 6,
+  "min_order_amount": 0,
+  "expires_at": {
+    "$date": "2026-02-24T00:00:00.000Z"
+  },
+  "status": "active",
+  "created_at": {
+    "$date": "2026-02-23T04:11:40.541Z"
+  },
+  "__v": 0
+}]

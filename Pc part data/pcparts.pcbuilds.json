@@ -1,0 +1,40 @@
+[{
+  "_id": "build_c617ca24-a965-4fbc-b053-ab87ea3ab22a",
+  "user_id": "test_user_123",
+  "name": "Test Build",
+  "total_price": 100000,
+  "created_at": {
+    "$date": "2026-01-13T10:38:26.224Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "build_e060f2a9-e657-4ac7-8e22-2e30ae4a7e20",
+  "user_id": "user_c8cc503f-a6e1-48aa-94cb-6f2882ce577a",
+  "name": "My Custom Build - 1/13/2026",
+  "total_price": 590831,
+  "created_at": {
+    "$date": "2026-01-13T11:14:55.203Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "build_0f4dfb47-44d7-455e-9c5a-3eaa7be9b080",
+  "user_id": "user_c8cc503f-a6e1-48aa-94cb-6f2882ce577a",
+  "name": "My Custom Build - 1/13/2026",
+  "total_price": 812800,
+  "created_at": {
+    "$date": "2026-01-13T11:16:27.096Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "build_ac3dd8c1-8a9b-4f59-b4a0-26636dc77209",
+  "user_id": "user_a60c21a8-d180-4f7a-9b18-4fc59ce29884",
+  "name": "My Custom Build - 2/23/2026",
+  "total_price": 447505,
+  "created_at": {
+    "$date": "2026-02-23T04:31:53.483Z"
+  },
+  "__v": 0
+}]

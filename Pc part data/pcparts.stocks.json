@@ -1,0 +1,549 @@
+[{
+  "_id": "stk_bf2130ea-a0d1-4007-9a32-ddb37b8e0dce",
+  "variant_id": "var_prod_pow_5352",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-18T07:10:44.754Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "stk_6f04f3a1-8259-4afa-b816-5dd35984d042",
+  "variant_id": "var_prod_pow_5399",
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-18T07:11:06.286Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "stk_098ac285-ce34-420f-aec1-6743cc8196cc",
+  "variant_id": "var_prod_sto_7601",
+  "quantity": 8,
+  "updated_at": {
+    "$date": "2026-02-18T07:12:20.081Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "stk_0265e8a0-6c2e-40be-959f-59447cbeb34e",
+  "variant_id": "var_prod_sto_2036",
+  "quantity": 98,
+  "updated_at": {
+    "$date": "2026-02-18T07:46:14.713Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "stk_e2d945b0-36c9-49c5-91d2-2f118101f0c4",
+  "variant_id": "var_prod_sto_7562",
+  "quantity": 97,
+  "updated_at": {
+    "$date": "2026-02-18T07:52:12.535Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "stk_ffbd917c-99ab-4b16-a7ce-3b06cd40ebed",
+  "variant_id": "var_prod_sto_6353",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-18T07:54:09.206Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_5014",
+  "variant_id": "var_prod_cpu_5014",
+  "quantity": 98,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.413Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_7834",
+  "variant_id": "var_prod_cpu_7834",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.420Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_9505",
+  "variant_id": "var_prod_cpu_9505",
+  "quantity": 99,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.422Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_3843",
+  "variant_id": "var_prod_cpu_3843",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.424Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_7319",
+  "variant_id": "var_prod_cpu_7319",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.426Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_5047",
+  "variant_id": "var_prod_mot_5047",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.427Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_5256",
+  "variant_id": "var_prod_mot_5256",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.429Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_2869",
+  "variant_id": "var_prod_mot_2869",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.431Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_6996",
+  "variant_id": "var_prod_mot_6996",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.433Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_9993",
+  "variant_id": "var_prod_mot_9993",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.435Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ram_6065",
+  "variant_id": "var_prod_ram_6065",
+  "quantity": 96,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.436Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ram_4621",
+  "variant_id": "var_prod_ram_4621",
+  "quantity": 92,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.437Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ram_8192",
+  "variant_id": "var_prod_ram_8192",
+  "quantity": 95,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.438Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ram_2423",
+  "variant_id": "var_prod_ram_2423",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.440Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ram_7553",
+  "variant_id": "var_prod_ram_7553",
+  "quantity": 98,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.441Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cab_1089",
+  "variant_id": "var_prod_cab_1089",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.443Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cab_2568",
+  "variant_id": "var_prod_cab_2568",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.444Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cab_3036",
+  "variant_id": "var_prod_cab_3036",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.445Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cab_7581",
+  "variant_id": "var_prod_cab_7581",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.446Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cab_4220",
+  "variant_id": "var_prod_cab_4220",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.447Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_pow_891",
+  "variant_id": "var_prod_pow_891",
+  "quantity": 99,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.448Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_pow_6839",
+  "variant_id": "var_prod_pow_6839",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.450Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_pow_562",
+  "variant_id": "var_prod_pow_562",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.451Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_gra_889",
+  "variant_id": "var_prod_gra_889",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.454Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_gra_5312",
+  "variant_id": "var_prod_gra_5312",
+  "quantity": 99,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.455Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_gra_9584",
+  "variant_id": "var_prod_gra_9584",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.456Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_gra_4146",
+  "variant_id": "var_prod_gra_4146",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.457Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_gra_3901",
+  "variant_id": "var_prod_gra_3901",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.458Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mon_6227",
+  "variant_id": "var_prod_mon_6227",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.459Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mon_1115",
+  "variant_id": "var_prod_mon_1115",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.460Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mon_3875",
+  "variant_id": "var_prod_mon_3875",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mon_2671",
+  "variant_id": "var_prod_mon_2671",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.462Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mon_8206",
+  "variant_id": "var_prod_mon_8206",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.463Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_sto_4757",
+  "variant_id": "var_prod_sto_4757",
+  "quantity": 86,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.466Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_3509",
+  "variant_id": "var_prod_cpu_3509",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.469Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_7863",
+  "variant_id": "var_prod_cpu_7863",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.470Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_3617",
+  "variant_id": "var_prod_cpu_3617",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.471Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_1522",
+  "variant_id": "var_prod_cpu_1522",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.472Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_cpu_5114",
+  "variant_id": "var_prod_cpu_5114",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.473Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ope_5692",
+  "variant_id": "var_prod_ope_5692",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ope_505",
+  "variant_id": "var_prod_ope_505",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ope_5734",
+  "variant_id": "var_prod_ope_5734",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.475Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ope_1801",
+  "variant_id": "var_prod_ope_1801",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.476Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_ope_3926",
+  "variant_id": "var_prod_ope_3926",
+  "quantity": 99,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.477Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_acc_5235",
+  "variant_id": "var_prod_acc_5235",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.479Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_acc_3352",
+  "variant_id": "var_prod_acc_3352",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.480Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_acc_9325",
+  "variant_id": "var_prod_acc_9325",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.481Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_acc_3656",
+  "variant_id": "var_prod_acc_3656",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.482Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_acc_5592",
+  "variant_id": "var_prod_acc_5592",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.483Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_77e977aa",
+  "variant_id": "var_prod_mot_77e977aa",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.484Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_f2fdc32e",
+  "variant_id": "var_prod_mot_f2fdc32e",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.485Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_267cc7e9",
+  "variant_id": "var_prod_mot_267cc7e9",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.486Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_4d898e5c",
+  "variant_id": "var_prod_mot_4d898e5c",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.486Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_prod_mot_7476caca",
+  "variant_id": "var_prod_mot_7476caca",
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.487Z"
+  },
+  "__v": 0
+},
+{
+  "_id": "sto_09015ed9-7a24-40dd-b994-cec9568a428a",
+  "variant_id": "var_09015ed9-7a24-40dd-b994-cec9568a428a",
+  "quantity": 98,
+  "updated_at": {
+    "$date": "2026-02-21T14:25:37.489Z"
+  },
+  "__v": 0
+}]

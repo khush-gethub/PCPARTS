@@ -26,16 +26,17 @@ const BenchmarksPage = () => {
                     name: item.name,
                     image: item.image,
                     capacity: item.capacity,
-                    cache: item.cache,
+                    cache: item.cache || 'N/A',
                     type: item.type,
                     interface: item.interface,
-                    writeSpeed: item.write_speed,
-                    readSpeed: item.read_speed,
+                    writeSpeed: item.write_speed || 0,
+                    readSpeed: item.read_speed || 0,
                     maxWrite: item.max_write,
                     maxRead: item.max_read,
                     rating: item.rating,
                     reviews: item.reviews,
-                    price: item.price
+                    price: item.price,
+                    category: item.category // Store category for cart
                 }));
 
                 setProducts(formattedProducts);
@@ -59,7 +60,7 @@ const BenchmarksPage = () => {
             title: product.name,
             price: product.price,
             image: product.image,
-            category: 'Storage' // Benchmarks page specifically shows storage currently
+            category: product.category || 'Hardware'
         });
 
         setNotification(`${product.name} added to cart!`);
