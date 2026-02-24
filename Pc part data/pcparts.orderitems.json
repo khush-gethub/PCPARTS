@@ -1,0 +1,189 @@
+[{
+  "_id": "orditem_52a21604-315d-4983-971c-995f7c17dcd7",
+  "order_id": "ord_2a3c0f07-c2da-4d82-9c38-f2c3de3cf14a",
+  "variant_id": "var_prod_sto_4757",
+  "product_name": "Crucial T700 1TB Gen5 - Standard Edition",
+  "price": 20000,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_ac9f704d-ccd2-4090-a941-168ed9e7a3fb",
+  "order_id": "ord_e32d3afa-1f7a-4688-889d-fdb00a1d4057",
+  "variant_id": "var_prod_ram_6065",
+  "product_name": "Corsair Vengeance DDR5 32GB - Standard Edition",
+  "price": 80115,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_5ecd3a18-231f-4af7-ae9b-732ec44b6ce1",
+  "order_id": "ord_6fe821c6-a0bd-481e-a8ee-774bc410793f",
+  "variant_id": "var_prod_ram_4621",
+  "product_name": "G.Skill Trident Z5 RGB 32GB - Standard Edition",
+  "price": 16919,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_e48449c6-8e42-47ae-9cb9-326a789134c8",
+  "order_id": "ord_0425cc89-c986-41af-8d1c-b397dd8368a2",
+  "variant_id": "var_prod_sto_7562",
+  "product_name": "Samsung 990 Pro 2TB - Standard Edition",
+  "price": 90686,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_4dddddab-1ca5-463d-b178-adc560259bfc",
+  "order_id": "ord_61678e84-c4d3-4d15-ad3c-9cb2ff6465e6",
+  "variant_id": "var_prod_sto_4757",
+  "product_name": "Crucial T700 1TB Gen5 - Standard Edition",
+  "price": 20000,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_0399e419-5aaa-44e4-9151-2ef8ec8f4762",
+  "order_id": "ord_2605cda7-7543-40a2-a982-f5dea6bcef89",
+  "variant_id": "var_prod_ram_8192",
+  "product_name": "Kingston FURY Beast 16GB - Standard Edition",
+  "price": 29759,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_edbcfeb7-c7e6-41cf-9d75-7647efd0c292",
+  "order_id": "ord_f8fbf61f-a913-4cc1-a956-7245ca2fb37e",
+  "variant_id": "var_prod_ram_4621",
+  "product_name": "G.Skill Trident Z5 RGB 32GB - Standard Edition",
+  "price": 16919,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_f4bff1b6-0377-4cb9-8c1c-d1f693487a6c",
+  "order_id": "ord_fb344af6-e10e-40a1-877f-87d000e2cc17",
+  "variant_id": "var_prod_sto_4757",
+  "product_name": "Crucial T700 1TB Gen5 - Standard Edition",
+  "price": 20000,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_3dfd5f09-3f9a-485a-8a42-07e19889fade",
+  "order_id": "ord_c9f95114-32fc-4a23-886f-72dc3df4cdb0",
+  "variant_id": "var_09015ed9-7a24-40dd-b994-cec9568a428a",
+  "product_name": "intel 5 13000  - Standard",
+  "price": 15000,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_03abbf2f-3d93-4971-9a30-ab702ba5a023",
+  "order_id": "ord_7d235fab-072c-40cb-8f4c-1e62ab921bea",
+  "variant_id": "var_prod_sto_7601",
+  "product_name": "SK Hynix Platinum P41 2TB - Standard Edition",
+  "price": 81112,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_bcc516c3-04fa-4338-82ae-9a3b9323ba7f",
+  "order_id": "ord_7d235fab-072c-40cb-8f4c-1e62ab921bea",
+  "variant_id": "var_prod_ram_4621",
+  "product_name": "G.Skill Trident Z5 RGB 32GB - Standard Edition",
+  "price": 16919,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_679226d6-596f-48de-91c6-11e67f0c30e1",
+  "order_id": "ord_32445bda-5828-4a0f-bde3-caffdf5e6bf7",
+  "variant_id": "var_prod_sto_4757",
+  "product_name": "Crucial T700 1TB Gen5 - Standard Edition",
+  "price": 20000,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_20a797d5-7b6b-4c28-8baf-d1d2d777b2fd",
+  "order_id": "ord_a84ff1bd-93c0-4c12-83d7-0e7e8dbf1e8f",
+  "variant_id": "var_prod_sto_4757",
+  "product_name": "Crucial T700 1TB Gen5 - Standard Edition",
+  "price": 20000,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_b7f081e1-05e7-49c0-84d1-3e565bbf70b4",
+  "order_id": "ord_5006dc06-940c-4598-bfd9-33a26b83e802",
+  "variant_id": "var_prod_ram_4621",
+  "product_name": "G.Skill Trident Z5 RGB 32GB - Standard Edition",
+  "price": 16919,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_f9368532-f888-4581-8c91-e728fbfa518a",
+  "order_id": "ord_b2ef8061-a3e0-486f-b8cd-24836d36870a",
+  "variant_id": "var_prod_sto_4757",
+  "product_name": "Crucial T700 1TB Gen5 - Standard Edition",
+  "price": 20000,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_eb82f004-5388-46d2-802e-bf38af33c9f3",
+  "order_id": "ord_79ed74a8-e781-407d-8c4a-024c73c2d4cb",
+  "variant_id": "var_prod_ram_6065",
+  "product_name": "Corsair Vengeance DDR5 32GB - Standard Edition",
+  "price": 80115,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_25b0f576-cc0b-4f5e-843c-afa5074ef6ef",
+  "order_id": "ord_0de03179-25eb-476c-b6e7-0cca6a63f990",
+  "variant_id": "var_prod_ram_8192",
+  "product_name": "Kingston FURY Beast 16GB - Standard Edition",
+  "price": 29759,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_126a40b2-649e-4d73-b007-d15a98c3c91c",
+  "order_id": "ord_0a3fa3c5-d0c8-4fa7-b17c-d4d53e2f415c",
+  "variant_id": "var_prod_ope_3926",
+  "product_name": "Windows Server 2022 - Standard Edition",
+  "price": 7871,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_8a12584f-01a3-41df-86be-17c149d63dba",
+  "order_id": "ord_0a3fa3c5-d0c8-4fa7-b17c-d4d53e2f415c",
+  "variant_id": "var_prod_ram_8192",
+  "product_name": "Kingston FURY Beast 16GB - Standard Edition",
+  "price": 29759,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_5941d8f3-46dc-4f24-8cd8-4243c6120c52",
+  "order_id": "ord_0a3fa3c5-d0c8-4fa7-b17c-d4d53e2f415c",
+  "variant_id": "var_prod_sto_4757",
+  "product_name": "Crucial T700 1TB Gen5 - Standard Edition",
+  "price": 20000,
+  "quantity": 1,
+  "__v": 0
+},
+{
+  "_id": "orditem_eaa50f0c-2d65-40c2-acbf-73fc28d47ac1",
+  "order_id": "ord_7e404fa8-605c-4fd8-aa73-f5f011afad20",
+  "variant_id": "var_prod_ram_4621",
+  "product_name": "G.Skill Trident Z5 RGB 32GB - Standard Edition",
+  "price": 16919,
+  "quantity": 1,
+  "__v": 0
+}]

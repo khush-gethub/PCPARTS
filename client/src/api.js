@@ -43,7 +43,7 @@ export const api = {
 
     // Benchmarks
     getBenchmarks: () => fetchJson('/benchmarks'),
-    getBenchmarkTable: () => fetchJson('/benchmark-table'),
+    getBenchmarkTable: () => fetchJson('/api/benchmark-products'),
     getProductBenchmarks: (productId) => fetchJson(`/products/${productId}/benchmarks`),
 
     // ReadyMade PCs
@@ -138,4 +138,8 @@ export const api = {
         method: 'DELETE'
     }),
     getUserCoupons: (userId) => fetchJson(`/api/user/coupons/${userId}`),
+
+    // Admin Dashboard
+    getAdminStats: () => fetchJson('/api/admin/stats'),
+    getAdminRecentOrders: (page = 1, limit = 5) => fetchJson(`/api/admin/recent-orders?page=${page}&limit=${limit}`),
 };

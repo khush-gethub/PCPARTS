@@ -1,0 +1,16 @@
+[{
+  "_id": "pc_ab93e37c-b297-4751-ae28-683308043d06",
+  "name": "pc pro",
+  "price": 776620,
+  "category": "Mid-Range",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn4A_yOzixC559QDsjgDoeZG1TKlvhiXSUrw&s",
+  "__v": 0
+},
+{
+  "_id": "pc_c8715cbe-81fe-41b7-9e81-2d529dc46111",
+  "name": "beast pro",
+  "price": 335839,
+  "category": "High-End",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShswfM74DTJiwERMjPZYaBg-QYWNnE3HrUMg&s",
+  "__v": 0
+}]
