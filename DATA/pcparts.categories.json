@@ -1,0 +1,55 @@
+[{
+  "_id": "cat_cabinet",
+  "__v": 0,
+  "name": "Cabinet"
+},
+{
+  "_id": "cat_cpu",
+  "__v": 0,
+  "name": "CPU"
+},
+{
+  "_id": "cat_graphic_card",
+  "__v": 0,
+  "name": "Graphic Card"
+},
+{
+  "_id": "cat_power_supply",
+  "__v": 0,
+  "name": "Power Supply"
+},
+{
+  "_id": "cat_ram",
+  "__v": 0,
+  "name": "RAM"
+},
+{
+  "_id": "cat_storage_ssd",
+  "__v": 0,
+  "name": "Storage SSD"
+},
+{
+  "_id": "cat_accessories",
+  "__v": 0,
+  "name": "Accessories"
+},
+{
+  "_id": "cat_cpu_cooler",
+  "__v": 0,
+  "name": "CPU Cooler"
+},
+{
+  "_id": "cat_monitor",
+  "__v": 0,
+  "name": "Monitor"
+},
+{
+  "_id": "cat_motherboard",
+  "__v": 0,
+  "name": "Motherboard"
+},
+{
+  "_id": "cat_operating_system",
+  "__v": 0,
+  "name": "OPERATING_SYSTEM"
+}]

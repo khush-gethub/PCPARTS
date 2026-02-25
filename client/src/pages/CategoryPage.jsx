@@ -87,6 +87,7 @@ const CategoryPage = () => {
                     let image = p.image_url || "https://placehold.co/400x400?text=No+Image";
                     let stockStatus = "Out of Stock";
                     let originalPrice = null;
+                    let variant_id = null;
 
                     try {
                         // Fetch variants for this product
@@ -97,11 +98,13 @@ const CategoryPage = () => {
                             price = formatter.format(v.price);
                             if (v.discount_price) originalPrice = formatter.format(v.discount_price);
                             stockStatus = v.stock_status === 'in_stock' ? "In Stock" : "Out of Stock";
+                            variant_id = v._id;
                         }
                     } catch (e) { console.warn("Enrich error", p.name, e); }
 
                     return {
                         id: p.product_id,
+                        variantId: variant_id,
                         title: p.name,
                         price: price,
                         originalPrice,

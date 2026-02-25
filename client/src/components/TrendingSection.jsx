@@ -20,6 +20,7 @@ const TrendingSection = () => {
                     let image = p.image_url || "https://placehold.co/300x200?text=No+Image";
                     let price = "N/A";
                     let stockStatus = "Unknown";
+                    let variant_id = null;
 
                     try {
                         const [variants] = await Promise.all([
@@ -29,6 +30,7 @@ const TrendingSection = () => {
                         if (variants.length > 0) {
                             price = `₹${variants[0].price.toLocaleString('en-IN')}`;
                             stockStatus = variants[0].stock_status === 'in_stock' ? "In Stock" : "Out of Stock";
+                            variant_id = variants[0]._id;
                         }
                     } catch (e) {
                         console.warn("Error enriching product", p.product_id, e);
@@ -38,6 +40,7 @@ const TrendingSection = () => {
                         ...p,
                         image,
                         price,
+                        variant_id,
                         category_name: p.category_id?.name || 'Component',
                         stockStatus,
                         // Convert specs to array for card
@@ -88,6 +91,7 @@ const TrendingSection = () => {
                         <ProductCard
                             key={item.product_id || item._id}
                             id={item.product_id || item._id}
+                            variantId={item.variant_id}
                             title={item.name}
                             image={item.image}
                             price={item.price}

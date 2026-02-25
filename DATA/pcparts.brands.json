@@ -1,0 +1,420 @@
+[{
+  "_id": "brand_lian_li",
+  "__v": 0,
+  "name": "LIAN_LI"
+},
+{
+  "_id": "brand_fractal_design",
+  "__v": 0,
+  "name": "FRACTAL_DESIGN"
+},
+{
+  "_id": "brand_nzxt",
+  "__v": 0,
+  "name": "NZXT"
+},
+{
+  "_id": "brand_corsair",
+  "__v": 0,
+  "name": "CORSAIR"
+},
+{
+  "_id": "brand_phanteks",
+  "__v": 0,
+  "name": "PHANTEKS"
+},
+{
+  "_id": "brand_be_quiet",
+  "__v": 0,
+  "name": "BE_QUIET"
+},
+{
+  "_id": "brand_cooler_master",
+  "__v": 0,
+  "name": "COOLER_MASTER"
+},
+{
+  "_id": "brand_hyte",
+  "__v": 0,
+  "name": "HYTE"
+},
+{
+  "_id": "brand_montech",
+  "__v": 0,
+  "name": "MONTECH"
+},
+{
+  "_id": "brand_thermaltake",
+  "__v": 0,
+  "name": "THERMALTAKE"
+},
+{
+  "_id": "brand_msi",
+  "__v": 0,
+  "name": "MSI"
+},
+{
+  "_id": "brand_asus",
+  "__v": 0,
+  "name": "ASUS"
+},
+{
+  "_id": "brand_deepcool",
+  "__v": 0,
+  "name": "DEEPCOOL"
+},
+{
+  "_id": "brand_aerocool",
+  "__v": 0,
+  "name": "AEROCOOL"
+},
+{
+  "_id": "brand_intel",
+  "__v": 0,
+  "name": "INTEL"
+},
+{
+  "_id": "brand_amd",
+  "__v": 0,
+  "name": "AMD"
+},
+{
+  "_id": "brand_gigabyte",
+  "__v": 0,
+  "name": "GIGABYTE"
+},
+{
+  "_id": "brand_zotac",
+  "__v": 0,
+  "name": "ZOTAC"
+},
+{
+  "_id": "brand_sapphire",
+  "__v": 0,
+  "name": "SAPPHIRE"
+},
+{
+  "_id": "brand_evga",
+  "__v": 0,
+  "name": "EVGA"
+},
+{
+  "_id": "brand_palit",
+  "__v": 0,
+  "name": "PALIT"
+},
+{
+  "_id": "brand_inno3d",
+  "__v": 0,
+  "name": "INNO3D"
+},
+{
+  "_id": "brand_pny",
+  "__v": 0,
+  "name": "PNY"
+},
+{
+  "_id": "brand_xfx",
+  "__v": 0,
+  "name": "XFX"
+},
+{
+  "_id": "brand_colorful",
+  "__v": 0,
+  "name": "COLORFUL"
+},
+{
+  "_id": "brand_gainward",
+  "__v": 0,
+  "name": "GAINWARD"
+},
+{
+  "_id": "brand_powercolor",
+  "__v": 0,
+  "name": "POWERCOLOR"
+},
+{
+  "_id": "brand_nvidia",
+  "__v": 0,
+  "name": "NVIDIA"
+},
+{
+  "_id": "brand_seasonic",
+  "__v": 0,
+  "name": "SEASONIC"
+},
+{
+  "_id": "brand_silverstone",
+  "__v": 0,
+  "name": "SILVERSTONE"
+},
+{
+  "_id": "brand_fsp",
+  "__v": 0,
+  "name": "FSP"
+},
+{
+  "_id": "brand_adata",
+  "__v": 0,
+  "name": "ADATA"
+},
+{
+  "_id": "brand_inwin",
+  "__v": 0,
+  "name": "INWIN"
+},
+{
+  "_id": "brand_gskill",
+  "__v": 0,
+  "name": "GSKILL"
+},
+{
+  "_id": "brand_kingston",
+  "__v": 0,
+  "name": "KINGSTON"
+},
+{
+  "_id": "brand_teamgroup",
+  "__v": 0,
+  "name": "TEAMGROUP"
+},
+{
+  "_id": "brand_crucial",
+  "__v": 0,
+  "name": "CRUCIAL"
+},
+{
+  "_id": "brand_patriot",
+  "__v": 0,
+  "name": "PATRIOT"
+},
+{
+  "_id": "brand_lexar",
+  "__v": 0,
+  "name": "LEXAR"
+},
+{
+  "_id": "brand_thermalright",
+  "__v": 0,
+  "name": "THERMALRIGHT"
+},
+{
+  "_id": "brand_mushkin",
+  "__v": 0,
+  "name": "MUSHKIN"
+},
+{
+  "_id": "brand_silicon_power",
+  "__v": 0,
+  "name": "SILICON_POWER"
+},
+{
+  "_id": "brand_samsung",
+  "__v": 0,
+  "name": "SAMSUNG"
+},
+{
+  "_id": "brand_wd",
+  "__v": 0,
+  "name": "WD"
+},
+{
+  "_id": "brand_seagate",
+  "__v": 0,
+  "name": "SEAGATE"
+},
+{
+  "_id": "brand_sabrent",
+  "__v": 0,
+  "name": "SABRENT"
+},
+{
+  "_id": "brand_mshkin",
+  "__v": 0,
+  "name": "MSHKIN"
+},
+{
+  "_id": "brand_inland",
+  "__v": 0,
+  "name": "INLAND"
+},
+{
+  "_id": "brand_logitech",
+  "__v": 0,
+  "name": "LOGITECH"
+},
+{
+  "_id": "brand_razer",
+  "__v": 0,
+  "name": "RAZER"
+},
+{
+  "_id": "brand_steelseries",
+  "__v": 0,
+  "name": "STEELSERIES"
+},
+{
+  "_id": "brand_elgato",
+  "__v": 0,
+  "name": "ELGATO"
+},
+{
+  "_id": "brand_ducky",
+  "__v": 0,
+  "name": "DUCKY"
+},
+{
+  "_id": "brand_hyperx",
+  "__v": 0,
+  "name": "HYPERX"
+},
+{
+  "_id": "brand_zowie",
+  "__v": 0,
+  "name": "ZOWIE"
+},
+{
+  "_id": "brand_shure",
+  "__v": 0,
+  "name": "SHURE"
+},
+{
+  "_id": "brand_wooting",
+  "__v": 0,
+  "name": "WOOTING"
+},
+{
+  "_id": "brand_sony",
+  "__v": 0,
+  "name": "SONY"
+},
+{
+  "_id": "brand_secretlab",
+  "__v": 0,
+  "name": "SECRETLAB"
+},
+{
+  "_id": "brand_noctua",
+  "__v": 0,
+  "name": "NOCTUA"
+},
+{
+  "_id": "brand_bequiet",
+  "__v": 0,
+  "name": "BEQUIET"
+},
+{
+  "_id": "brand_arctic",
+  "__v": 0,
+  "name": "ARCTIC"
+},
+{
+  "_id": "brand_coolermaster",
+  "__v": 0,
+  "name": "COOLERMASTER"
+},
+{
+  "_id": "brand_lianli",
+  "__v": 0,
+  "name": "LIANLI"
+},
+{
+  "_id": "brand_scythe",
+  "__v": 0,
+  "name": "SCYTHE"
+},
+{
+  "_id": "brand_idcooling",
+  "__v": 0,
+  "name": "IDCOOLING"
+},
+{
+  "_id": "brand_dell",
+  "__v": 0,
+  "name": "DELL"
+},
+{
+  "_id": "brand_lg",
+  "__v": 0,
+  "name": "LG"
+},
+{
+  "_id": "brand_benq",
+  "__v": 0,
+  "name": "BENQ"
+},
+{
+  "_id": "brand_acer",
+  "__v": 0,
+  "name": "ACER"
+},
+{
+  "_id": "brand_viewsonic",
+  "__v": 0,
+  "name": "VIEWSONIC"
+},
+{
+  "_id": "brand_hp",
+  "__v": 0,
+  "name": "HP"
+},
+{
+  "_id": "brand_aoc",
+  "__v": 0,
+  "name": "AOC"
+},
+{
+  "_id": "brand_huawei",
+  "__v": 0,
+  "name": "HUAWEI"
+},
+{
+  "_id": "brand_lenovo",
+  "__v": 0,
+  "name": "LENOVO"
+},
+{
+  "_id": "brand_philips",
+  "__v": 0,
+  "name": "PHILIPS"
+},
+{
+  "_id": "brand_asrock",
+  "__v": 0,
+  "name": "ASROCK"
+},
+{
+  "_id": "brand_rog",
+  "__v": 0,
+  "name": "ROG"
+},
+{
+  "_id": "brand_microsoft",
+  "__v": 0,
+  "name": "MICROSOFT"
+},
+{
+  "_id": "brand_redhat",
+  "__v": 0,
+  "name": "REDHAT"
+},
+{
+  "_id": "brand_ubuntu",
+  "__v": 0,
+  "name": "UBUNTU"
+},
+{
+  "_id": "brand_vmware",
+  "__v": 0,
+  "name": "VMWARE"
+},
+{
+  "_id": "brand_symantec",
+  "__v": 0,
+  "name": "SYMANTEC"
+},
+{
+  "_id": "brand_malwarebytes",
+  "__v": 0,
+  "name": "MALWAREBYTES"
+}]

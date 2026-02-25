@@ -581,7 +581,8 @@ app.get('/api/benchmark-products', async (req, res) => {
                 max_read: 14000,
                 rating: 5.0,
                 reviews: Math.floor(Math.random() * 500) + 50,
-                price: variant ? variant.price : 0
+                price: variant ? variant.price : 0,
+                variant_id: variant ? variant._id : null
             };
         }));
 
@@ -941,6 +942,7 @@ app.get('/search', async (req, res) => {
                 product_id: p._id, // Explicitly pass product_id for aggregation results
                 image_url: image ? image.image_url : null,
                 price: variant ? variant.price : (p.price || 0),
+                variant_id: variant ? variant._id : null,
                 type: 'product'
             };
         }));

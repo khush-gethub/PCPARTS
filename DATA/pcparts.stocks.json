@@ -1,0 +1,1476 @@
+[{
+  "_id": "stk_case_001",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.872Z"
+  },
+  "variant_id": "var_case_001"
+},
+{
+  "_id": "stk_case_002",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.886Z"
+  },
+  "variant_id": "var_case_002"
+},
+{
+  "_id": "stk_case_003",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.898Z"
+  },
+  "variant_id": "var_case_003"
+},
+{
+  "_id": "stk_case_004",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.911Z"
+  },
+  "variant_id": "var_case_004"
+},
+{
+  "_id": "stk_case_005",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.932Z"
+  },
+  "variant_id": "var_case_005"
+},
+{
+  "_id": "stk_case_006",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.944Z"
+  },
+  "variant_id": "var_case_006"
+},
+{
+  "_id": "stk_case_007",
+  "__v": 0,
+  "quantity": 60,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.957Z"
+  },
+  "variant_id": "var_case_007"
+},
+{
+  "_id": "stk_case_008",
+  "__v": 0,
+  "quantity": 12,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.965Z"
+  },
+  "variant_id": "var_case_008"
+},
+{
+  "_id": "stk_case_009",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.979Z"
+  },
+  "variant_id": "var_case_009"
+},
+{
+  "_id": "stk_case_010",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:03.994Z"
+  },
+  "variant_id": "var_case_010"
+},
+{
+  "_id": "stk_case_011",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.006Z"
+  },
+  "variant_id": "var_case_011"
+},
+{
+  "_id": "stk_case_012",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.020Z"
+  },
+  "variant_id": "var_case_012"
+},
+{
+  "_id": "stk_case_013",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.028Z"
+  },
+  "variant_id": "var_case_013"
+},
+{
+  "_id": "stk_case_014",
+  "__v": 0,
+  "quantity": 35,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.041Z"
+  },
+  "variant_id": "var_case_014"
+},
+{
+  "_id": "stk_case_015",
+  "__v": 0,
+  "quantity": 80,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.053Z"
+  },
+  "variant_id": "var_case_015"
+},
+{
+  "_id": "stk_cpu_001",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.063Z"
+  },
+  "variant_id": "var_cpu_001"
+},
+{
+  "_id": "stk_cpu_002",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.076Z"
+  },
+  "variant_id": "var_cpu_002"
+},
+{
+  "_id": "stk_cpu_003",
+  "__v": 0,
+  "quantity": 45,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.092Z"
+  },
+  "variant_id": "var_cpu_003"
+},
+{
+  "_id": "stk_cpu_004",
+  "__v": 0,
+  "quantity": 60,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.104Z"
+  },
+  "variant_id": "var_cpu_004"
+},
+{
+  "_id": "stk_cpu_005",
+  "__v": 0,
+  "quantity": 80,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.121Z"
+  },
+  "variant_id": "var_cpu_005"
+},
+{
+  "_id": "stk_cpu_006",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.131Z"
+  },
+  "variant_id": "var_cpu_006"
+},
+{
+  "_id": "stk_cpu_007",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.143Z"
+  },
+  "variant_id": "var_cpu_007"
+},
+{
+  "_id": "stk_cpu_008",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.153Z"
+  },
+  "variant_id": "var_cpu_008"
+},
+{
+  "_id": "stk_cpu_009",
+  "__v": 0,
+  "quantity": 5,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.164Z"
+  },
+  "variant_id": "var_cpu_009"
+},
+{
+  "_id": "stk_cpu_010",
+  "__v": 0,
+  "quantity": 120,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.175Z"
+  },
+  "variant_id": "var_cpu_010"
+},
+{
+  "_id": "stk_cpu_011",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.181Z"
+  },
+  "variant_id": "var_cpu_011"
+},
+{
+  "_id": "stk_cpu_012",
+  "__v": 0,
+  "quantity": 55,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.193Z"
+  },
+  "variant_id": "var_cpu_012"
+},
+{
+  "_id": "stk_cpu_013",
+  "__v": 0,
+  "quantity": 90,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.201Z"
+  },
+  "variant_id": "var_cpu_013"
+},
+{
+  "_id": "stk_cpu_014",
+  "__v": 0,
+  "quantity": 110,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.209Z"
+  },
+  "variant_id": "var_cpu_014"
+},
+{
+  "_id": "stk_cpu_015",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.216Z"
+  },
+  "variant_id": "var_cpu_015"
+},
+{
+  "_id": "stk_gpu_001",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.230Z"
+  },
+  "variant_id": "var_gpu_001"
+},
+{
+  "_id": "stk_gpu_002",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.243Z"
+  },
+  "variant_id": "var_gpu_002"
+},
+{
+  "_id": "stk_gpu_003",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.251Z"
+  },
+  "variant_id": "var_gpu_003"
+},
+{
+  "_id": "stk_gpu_004",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.259Z"
+  },
+  "variant_id": "var_gpu_004"
+},
+{
+  "_id": "stk_gpu_005",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.264Z"
+  },
+  "variant_id": "var_gpu_005"
+},
+{
+  "_id": "stk_gpu_006",
+  "__v": 0,
+  "quantity": 8,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.276Z"
+  },
+  "variant_id": "var_gpu_006"
+},
+{
+  "_id": "stk_gpu_007",
+  "__v": 0,
+  "quantity": 60,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.286Z"
+  },
+  "variant_id": "var_gpu_007"
+},
+{
+  "_id": "stk_gpu_008",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.296Z"
+  },
+  "variant_id": "var_gpu_008"
+},
+{
+  "_id": "stk_gpu_009",
+  "__v": 0,
+  "quantity": 10,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.304Z"
+  },
+  "variant_id": "var_gpu_009"
+},
+{
+  "_id": "stk_gpu_010",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.315Z"
+  },
+  "variant_id": "var_gpu_010"
+},
+{
+  "_id": "stk_gpu_011",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.325Z"
+  },
+  "variant_id": "var_gpu_011"
+},
+{
+  "_id": "stk_gpu_012",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.332Z"
+  },
+  "variant_id": "var_gpu_012"
+},
+{
+  "_id": "stk_gpu_013",
+  "__v": 0,
+  "quantity": 35,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.345Z"
+  },
+  "variant_id": "var_gpu_013"
+},
+{
+  "_id": "stk_gpu_014",
+  "__v": 0,
+  "quantity": 5,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.359Z"
+  },
+  "variant_id": "var_gpu_014"
+},
+{
+  "_id": "stk_gpu_015",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.365Z"
+  },
+  "variant_id": "var_gpu_015"
+},
+{
+  "_id": "stk_psu_001",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.376Z"
+  },
+  "variant_id": "var_psu_001"
+},
+{
+  "_id": "stk_psu_002",
+  "__v": 0,
+  "quantity": 65,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.386Z"
+  },
+  "variant_id": "var_psu_002"
+},
+{
+  "_id": "stk_psu_003",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.395Z"
+  },
+  "variant_id": "var_psu_003"
+},
+{
+  "_id": "stk_psu_004",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.406Z"
+  },
+  "variant_id": "var_psu_004"
+},
+{
+  "_id": "stk_psu_005",
+  "__v": 0,
+  "quantity": 35,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.414Z"
+  },
+  "variant_id": "var_psu_005"
+},
+{
+  "_id": "stk_psu_006",
+  "__v": 0,
+  "quantity": 10,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.426Z"
+  },
+  "variant_id": "var_psu_006"
+},
+{
+  "_id": "stk_psu_007",
+  "__v": 0,
+  "quantity": 80,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.436Z"
+  },
+  "variant_id": "var_psu_007"
+},
+{
+  "_id": "stk_psu_008",
+  "__v": 0,
+  "quantity": 55,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.444Z"
+  },
+  "variant_id": "var_psu_008"
+},
+{
+  "_id": "stk_psu_009",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.453Z"
+  },
+  "variant_id": "var_psu_009"
+},
+{
+  "_id": "stk_psu_010",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.465Z"
+  },
+  "variant_id": "var_psu_010"
+},
+{
+  "_id": "stk_psu_011",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.473Z"
+  },
+  "variant_id": "var_psu_011"
+},
+{
+  "_id": "stk_psu_012",
+  "__v": 0,
+  "quantity": 45,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.479Z"
+  },
+  "variant_id": "var_psu_012"
+},
+{
+  "_id": "stk_psu_013",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.487Z"
+  },
+  "variant_id": "var_psu_013"
+},
+{
+  "_id": "stk_psu_014",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.498Z"
+  },
+  "variant_id": "var_psu_014"
+},
+{
+  "_id": "stk_psu_015",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.509Z"
+  },
+  "variant_id": "var_psu_015"
+},
+{
+  "_id": "stk_ram_001",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.516Z"
+  },
+  "variant_id": "var_ram_001"
+},
+{
+  "_id": "stk_ram_002",
+  "__v": 0,
+  "quantity": 65,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.525Z"
+  },
+  "variant_id": "var_ram_002"
+},
+{
+  "_id": "stk_ram_003",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.535Z"
+  },
+  "variant_id": "var_ram_003"
+},
+{
+  "_id": "stk_ram_004",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.545Z"
+  },
+  "variant_id": "var_ram_004"
+},
+{
+  "_id": "stk_ram_005",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.554Z"
+  },
+  "variant_id": "var_ram_005"
+},
+{
+  "_id": "stk_ram_006",
+  "__v": 0,
+  "quantity": 45,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.563Z"
+  },
+  "variant_id": "var_ram_006"
+},
+{
+  "_id": "stk_ram_007",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.576Z"
+  },
+  "variant_id": "var_ram_007"
+},
+{
+  "_id": "stk_ram_008",
+  "__v": 0,
+  "quantity": 55,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.582Z"
+  },
+  "variant_id": "var_ram_008"
+},
+{
+  "_id": "stk_ram_009",
+  "__v": 0,
+  "quantity": 10,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.591Z"
+  },
+  "variant_id": "var_ram_009"
+},
+{
+  "_id": "stk_ram_010",
+  "__v": 0,
+  "quantity": 150,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.601Z"
+  },
+  "variant_id": "var_ram_015"
+},
+{
+  "_id": "stk_ram_011",
+  "__v": 0,
+  "quantity": 80,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.611Z"
+  },
+  "variant_id": "var_ram_011"
+},
+{
+  "_id": "stk_ram_012",
+  "__v": 0,
+  "quantity": 95,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.618Z"
+  },
+  "variant_id": "var_ram_012"
+},
+{
+  "_id": "stk_ram_013",
+  "__v": 0,
+  "quantity": 120,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.626Z"
+  },
+  "variant_id": "var_ram_013"
+},
+{
+  "_id": "stk_ram_014",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.639Z"
+  },
+  "variant_id": "var_ram_014"
+},
+{
+  "_id": "stk_ssd_001",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.657Z"
+  },
+  "variant_id": "var_ssd_001"
+},
+{
+  "_id": "stk_ssd_002",
+  "__v": 0,
+  "quantity": 60,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.664Z"
+  },
+  "variant_id": "var_ssd_002"
+},
+{
+  "_id": "stk_ssd_003",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.673Z"
+  },
+  "variant_id": "var_ssd_003"
+},
+{
+  "_id": "stk_ssd_004",
+  "__v": 0,
+  "quantity": 120,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.680Z"
+  },
+  "variant_id": "var_ssd_004"
+},
+{
+  "_id": "stk_ssd_005",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.691Z"
+  },
+  "variant_id": "var_ssd_005"
+},
+{
+  "_id": "stk_ssd_006",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.702Z"
+  },
+  "variant_id": "var_ssd_006"
+},
+{
+  "_id": "stk_ssd_007",
+  "__v": 0,
+  "quantity": 70,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.718Z"
+  },
+  "variant_id": "var_ssd_007"
+},
+{
+  "_id": "stk_ssd_008",
+  "__v": 0,
+  "quantity": 85,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.725Z"
+  },
+  "variant_id": "var_ssd_008"
+},
+{
+  "_id": "stk_ssd_009",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.731Z"
+  },
+  "variant_id": "var_ssd_009"
+},
+{
+  "_id": "stk_ssd_010",
+  "__v": 0,
+  "quantity": 90,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.745Z"
+  },
+  "variant_id": "var_ssd_010"
+},
+{
+  "_id": "stk_ssd_011",
+  "__v": 0,
+  "quantity": 55,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.757Z"
+  },
+  "variant_id": "var_ssd_011"
+},
+{
+  "_id": "stk_ssd_012",
+  "__v": 0,
+  "quantity": 110,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.765Z"
+  },
+  "variant_id": "var_ssd_012"
+},
+{
+  "_id": "stk_ssd_013",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.777Z"
+  },
+  "variant_id": "var_ssd_013"
+},
+{
+  "_id": "stk_ssd_014",
+  "__v": 0,
+  "quantity": 35,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.785Z"
+  },
+  "variant_id": "var_ssd_014"
+},
+{
+  "_id": "stk_ssd_015",
+  "__v": 0,
+  "quantity": 45,
+  "updated_at": {
+    "$date": "2026-02-25T06:49:04.793Z"
+  },
+  "variant_id": "var_ssd_015"
+},
+{
+  "_id": "stk_acc_001",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:50.951Z"
+  },
+  "variant_id": "var_acc_001"
+},
+{
+  "_id": "stk_acc_002",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:50.967Z"
+  },
+  "variant_id": "var_acc_002"
+},
+{
+  "_id": "stk_acc_003",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:50.981Z"
+  },
+  "variant_id": "var_acc_003"
+},
+{
+  "_id": "stk_acc_004",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.002Z"
+  },
+  "variant_id": "var_acc_004"
+},
+{
+  "_id": "stk_acc_005",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.013Z"
+  },
+  "variant_id": "var_acc_005"
+},
+{
+  "_id": "stk_acc_006",
+  "__v": 0,
+  "quantity": 10,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.021Z"
+  },
+  "variant_id": "var_acc_006"
+},
+{
+  "_id": "stk_acc_007",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.035Z"
+  },
+  "variant_id": "var_acc_007"
+},
+{
+  "_id": "stk_acc_008",
+  "__v": 0,
+  "quantity": 12,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.046Z"
+  },
+  "variant_id": "var_acc_008"
+},
+{
+  "_id": "stk_acc_009",
+  "__v": 0,
+  "quantity": 8,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.059Z"
+  },
+  "variant_id": "var_acc_009"
+},
+{
+  "_id": "stk_acc_010",
+  "__v": 0,
+  "quantity": 6,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.070Z"
+  },
+  "variant_id": "var_acc_010"
+},
+{
+  "_id": "stk_acc_011",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.083Z"
+  },
+  "variant_id": "var_acc_011"
+},
+{
+  "_id": "stk_acc_012",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.097Z"
+  },
+  "variant_id": "var_acc_012"
+},
+{
+  "_id": "stk_acc_013",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.115Z"
+  },
+  "variant_id": "var_acc_013"
+},
+{
+  "_id": "stk_acc_014",
+  "__v": 0,
+  "quantity": 3,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.127Z"
+  },
+  "variant_id": "var_acc_014"
+},
+{
+  "_id": "stk_acc_015",
+  "__v": 0,
+  "quantity": 2,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.136Z"
+  },
+  "variant_id": "var_acc_015"
+},
+{
+  "_id": "stk_clr_001",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.295Z"
+  },
+  "variant_id": "var_clr_001"
+},
+{
+  "_id": "stk_clr_002",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.307Z"
+  },
+  "variant_id": "var_clr_002"
+},
+{
+  "_id": "stk_clr_003",
+  "__v": 0,
+  "quantity": 10,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.320Z"
+  },
+  "variant_id": "var_clr_003"
+},
+{
+  "_id": "stk_clr_004",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.327Z"
+  },
+  "variant_id": "var_clr_004"
+},
+{
+  "_id": "stk_clr_005",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.334Z"
+  },
+  "variant_id": "var_clr_005"
+},
+{
+  "_id": "stk_clr_006",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.342Z"
+  },
+  "variant_id": "var_clr_006"
+},
+{
+  "_id": "stk_clr_007",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.351Z"
+  },
+  "variant_id": "var_clr_007"
+},
+{
+  "_id": "stk_clr_008",
+  "__v": 0,
+  "quantity": 8,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.366Z"
+  },
+  "variant_id": "var_clr_008"
+},
+{
+  "_id": "stk_clr_009",
+  "__v": 0,
+  "quantity": 150,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.377Z"
+  },
+  "variant_id": "var_clr_009"
+},
+{
+  "_id": "stk_clr_010",
+  "__v": 0,
+  "quantity": 5,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.385Z"
+  },
+  "variant_id": "var_clr_010"
+},
+{
+  "_id": "stk_clr_011",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.396Z"
+  },
+  "variant_id": "var_clr_011"
+},
+{
+  "_id": "stk_clr_012",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.406Z"
+  },
+  "variant_id": "var_clr_012"
+},
+{
+  "_id": "stk_clr_013",
+  "__v": 0,
+  "quantity": 18,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.417Z"
+  },
+  "variant_id": "var_clr_013"
+},
+{
+  "_id": "stk_clr_014",
+  "__v": 0,
+  "quantity": 80,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.431Z"
+  },
+  "variant_id": "var_clr_014"
+},
+{
+  "_id": "stk_clr_015",
+  "__v": 0,
+  "quantity": 12,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.444Z"
+  },
+  "variant_id": "var_clr_015"
+},
+{
+  "_id": "stk_mon_001",
+  "__v": 0,
+  "quantity": 10,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.724Z"
+  },
+  "variant_id": "var_mon_001"
+},
+{
+  "_id": "stk_mon_002",
+  "__v": 0,
+  "quantity": 5,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.734Z"
+  },
+  "variant_id": "var_mon_002"
+},
+{
+  "_id": "stk_mon_003",
+  "__v": 0,
+  "quantity": 12,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.744Z"
+  },
+  "variant_id": "var_mon_003"
+},
+{
+  "_id": "stk_mon_004",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.751Z"
+  },
+  "variant_id": "var_mon_004"
+},
+{
+  "_id": "stk_mon_005",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.764Z"
+  },
+  "variant_id": "var_mon_005"
+},
+{
+  "_id": "stk_mon_006",
+  "__v": 0,
+  "quantity": 60,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.777Z"
+  },
+  "variant_id": "var_mon_006"
+},
+{
+  "_id": "stk_mon_007",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.791Z"
+  },
+  "variant_id": "var_mon_007"
+},
+{
+  "_id": "stk_mon_008",
+  "__v": 0,
+  "quantity": 35,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.798Z"
+  },
+  "variant_id": "var_mon_008"
+},
+{
+  "_id": "stk_mon_009",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.808Z"
+  },
+  "variant_id": "var_mon_009"
+},
+{
+  "_id": "stk_mon_010",
+  "__v": 0,
+  "quantity": 8,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.816Z"
+  },
+  "variant_id": "var_mon_010"
+},
+{
+  "_id": "stk_mon_011",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.827Z"
+  },
+  "variant_id": "var_mon_011"
+},
+{
+  "_id": "stk_mon_012",
+  "__v": 0,
+  "quantity": 45,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.844Z"
+  },
+  "variant_id": "var_mon_012"
+},
+{
+  "_id": "stk_mon_013",
+  "__v": 0,
+  "quantity": 18,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.854Z"
+  },
+  "variant_id": "var_mon_013"
+},
+{
+  "_id": "stk_mon_014",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.861Z"
+  },
+  "variant_id": "var_mon_014"
+},
+{
+  "_id": "stk_mon_015",
+  "__v": 0,
+  "quantity": 3,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.866Z"
+  },
+  "variant_id": "var_mon_015"
+},
+{
+  "_id": "stk_mb_001",
+  "__v": 0,
+  "quantity": 12,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.876Z"
+  },
+  "variant_id": "var_mb_001"
+},
+{
+  "_id": "stk_mb_002",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.882Z"
+  },
+  "variant_id": "var_mb_002"
+},
+{
+  "_id": "stk_mb_003",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.896Z"
+  },
+  "variant_id": "var_mb_003"
+},
+{
+  "_id": "stk_mb_004",
+  "__v": 0,
+  "quantity": 8,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.906Z"
+  },
+  "variant_id": "var_mb_004"
+},
+{
+  "_id": "stk_mb_005",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.912Z"
+  },
+  "variant_id": "var_mb_005"
+},
+{
+  "_id": "stk_mb_006",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.921Z"
+  },
+  "variant_id": "var_mb_006"
+},
+{
+  "_id": "stk_mb_007",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.931Z"
+  },
+  "variant_id": "var_mb_007"
+},
+{
+  "_id": "stk_mb_008",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.941Z"
+  },
+  "variant_id": "var_mb_008"
+},
+{
+  "_id": "stk_mb_009",
+  "__v": 0,
+  "quantity": 10,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.949Z"
+  },
+  "variant_id": "var_mb_009"
+},
+{
+  "_id": "stk_mb_010",
+  "__v": 0,
+  "quantity": 35,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.957Z"
+  },
+  "variant_id": "var_mb_010"
+},
+{
+  "_id": "stk_mb_011",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.965Z"
+  },
+  "variant_id": "var_mb_011"
+},
+{
+  "_id": "stk_mb_012",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.975Z"
+  },
+  "variant_id": "var_mb_012"
+},
+{
+  "_id": "stk_mb_013",
+  "__v": 0,
+  "quantity": 5,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.979Z"
+  },
+  "variant_id": "var_mb_013"
+},
+{
+  "_id": "stk_mb_014",
+  "__v": 0,
+  "quantity": 18,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.987Z"
+  },
+  "variant_id": "var_mb_014"
+},
+{
+  "_id": "stk_mb_015",
+  "__v": 0,
+  "quantity": 22,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:51.994Z"
+  },
+  "variant_id": "var_mb_015"
+},
+{
+  "_id": "stk_os_001",
+  "__v": 0,
+  "quantity": 50,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.015Z"
+  },
+  "variant_id": "var_os_001"
+},
+{
+  "_id": "stk_os_002",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.022Z"
+  },
+  "variant_id": "var_os_002"
+},
+{
+  "_id": "stk_os_003",
+  "__v": 0,
+  "quantity": 30,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.027Z"
+  },
+  "variant_id": "var_os_003"
+},
+{
+  "_id": "stk_os_004",
+  "__v": 0,
+  "quantity": 200,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.032Z"
+  },
+  "variant_id": "var_os_004"
+},
+{
+  "_id": "stk_os_005",
+  "__v": 0,
+  "quantity": 5,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.040Z"
+  },
+  "variant_id": "var_os_005"
+},
+{
+  "_id": "stk_os_006",
+  "__v": 0,
+  "quantity": 500,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.047Z"
+  },
+  "variant_id": "var_os_006"
+},
+{
+  "_id": "stk_os_007",
+  "__v": 0,
+  "quantity": 150,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.055Z"
+  },
+  "variant_id": "var_os_007"
+},
+{
+  "_id": "stk_os_008",
+  "__v": 0,
+  "quantity": 40,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.063Z"
+  },
+  "variant_id": "var_os_008"
+},
+{
+  "_id": "stk_os_009",
+  "__v": 0,
+  "quantity": 25,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.068Z"
+  },
+  "variant_id": "var_os_009"
+},
+{
+  "_id": "stk_os_010",
+  "__v": 0,
+  "quantity": 20,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.077Z"
+  },
+  "variant_id": "var_os_010"
+},
+{
+  "_id": "stk_os_011",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.085Z"
+  },
+  "variant_id": "var_os_011"
+},
+{
+  "_id": "stk_os_012",
+  "__v": 0,
+  "quantity": 300,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.094Z"
+  },
+  "variant_id": "var_os_012"
+},
+{
+  "_id": "stk_os_013",
+  "__v": 0,
+  "quantity": 250,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.099Z"
+  },
+  "variant_id": "var_os_013"
+},
+{
+  "_id": "stk_os_014",
+  "__v": 0,
+  "quantity": 100,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.107Z"
+  },
+  "variant_id": "var_os_014"
+},
+{
+  "_id": "stk_os_015",
+  "__v": 0,
+  "quantity": 15,
+  "updated_at": {
+    "$date": "2026-02-25T07:00:52.115Z"
+  },
+  "variant_id": "var_os_015"
+}]

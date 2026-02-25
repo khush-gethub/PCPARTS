@@ -1,0 +1,1155 @@
+[{
+  "_id": "img_case_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Lian+Li+O11+Dynamic",
+  "position": 1,
+  "product_id": "prod_case_001"
+},
+{
+  "_id": "img_case_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Fractal+Design+North",
+  "position": 1,
+  "product_id": "prod_case_002"
+},
+{
+  "_id": "img_case_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=NZXT+H9+Flow",
+  "position": 1,
+  "product_id": "prod_case_003"
+},
+{
+  "_id": "img_case_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+4000D+Airflow",
+  "position": 1,
+  "product_id": "prod_case_004"
+},
+{
+  "_id": "img_case_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Phanteks+NV7",
+  "position": 1,
+  "product_id": "prod_case_005"
+},
+{
+  "_id": "img_case_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=be+quiet!+Pure+Base+500DX",
+  "position": 1,
+  "product_id": "prod_case_006"
+},
+{
+  "_id": "img_case_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Cooler+Master+TD500+Mesh",
+  "position": 1,
+  "product_id": "prod_case_007"
+},
+{
+  "_id": "img_case_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=HYTE+Y60",
+  "position": 1,
+  "product_id": "prod_case_008"
+},
+{
+  "_id": "img_case_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=HYTE+Y40",
+  "position": 1,
+  "product_id": "prod_case_009"
+},
+{
+  "_id": "img_case_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Montech+Sky+Two",
+  "position": 1,
+  "product_id": "prod_case_010"
+},
+{
+  "_id": "img_case_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Thermaltake+The+Tower+500",
+  "position": 1,
+  "product_id": "prod_case_011"
+},
+{
+  "_id": "img_case_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=MSI+Gungnir+110R",
+  "position": 1,
+  "product_id": "prod_case_012"
+},
+{
+  "_id": "img_case_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASUS+TUF+GT502",
+  "position": 1,
+  "product_id": "prod_case_013"
+},
+{
+  "_id": "img_case_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Deepcool+CH560+Digital",
+  "position": 1,
+  "product_id": "prod_case_014"
+},
+{
+  "_id": "img_case_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Aerocool+Cylon",
+  "position": 1,
+  "product_id": "prod_case_015"
+},
+{
+  "_id": "img_cpu_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Intel+i9-14900K",
+  "position": 1,
+  "product_id": "prod_cpu_001"
+},
+{
+  "_id": "img_cpu_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AMD+Ryzen+9+7950X3D",
+  "position": 1,
+  "product_id": "prod_cpu_002"
+},
+{
+  "_id": "img_cpu_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Intel+i7-14700K",
+  "position": 1,
+  "product_id": "prod_cpu_003"
+},
+{
+  "_id": "img_cpu_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AMD+Ryzen+7+7800X3D",
+  "position": 1,
+  "product_id": "prod_cpu_004"
+},
+{
+  "_id": "img_cpu_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Intel+i5-14600K",
+  "position": 1,
+  "product_id": "prod_cpu_005"
+},
+{
+  "_id": "img_cpu_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AMD+Ryzen+5+7600X",
+  "position": 1,
+  "product_id": "prod_cpu_006"
+},
+{
+  "_id": "img_cpu_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Intel+i3-14100",
+  "position": 1,
+  "product_id": "prod_cpu_007"
+},
+{
+  "_id": "img_cpu_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AMD+Ryzen+9+7900X",
+  "position": 1,
+  "product_id": "prod_cpu_008"
+},
+{
+  "_id": "img_cpu_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Intel+i9-13900KS",
+  "position": 1,
+  "product_id": "prod_cpu_009"
+},
+{
+  "_id": "img_cpu_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AMD+Ryzen+5+5600X",
+  "position": 1,
+  "product_id": "prod_cpu_010"
+},
+{
+  "_id": "img_cpu_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Intel+i7-13700K",
+  "position": 1,
+  "product_id": "prod_cpu_011"
+},
+{
+  "_id": "img_cpu_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AMD+Ryzen+7+5700X",
+  "position": 1,
+  "product_id": "prod_cpu_012"
+},
+{
+  "_id": "img_cpu_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Intel+i5-13400F",
+  "position": 1,
+  "product_id": "prod_cpu_013"
+},
+{
+  "_id": "img_cpu_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AMD+Ryzen+3+4100",
+  "position": 1,
+  "product_id": "prod_cpu_014"
+},
+{
+  "_id": "img_cpu_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Intel+i5-12400",
+  "position": 1,
+  "product_id": "prod_cpu_015"
+},
+{
+  "_id": "img_gpu_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASUS+RTX+4090",
+  "position": 1,
+  "product_id": "prod_gpu_001"
+},
+{
+  "_id": "img_gpu_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=MSI+RTX+4080+Super",
+  "position": 1,
+  "product_id": "prod_gpu_002"
+},
+{
+  "_id": "img_gpu_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Gigabyte+RX+7900+XTX",
+  "position": 1,
+  "product_id": "prod_gpu_003"
+},
+{
+  "_id": "img_gpu_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Zotac+RTX+4070+Ti+Super",
+  "position": 1,
+  "product_id": "prod_gpu_004"
+},
+{
+  "_id": "img_gpu_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Sapphire+RX+7800+XT",
+  "position": 1,
+  "product_id": "prod_gpu_005"
+},
+{
+  "_id": "img_gpu_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=EVGA+RTX+3060",
+  "position": 1,
+  "product_id": "prod_gpu_006"
+},
+{
+  "_id": "img_gpu_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Palit+RTX+4060+Ti",
+  "position": 1,
+  "product_id": "prod_gpu_007"
+},
+{
+  "_id": "img_gpu_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Inno3D+RTX+4070+Super",
+  "position": 1,
+  "product_id": "prod_gpu_008"
+},
+{
+  "_id": "img_gpu_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=PNY+RTX+4090",
+  "position": 1,
+  "product_id": "prod_gpu_009"
+},
+{
+  "_id": "img_gpu_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=XFX+RX+7900+XT",
+  "position": 1,
+  "product_id": "prod_gpu_010"
+},
+{
+  "_id": "img_gpu_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Colorful+RTX+4060",
+  "position": 1,
+  "product_id": "prod_gpu_011"
+},
+{
+  "_id": "img_gpu_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Gainward+RTX+4070",
+  "position": 1,
+  "product_id": "prod_gpu_012"
+},
+{
+  "_id": "img_gpu_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=PowerColor+RX+7700+XT",
+  "position": 1,
+  "product_id": "prod_gpu_013"
+},
+{
+  "_id": "img_gpu_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=NVIDIA+RTX+4070+Super+FE",
+  "position": 1,
+  "product_id": "prod_gpu_014"
+},
+{
+  "_id": "img_gpu_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AMD+RX+7600",
+  "position": 1,
+  "product_id": "prod_gpu_015"
+},
+{
+  "_id": "img_psu_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+RM850x",
+  "position": 1,
+  "product_id": "prod_psu_001"
+},
+{
+  "_id": "img_psu_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Seasonic+FOCUS+GX-750",
+  "position": 1,
+  "product_id": "prod_psu_002"
+},
+{
+  "_id": "img_psu_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=EVGA+SuperNOVA+1000",
+  "position": 1,
+  "product_id": "prod_psu_003"
+},
+{
+  "_id": "img_psu_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=be+quiet!+Straight+Power+11",
+  "position": 1,
+  "product_id": "prod_psu_004"
+},
+{
+  "_id": "img_psu_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=MSI+MPG+A850G",
+  "position": 1,
+  "product_id": "prod_psu_005"
+},
+{
+  "_id": "img_psu_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASUS+ROG+Thor+1200W",
+  "position": 1,
+  "product_id": "prod_psu_006"
+},
+{
+  "_id": "img_psu_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Gigabyte+P750GM",
+  "position": 1,
+  "product_id": "prod_psu_007"
+},
+{
+  "_id": "img_psu_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Cooler+Master+MWE+Gold+850",
+  "position": 1,
+  "product_id": "prod_psu_008"
+},
+{
+  "_id": "img_psu_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Thermaltake+Toughpower+GF3",
+  "position": 1,
+  "product_id": "prod_psu_009"
+},
+{
+  "_id": "img_psu_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=NZXT+C850+Gold",
+  "position": 1,
+  "product_id": "prod_psu_010"
+},
+{
+  "_id": "img_psu_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=SilverStone+SX750+SFX",
+  "position": 1,
+  "product_id": "prod_psu_011"
+},
+{
+  "_id": "img_psu_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=FSP+Hydro+G+Pro",
+  "position": 1,
+  "product_id": "prod_psu_012"
+},
+{
+  "_id": "img_psu_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ADATA+XPG+Core+Reactor",
+  "position": 1,
+  "product_id": "prod_psu_013"
+},
+{
+  "_id": "img_psu_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=InWin+P85",
+  "position": 1,
+  "product_id": "prod_psu_014"
+},
+{
+  "_id": "img_psu_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Deepcool+PQ850M",
+  "position": 1,
+  "product_id": "prod_psu_015"
+},
+{
+  "_id": "img_ram_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=G.Skill+Trident+Z5",
+  "position": 1,
+  "product_id": "prod_ram_001"
+},
+{
+  "_id": "img_ram_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+Vengeance+DDR5",
+  "position": 1,
+  "product_id": "prod_ram_002"
+},
+{
+  "_id": "img_ram_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Kingston+FURY+DDR5",
+  "position": 1,
+  "product_id": "prod_ram_003"
+},
+{
+  "_id": "img_ram_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=TeamGroup+T-Force+DDR5",
+  "position": 1,
+  "product_id": "prod_ram_004"
+},
+{
+  "_id": "img_ram_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Crucial+DDR5+Classic",
+  "position": 1,
+  "product_id": "prod_ram_005"
+},
+{
+  "_id": "img_ram_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ADATA+XPG+DDR5",
+  "position": 1,
+  "product_id": "prod_ram_006"
+},
+{
+  "_id": "img_ram_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+Dominator+DDR5",
+  "position": 1,
+  "product_id": "prod_ram_007"
+},
+{
+  "_id": "img_ram_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=G.Skill+Ripjaws+DDR5",
+  "position": 1,
+  "product_id": "prod_ram_008"
+},
+{
+  "_id": "img_ram_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Patriot+Viper+DDR5",
+  "position": 1,
+  "product_id": "prod_ram_009"
+},
+{
+  "_id": "img_ram_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Lexar+Ares+DDR5",
+  "position": 1,
+  "product_id": "prod_ram_010"
+},
+{
+  "_id": "img_ram_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=PNY+XLR8+DDR4",
+  "position": 1,
+  "product_id": "prod_ram_011"
+},
+{
+  "_id": "img_ram_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=T-Force+Vulcan+DDR4",
+  "position": 1,
+  "product_id": "prod_ram_012"
+},
+{
+  "_id": "img_ram_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+Vengeance+LPX+DDR4",
+  "position": 1,
+  "product_id": "prod_ram_013"
+},
+{
+  "_id": "img_ram_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Mushkin+Redline+DDR4",
+  "position": 1,
+  "product_id": "prod_ram_014"
+},
+{
+  "_id": "img_ram_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Silicon+Power+DDR4",
+  "position": 1,
+  "product_id": "prod_ram_015"
+},
+{
+  "_id": "img_ssd_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Samsung+990+Pro",
+  "position": 1,
+  "product_id": "prod_ssd_001"
+},
+{
+  "_id": "img_ssd_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=WD+Black+SN850X",
+  "position": 1,
+  "product_id": "prod_ssd_002"
+},
+{
+  "_id": "img_ssd_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Crucial+T705+Gen5",
+  "position": 1,
+  "product_id": "prod_ssd_003"
+},
+{
+  "_id": "img_ssd_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Kingston+NV2",
+  "position": 1,
+  "product_id": "prod_ssd_004"
+},
+{
+  "_id": "img_ssd_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Seagate+FireCuda+530",
+  "position": 1,
+  "product_id": "prod_ssd_005"
+},
+{
+  "_id": "img_ssd_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Lexar+NM790",
+  "position": 1,
+  "product_id": "prod_ssd_006"
+},
+{
+  "_id": "img_ssd_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+MP600+Pro",
+  "position": 1,
+  "product_id": "prod_ssd_007"
+},
+{
+  "_id": "img_ssd_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=PNY+CS2241",
+  "position": 1,
+  "product_id": "prod_ssd_008"
+},
+{
+  "_id": "img_ssd_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Sabrent+Rocket+4+Plus",
+  "position": 1,
+  "product_id": "prod_ssd_009"
+},
+{
+  "_id": "img_ssd_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=TeamGroup+MP44L",
+  "position": 1,
+  "product_id": "prod_ssd_010"
+},
+{
+  "_id": "img_ssd_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=XPG+GAMMIX+S70",
+  "position": 1,
+  "product_id": "prod_ssd_011"
+},
+{
+  "_id": "img_ssd_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Silicon+Power+UD90",
+  "position": 1,
+  "product_id": "prod_ssd_012"
+},
+{
+  "_id": "img_ssd_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Patriot+Viper+VP4300",
+  "position": 1,
+  "product_id": "prod_ssd_013"
+},
+{
+  "_id": "img_ssd_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Mushkin+Vortex",
+  "position": 1,
+  "product_id": "prod_ssd_014"
+},
+{
+  "_id": "img_ssd_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Inland+Performance+Plus",
+  "position": 1,
+  "product_id": "prod_ssd_015"
+},
+{
+  "_id": "img_acc_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Logitech+G+Pro+X+Superlight+2",
+  "position": 1,
+  "product_id": "prod_acc_001"
+},
+{
+  "_id": "img_acc_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Razer+BlackWidow+V4+Pro",
+  "position": 1,
+  "product_id": "prod_acc_002"
+},
+{
+  "_id": "img_acc_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=SteelSeries+Arctis+Nova+Pro",
+  "position": 1,
+  "product_id": "prod_acc_003"
+},
+{
+  "_id": "img_acc_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+MM700+RGB",
+  "position": 1,
+  "product_id": "prod_acc_004"
+},
+{
+  "_id": "img_acc_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Elgato+Stream+Deck+MK.2",
+  "position": 1,
+  "product_id": "prod_acc_005"
+},
+{
+  "_id": "img_acc_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Ducky+One+3+Daybreak",
+  "position": 1,
+  "product_id": "prod_acc_006"
+},
+{
+  "_id": "img_acc_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=HyperX+QuadCast+S",
+  "position": 1,
+  "product_id": "prod_acc_007"
+},
+{
+  "_id": "img_acc_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Zowie+EC2-CW",
+  "position": 1,
+  "product_id": "prod_acc_008"
+},
+{
+  "_id": "img_acc_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Shure+SM7B",
+  "position": 1,
+  "product_id": "prod_acc_009"
+},
+{
+  "_id": "img_acc_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Razer+Leviathan+V2+Pro",
+  "position": 1,
+  "product_id": "prod_acc_010"
+},
+{
+  "_id": "img_acc_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Wooting+60HE+",
+  "position": 1,
+  "product_id": "prod_acc_011"
+},
+{
+  "_id": "img_acc_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=SteelSeries+QcK+Heavy",
+  "position": 1,
+  "product_id": "prod_acc_012"
+},
+{
+  "_id": "img_acc_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Sony+DualSense+Edge",
+  "position": 1,
+  "product_id": "prod_acc_013"
+},
+{
+  "_id": "img_acc_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Razer+Enki+Pro",
+  "position": 1,
+  "product_id": "prod_acc_014"
+},
+{
+  "_id": "img_acc_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Secretlab+MAGNUS+Pro",
+  "position": 1,
+  "product_id": "prod_acc_015"
+},
+{
+  "_id": "img_clr_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+H150i+Elite+LCD",
+  "position": 1,
+  "product_id": "prod_clr_001"
+},
+{
+  "_id": "img_clr_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Noctua+NH-D15+Black",
+  "position": 1,
+  "product_id": "prod_clr_002"
+},
+{
+  "_id": "img_clr_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=NZXT+Kraken+Elite+360+White",
+  "position": 1,
+  "product_id": "prod_clr_003"
+},
+{
+  "_id": "img_clr_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=be+quiet!+Dark+Rock+Pro+5",
+  "position": 1,
+  "product_id": "prod_clr_004"
+},
+{
+  "_id": "img_clr_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Arctic+Liquid+Freezer+III",
+  "position": 1,
+  "product_id": "prod_clr_005"
+},
+{
+  "_id": "img_clr_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Cooler+Master+Hyper+212+Halo",
+  "position": 1,
+  "product_id": "prod_clr_006"
+},
+{
+  "_id": "img_clr_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Deepcool+AK620+Digital",
+  "position": 1,
+  "product_id": "prod_clr_007"
+},
+{
+  "_id": "img_clr_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Lian+Li+Galahad+II+LCD",
+  "position": 1,
+  "product_id": "prod_clr_008"
+},
+{
+  "_id": "img_clr_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Thermalright+Peerless+Assassin",
+  "position": 1,
+  "product_id": "prod_clr_009"
+},
+{
+  "_id": "img_clr_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASUS+ROG+Ryujin+III",
+  "position": 1,
+  "product_id": "prod_clr_010"
+},
+{
+  "_id": "img_clr_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Scythe+Fuma+3",
+  "position": 1,
+  "product_id": "prod_clr_011"
+},
+{
+  "_id": "img_clr_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=MSI+Coreliquid+M360",
+  "position": 1,
+  "product_id": "prod_clr_012"
+},
+{
+  "_id": "img_clr_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Noctua+NH-U12A+Black",
+  "position": 1,
+  "product_id": "prod_clr_013"
+},
+{
+  "_id": "img_clr_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ID-COOLING+SE-224-XTS",
+  "position": 1,
+  "product_id": "prod_clr_014"
+},
+{
+  "_id": "img_clr_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Razer+Hanbo+Chroma+360",
+  "position": 1,
+  "product_id": "prod_clr_015"
+},
+{
+  "_id": "img_mon_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASUS+ROG+Swift+OLED",
+  "position": 1,
+  "product_id": "prod_mon_001"
+},
+{
+  "_id": "img_mon_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Samsung+Odyssey+Neo+G9",
+  "position": 1,
+  "product_id": "prod_mon_002"
+},
+{
+  "_id": "img_mon_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Alienware+AW3423DWF",
+  "position": 1,
+  "product_id": "prod_mon_003"
+},
+{
+  "_id": "img_mon_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=LG+UltraGear+27GP850",
+  "position": 1,
+  "product_id": "prod_mon_004"
+},
+{
+  "_id": "img_mon_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Gigabyte+M27Q-P",
+  "position": 1,
+  "product_id": "prod_mon_005"
+},
+{
+  "_id": "img_mon_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=MSI+Optix+G241",
+  "position": 1,
+  "product_id": "prod_mon_006"
+},
+{
+  "_id": "img_mon_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=BenQ+Zowie+XL2546K",
+  "position": 1,
+  "product_id": "prod_mon_007"
+},
+{
+  "_id": "img_mon_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Acer+Nitro+XV272U",
+  "position": 1,
+  "product_id": "prod_mon_008"
+},
+{
+  "_id": "img_mon_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ViewSonic+Elite+XG270QG",
+  "position": 1,
+  "product_id": "prod_mon_009"
+},
+{
+  "_id": "img_mon_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Corsair+XENEON+OLED",
+  "position": 1,
+  "product_id": "prod_mon_010"
+},
+{
+  "_id": "img_mon_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=HP+Omen+27qs",
+  "position": 1,
+  "product_id": "prod_mon_011"
+},
+{
+  "_id": "img_mon_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=AOC+C27G2+Curved",
+  "position": 1,
+  "product_id": "prod_mon_012"
+},
+{
+  "_id": "img_mon_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Huawei+MateView+GT",
+  "position": 1,
+  "product_id": "prod_mon_013"
+},
+{
+  "_id": "img_mon_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Lenovo+Legion+Y25-30",
+  "position": 1,
+  "product_id": "prod_mon_014"
+},
+{
+  "_id": "img_mon_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Philips+Evnia+OLED",
+  "position": 1,
+  "product_id": "prod_mon_015"
+},
+{
+  "_id": "img_mb_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASUS+ROG+Maximus+Z790",
+  "position": 1,
+  "product_id": "prod_mb_001"
+},
+{
+  "_id": "img_mb_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=MSI+MPG+B650+Carbon",
+  "position": 1,
+  "product_id": "prod_mb_002"
+},
+{
+  "_id": "img_mb_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Gigabyte+Z790+Aorus+Elite",
+  "position": 1,
+  "product_id": "prod_mb_003"
+},
+{
+  "_id": "img_mb_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASRock+X670E+Taichi",
+  "position": 1,
+  "product_id": "prod_mb_004"
+},
+{
+  "_id": "img_mb_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=NZXT+N7+Z790+White",
+  "position": 1,
+  "product_id": "prod_mb_005"
+},
+{
+  "_id": "img_mb_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASUS+TUF+B760M+WIFI",
+  "position": 1,
+  "product_id": "prod_mb_006"
+},
+{
+  "_id": "img_mb_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=MSI+PRO+Z790-P",
+  "position": 1,
+  "product_id": "prod_mb_007"
+},
+{
+  "_id": "img_mb_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Gigabyte+B650M+DS3H",
+  "position": 1,
+  "product_id": "prod_mb_008"
+},
+{
+  "_id": "img_mb_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ROG+Strix+X670E-E",
+  "position": 1,
+  "product_id": "prod_mb_009"
+},
+{
+  "_id": "img_mb_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=MSI+MAG+B760+Tomahawk",
+  "position": 1,
+  "product_id": "prod_mb_010"
+},
+{
+  "_id": "img_mb_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASUS+Prime+H610M-E",
+  "position": 1,
+  "product_id": "prod_mb_011"
+},
+{
+  "_id": "img_mb_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=ASRock+B650+Phantom+Gaming",
+  "position": 1,
+  "product_id": "prod_mb_012"
+},
+{
+  "_id": "img_mb_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=EVGA+Z790+Dark+Kingpin",
+  "position": 1,
+  "product_id": "prod_mb_013"
+},
+{
+  "_id": "img_mb_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Gigabyte+B550I+Aorus+ITX",
+  "position": 1,
+  "product_id": "prod_mb_014"
+},
+{
+  "_id": "img_mb_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=NZXT+N5+Z690+Black",
+  "position": 1,
+  "product_id": "prod_mb_015"
+},
+{
+  "_id": "img_os_001",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Windows+11+Home",
+  "position": 1,
+  "product_id": "prod_os_001"
+},
+{
+  "_id": "img_os_002",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Windows+11+Pro",
+  "position": 1,
+  "product_id": "prod_os_002"
+},
+{
+  "_id": "img_os_003",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Windows+10+Home+OEM",
+  "position": 1,
+  "product_id": "prod_os_003"
+},
+{
+  "_id": "img_os_004",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Red+Hat+Enterprise+Linux",
+  "position": 1,
+  "product_id": "prod_os_004"
+},
+{
+  "_id": "img_os_005",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Windows+Server+2022",
+  "position": 1,
+  "product_id": "prod_os_005"
+},
+{
+  "_id": "img_os_006",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Ubuntu+Pro",
+  "position": 1,
+  "product_id": "prod_os_006"
+},
+{
+  "_id": "img_os_007",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Office+2021+Home+Student",
+  "position": 1,
+  "product_id": "prod_os_007"
+},
+{
+  "_id": "img_os_008",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Windows+11+Pro+OEM",
+  "position": 1,
+  "product_id": "prod_os_008"
+},
+{
+  "_id": "img_os_009",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Office+2021+Professional",
+  "position": 1,
+  "product_id": "prod_os_009"
+},
+{
+  "_id": "img_os_010",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Windows+10+Pro+USB",
+  "position": 1,
+  "product_id": "prod_os_010"
+},
+{
+  "_id": "img_os_011",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=VMware+Workstation+Pro",
+  "position": 1,
+  "product_id": "prod_os_011"
+},
+{
+  "_id": "img_os_012",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Microsoft+365+Personal",
+  "position": 1,
+  "product_id": "prod_os_012"
+},
+{
+  "_id": "img_os_013",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Norton+360+Deluxe",
+  "position": 1,
+  "product_id": "prod_os_013"
+},
+{
+  "_id": "img_os_014",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Malwarebytes+Premium",
+  "position": 1,
+  "product_id": "prod_os_014"
+},
+{
+  "_id": "img_os_015",
+  "__v": 0,
+  "image_url": "https://placehold.co/400x400?text=Windows+11+Home+OEM",
+  "position": 1,
+  "product_id": "prod_os_015"
+}]
