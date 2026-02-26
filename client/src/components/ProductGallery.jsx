@@ -37,7 +37,11 @@ const ProductGallery = ({ images }) => {
                             }`}
                     >
                         <img
-                            src={img?.startsWith('http') || img?.startsWith('data:') ? img : (img?.startsWith('/') ? `http://localhost:4080${img}` : img)}
+                            src={img?.startsWith('http') || img?.startsWith('data:')
+                                ? img
+                                : (img?.startsWith('/')
+                                    ? `http://localhost:4080${img}`
+                                    : (img ? `http://localhost:4080/${img}` : img))}
                             alt={`Thumbnail ${index}`}
                             onError={(e) => {
                                 e.target.onerror = null;
@@ -58,7 +62,11 @@ const ProductGallery = ({ images }) => {
                 onMouseMove={handleMouseMove}
             >
                 <img
-                    src={selectedImage?.startsWith('http') || selectedImage?.startsWith('data:') ? selectedImage : (selectedImage?.startsWith('/') ? `http://localhost:4080${selectedImage}` : selectedImage)}
+                    src={selectedImage?.startsWith('http') || selectedImage?.startsWith('data:')
+                        ? selectedImage
+                        : (selectedImage?.startsWith('/')
+                            ? `http://localhost:4080${selectedImage}`
+                            : (selectedImage ? `http://localhost:4080/${selectedImage}` : selectedImage))}
                     alt="Main Product"
                     onError={(e) => {
                         e.target.onerror = null;

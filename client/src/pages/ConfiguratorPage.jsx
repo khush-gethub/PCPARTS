@@ -170,19 +170,19 @@ const ConfiguratorPage = () => {
             const isAMD = cpuBrandAttr.includes('amd') || cpuName.includes('amd') || cpuName.includes('ryzen');
 
             const moboName = (mobo.name || '').toUpperCase();
-            const moboChipsetAttr = (mobo.specs?.Chipset || '').toUpperCase();
+            const moboChipsetAttr = (mobo.specs?.Chipset || mobo.specs?.chipset || '').toUpperCase();
 
-            // Check if it's H-series or B-series from specs or name
-            const isHSeries = moboChipsetAttr.startsWith('H') || /\bH\d{3}\b/.test(moboName);
-            const isBSeries = moboChipsetAttr.startsWith('B') || /\bB\d{3}\b/.test(moboName);
+            // Improved Series Detection (Handles H610, B760, Z790, B550I, X670E, etc.)
+            const isIntelSeries = (chipset) => /^[HBQWZ]\d{2,3}/.test(chipset) || /\b[HBQWZ]\d{2,3}/.test(moboName);
+            const isAMDSeries = (chipset) => /^[ABX]\d{2,3}/.test(chipset) || /\b[ABX]\d{2,3}/.test(moboName);
 
             if (isIntel) {
-                if (!isHSeries) {
-                    issues.push("Incompatible Selection: Intel CPU requires an H-series motherboard");
+                if (!isIntelSeries(moboChipsetAttr)) {
+                    issues.push("Incompatible Selection: Intel CPU requires an Intel chipset motherboard (H/B/Q/W/Z series)");
                 }
             } else if (isAMD) {
-                if (!isBSeries) {
-                    issues.push("Incompatible Selection: AMD CPU requires a B-series motherboard");
+                if (!isAMDSeries(moboChipsetAttr)) {
+                    issues.push("Incompatible Selection: AMD CPU requires an AMD chipset motherboard (A/B/X series)");
                 }
             }
         }
@@ -332,6 +332,7 @@ const ConfiguratorPage = () => {
                 products={categoryProducts}
                 onSelect={handleSelectProduct}
                 isLoading={isLoadingProducts}
+                selectedParts={selectedParts}
             />
         </div>
     );

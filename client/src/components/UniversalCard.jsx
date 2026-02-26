@@ -69,7 +69,11 @@ const UniversalCard = ({
             {/* 2. Top Section: Image */}
             <div className="relative aspect-[5/4] bg-gray-50 border-b border-gray-50 overflow-hidden p-6">
                 <img
-                    src={image?.startsWith('http') || image?.startsWith('data:') ? image : (image?.startsWith('/') ? `http://localhost:4080${image}` : image)}
+                    src={image?.startsWith('http') || image?.startsWith('data:')
+                        ? image
+                        : (image?.startsWith('/')
+                            ? `http://localhost:4080${image}`
+                            : (image ? `http://localhost:4080/${image}` : image))}
                     alt={title}
                     onError={(e) => {
                         e.target.onerror = null;

@@ -247,7 +247,7 @@ app.get('/products', async (req, res) => {
             const productSuffix = p._id.split('_').pop();
 
             const [image, variant] = await Promise.all([
-                ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position'),
+                ProductImage.findOne({ product_id: p._id }).sort('position'),
                 ProductVariant.findOne({ product_id: p._id }).sort({ price: 1 }) // Get cheapest variant or primary
             ]);
 
@@ -364,8 +364,7 @@ app.put('/products/:id', async (req, res) => {
         }
 
         // 4. Update Image (Simplistic: Update first image or insert)
-        const productSuffix = req.params.id.split('_').pop();
-        const image = await ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position');
+        const image = await ProductImage.findOne({ product_id: req.params.id }).sort('position');
 
         if (image) {
             if (image_url) {
@@ -427,7 +426,7 @@ app.get('/api/products/category/:category_id', async (req, res) => {
         const productsWithDetails = await Promise.all(products.map(async (p) => {
             const productSuffix = p._id.split('_').pop();
             const [image, variant] = await Promise.all([
-                ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position'),
+                ProductImage.findOne({ product_id: p._id }).sort('position'),
                 ProductVariant.findOne({ product_id: p._id })
             ]);
 
@@ -461,7 +460,7 @@ app.get('/products/:id', async (req, res) => {
         const [variants, images, benchmarks] = await Promise.all([
             ProductVariant.find({ product_id: req.params.id }),
             ProductImage.find({
-                product_id: { $regex: productSuffix + '$' }
+                product_id: req.params.id
             }).sort('position'),
             Benchmark.find({ product_id: req.params.id })
         ]);
@@ -551,7 +550,7 @@ app.get('/api/benchmark-products', async (req, res) => {
         const enrichedProducts = await Promise.all(products.map(async (p) => {
             const productSuffix = p._id.split('_').pop();
             const [image, variant] = await Promise.all([
-                ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position'),
+                ProductImage.findOne({ product_id: p._id }).sort('position'),
                 ProductVariant.findOne({ product_id: p._id })
             ]);
 
