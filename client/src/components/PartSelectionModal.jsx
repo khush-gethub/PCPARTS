@@ -1,16 +1,39 @@
 import React, { useState } from 'react';
 import UniversalCard from './UniversalCard.jsx';
 
-const PartSelectionModal = ({ isOpen, onClose, componentType, onSelect, products = [], isLoading = false }) => {
+const PartSelectionModal = ({
+    isOpen,
+    onClose,
+    componentType,
+    onSelect,
+    products = [],
+    isLoading = false,
+    selectedParts = {}
+}) => {
     if (!isOpen) return null;
 
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('price_low');
 
+    // CPU Socket for filtering
+    const selectedCpuSocket = selectedParts.cat_cpu?.specs?.Socket;
+
     // Filter products
-    const filteredProducts = products.filter(product =>
-        (product.name || '').toLowerCase().includes(searchTerm.toLowerCase())
-    ).sort((a, b) => {
+    const filteredProducts = products.filter(product => {
+        // 1. Search filter
+        const matchesSearch = (product.name || '').toLowerCase().includes(searchTerm.toLowerCase());
+        if (!matchesSearch) return false;
+
+        // 2. Compatibility filter (Motherboard Socket)
+        if (componentType === 'Motherboard' && selectedCpuSocket) {
+            const moboSocket = product.specs?.Socket;
+            if (moboSocket && moboSocket !== selectedCpuSocket) {
+                return false;
+            }
+        }
+
+        return true;
+    }).sort((a, b) => {
         if (sortBy === 'price_low') return (a.price || 0) - (b.price || 0);
         if (sortBy === 'price_high') return (b.price || 0) - (a.price || 0);
         return 0;
@@ -36,27 +59,39 @@ const PartSelectionModal = ({ isOpen, onClose, componentType, onSelect, products
                 </div>
 
                 {/* Filters & Search */}
-                <div className="p-4 border-b border-gray-100 flex gap-4 bg-white items-center">
-                    <div className="relative flex-1">
-                        <svg className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        <input
-                            type="text"
-                            placeholder={`Search ${componentType}...`}
-                            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                <div className="p-4 border-b border-gray-100 bg-white space-y-4">
+                    <div className="flex gap-4 items-center">
+                        <div className="relative flex-1">
+                            <svg className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input
+                                type="text"
+                                placeholder={`Search ${componentType}...`}
+                                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                        <select
+                            className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white"
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                        >
+                            <option value="price_low">Price: Low to High</option>
+                            <option value="price_high">Price: High to Low</option>
+                        </select>
                     </div>
-                    <select
-                        className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white"
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                    >
-                        <option value="price_low">Price: Low to High</option>
-                        <option value="price_high">Price: High to Low</option>
-                    </select>
+
+                    {/* Compatibility Info */}
+                    {componentType === 'Motherboard' && selectedCpuSocket && (
+                        <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 flex items-center gap-3 text-blue-700 text-sm">
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <p>
+                                Showing motherboards compatible with <strong>{selectedParts.cat_cpu.name}</strong> (Socket: {selectedCpuSocket})
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Product List Grid */}

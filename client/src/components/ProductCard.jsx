@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 
 const ProductCard = (props) => {
-    const { id, image, title, price, originalPrice, specs, stockStatus, rating, brand, badges } = props;
+    const { id, variantId, image, title, price, originalPrice, specs, stockStatus, rating, brand, badges } = props;
     const navigate = useNavigate();
     const { addToCart } = useCart();
 
@@ -17,6 +17,7 @@ const ProductCard = (props) => {
 
         const productToAdd = {
             id: productId,
+            variant_id: variantId || id, // Use variantId if provided, fallback to id (for mock data)
             image,
             title,
             price,

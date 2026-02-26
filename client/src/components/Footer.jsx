@@ -3,37 +3,100 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="bg-[#1a232e] text-white py-12 px-10">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-                {/* Logo and Links Container */}
-                <div className="flex flex-col md:flex-row items-center gap-12">
-                    {/* Logo */}
-                    <Link to="/" className="text-4xl font-black text-white tracking-tighter cursor-pointer flex items-center">H</Link>
+        <footer className="bg-[#0a0f14] text-white pt-20 pb-10 border-t border-gray-800/50">
+            <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
 
-                    {/* Links */}
-                    <div className="flex flex-wrap justify-center md:justify-start gap-8 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                        <a href="#" className="hover:text-orange-500 transition-colors">About Us</a>
-                        <a href="#" className="hover:text-orange-500 transition-colors">Alred Us</a>
-                        <a href="#" className="hover:text-orange-500 transition-colors">Oefer Nebury</a>
-                        <a href="#" className="hover:text-orange-500 transition-colors">Teack Oerer</a>
-                        <a href="#" className="hover:text-orange-500 transition-colors">Carguies</a>
-                        <a href="#" className="hover:text-orange-500 transition-colors">Meresses</a>
+                {/* Main Content Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+
+                    {/* Brand Column */}
+                    <div className="space-y-6">
+                        <Link to="/" className="text-3xl font-black tracking-tighter cursor-pointer flex items-center">
+                            PC<span className="text-orange-600">STORE</span>
+                        </Link>
+                        <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+                            Premium hardware for elite performance. From high-end GPUs to custom pre-builts, we provide the gear that powers your passion.
+                        </p>
+                        <div className="flex gap-4">
+                            {/* Social Icons with Hover Effects */}
+                            {['Twitter', 'Instagram', 'YouTube', 'Facebook'].map((platform) => (
+                                <a key={platform} href="#" className="w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center hover:bg-orange-600 hover:border-orange-600 transition-all duration-300 group">
+                                    <span className="sr-only">{platform}</span>
+                                    {/* Placeholder icons using simplified SVG shapes */}
+                                    <div className="w-4 h-4 bg-gray-400 group-hover:bg-white transition-colors rounded-sm"></div>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Products Column */}
+                    <div>
+                        <h3 className="text-sm font-bold uppercase tracking-widest mb-6 text-gray-100">Products</h3>
+                        <ul className="space-y-4">
+                            {[
+                                { name: 'CPUs & Processors', to: '/category/cat_cpu' },
+                                { name: 'Graphics Cards', to: '/category/cat_graphic_card' },
+                                { name: 'Memory (RAM)', to: '/category/cat_ram' },
+                                { name: 'Storage SSD/HDD', to: '/category/cat_storage_ssd' },
+                                { name: 'Pre-Built PCs', to: '/readymade-pcs' }
+                            ].map((link) => (
+                                <li key={link.name}>
+                                    <Link to={link.to} className="text-gray-400 hover:text-orange-500 transition-colors text-sm font-medium">
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Support Column */}
+                    <div>
+                        <h3 className="text-sm font-bold uppercase tracking-widest mb-6 text-gray-100">Support</h3>
+                        <ul className="space-y-4">
+                            {[
+                                { name: 'Track Your Order', to: '#' },
+                                { name: 'Shipping Information', to: '#' },
+                                { name: 'Returns & Refunds', to: '#' },
+                                { name: 'Help Center & FAQ', to: '#' },
+                                { name: 'Contact Support', to: '#' }
+                            ].map((link) => (
+                                <li key={link.name}>
+                                    <Link to={link.to} className="text-gray-400 hover:text-orange-500 transition-colors text-sm font-medium">
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Newsletter Column */}
+                    <div className="space-y-6">
+                        <h3 className="text-sm font-bold uppercase tracking-widest text-gray-100">Stay Updated</h3>
+                        <p className="text-gray-400 text-sm">
+                            Join our newsletter for exclusive deals, hardware news, and system optimization tips.
+                        </p>
+                        <form className="relative group">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className="w-full bg-gray-900/50 border border-gray-800 rounded-lg py-3 px-4 text-sm text-gray-200 focus:outline-none focus:ring-1 focus:ring-orange-600 focus:border-orange-600 transition-all"
+                            />
+                            <button className="absolute right-2 top-2 px-4 py-1.5 bg-orange-600 hover:bg-orange-700 text-white rounded font-bold text-xs transition-colors">
+                                JOIN
+                            </button>
+                        </form>
                     </div>
                 </div>
 
-                {/* Right Side */}
-                <div className="flex flex-col md:flex-row items-center gap-6">
-                    <span className="text-gray-500 text-[10px] font-bold">© guardatemedee</span>
-                    <div className="flex gap-4">
-                        <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                            <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" /></svg>
-                        </a>
-                        <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                            <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.071 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-                        </a>
-                        <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                            <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" /></svg>
-                        </a>
+                {/* Bottom Bar */}
+                <div className="pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p className="text-gray-500 text-xs">
+                        © {new Date().getFullYear()} PC STORE ENGINE ROOM. All rights reserved.
+                    </p>
+                    <div className="flex gap-8 text-[11px] font-bold text-gray-600 tracking-tighter uppercase uppercase">
+                        <a href="#" className="hover:text-gray-300 transition-colors">Privacy Policy</a>
+                        <a href="#" className="hover:text-gray-300 transition-colors">Terms of Service</a>
+                        <a href="#" className="hover:text-gray-300 transition-colors">Cookies</a>
                     </div>
                 </div>
             </div>

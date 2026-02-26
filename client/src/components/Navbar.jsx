@@ -90,12 +90,22 @@ const Navbar = () => {
                     <div className="flex items-center space-x-6">
                         <div className="hidden md:flex items-center space-x-4">
                             {isLoggedIn ? (
-                                <button
-                                    onClick={handleLogout}
-                                    className="bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 transition duration-150 text-sm"
-                                >
-                                    Logout
-                                </button>
+                                <div className="flex items-center space-x-4">
+                                    {JSON.parse(localStorage.getItem('user'))?.role === 'admin' && (
+                                        <Link
+                                            to="/admin"
+                                            className="bg-gray-900 text-white px-6 py-2 rounded-md font-bold hover:bg-black transition duration-150 text-sm"
+                                        >
+                                            Dashboard
+                                        </Link>
+                                    )}
+                                    <button
+                                        onClick={handleLogout}
+                                        className="bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 transition duration-150 text-sm"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
                             ) : (
                                 <Link to="/login" className="bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 transition duration-150 text-sm">
                                     Login Register
@@ -147,12 +157,23 @@ const Navbar = () => {
                         />
                     </form>
                     {isLoggedIn ? (
-                        <button
-                            onClick={handleLogout}
-                            className="w-full block text-center bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 mt-2"
-                        >
-                            Logout
-                        </button>
+                        <div className="space-y-2">
+                            {JSON.parse(localStorage.getItem('user'))?.role === 'admin' && (
+                                <Link
+                                    to="/admin"
+                                    onClick={() => setIsOpen(false)}
+                                    className="w-full block text-center bg-gray-900 text-white px-6 py-2 rounded-md font-bold hover:bg-black"
+                                >
+                                    Dashboard
+                                </Link>
+                            )}
+                            <button
+                                onClick={handleLogout}
+                                className="w-full block text-center bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700"
+                            >
+                                Logout
+                            </button>
+                        </div>
                     ) : (
                         <Link to="/login" className="w-full block text-center bg-[#f06437] text-white px-6 py-2 rounded-md font-bold hover:bg-orange-700 mt-2">
                             Login Register

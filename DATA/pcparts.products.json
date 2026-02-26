@@ -1,0 +1,2601 @@
+[
+  {
+    "_id": "prod_case_001",
+    "__v": 0,
+    "brand_id": "brand_lian_li",
+    "category_id": "cat_cabinet",
+    "description": "The O11 Dynamic is a combination of modern design and art. Through years of researching, collecting feedback and redesigning, we have successfully crafted the best edition of the dual chamber chassis.",
+    "name": "Lian Li PC-O11 Dynamic",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Black",
+      "Material": "Tempered Glass+Aluminum",
+      "Motherboard Support": "E-ATX/ATX/M-ATX/ITX",
+      "Expansion Slots": "8",
+      "Max GPU Length": "420mm"
+    }
+  },
+  {
+    "_id": "prod_case_002",
+    "__v": 0,
+    "brand_id": "brand_fractal_design",
+    "category_id": "cat_cabinet",
+    "description": "North reimagines the gaming PC, introducing natural materials and bespoke details to make gaming a stylish addition to the living space.",
+    "name": "Fractal Design North Charcoal Black",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Charcoal Black",
+      "Material": "Steel / Oak wood",
+      "Motherboard Support": "ATX / mATX / ITX",
+      "Fans Included": "2x 140mm PWM",
+      "Front I/O": "USB-C 3.1 Gen 2, 2x USB 3.0"
+    }
+  },
+  {
+    "_id": "prod_case_003",
+    "__v": 0,
+    "brand_id": "brand_nzxt",
+    "category_id": "cat_cabinet",
+    "description": "The H9 Flow is designed to cool off high-powered GPUs with its expansive thermal capabilities, featuring a wrap-around glass design.",
+    "name": "NZXT H9 Flow",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "White",
+      "Motherboard Support": "ATX, Micro-ATX, Mini-ITX",
+      "Fans Included": "4x F120Q Core Fans",
+      "Max GPU Length": "435mm",
+      "Radiator Support": "Up to 360mm"
+    }
+  },
+  {
+    "_id": "prod_case_004",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_cabinet",
+    "description": "The CORSAIR 4000D AIRFLOW is a distinctive, high-airflow optimized mid-tower ATX case with easy cable management and exceptional cooling.",
+    "name": "Corsair 4000D Airflow",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Black",
+      "Front Panel": "High-Airflow Steel",
+      "Fans Included": "2x 120mm Fans",
+      "Motherboard Support": "ATX",
+      "Max CPU Cooler Height": "170mm"
+    }
+  },
+  {
+    "_id": "prod_case_005",
+    "__v": 0,
+    "brand_id": "brand_phanteks",
+    "category_id": "cat_cabinet",
+    "description": "The Phanteks NV7, with its unmistakable purpose design, highlights the system components while concentrating on the motherboard.",
+    "name": "Phanteks NV7",
+    "specs": {
+      "Type": "Full Tower",
+      "Color": "Satin Black",
+      "Motherboard Support": "SSI-EEB, E-ATX, ATX, M-ATX, ITX",
+      "Fans Support": "Up to 12x 120mm",
+      "Max GPU Length": "450mm"
+    }
+  },
+  {
+    "_id": "prod_case_006",
+    "__v": 0,
+    "brand_id": "brand_be_quiet",
+    "category_id": "cat_cabinet",
+    "description": "be quiet! Pure Base 500DX Black is optimized for high cooling performance and designed for those who seek high airflow.",
+    "name": "be quiet! Pure Base 500DX",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Black",
+      "Lighting": "ARGB LED front and inside",
+      "Fans Included": "3x Pure Wings 2 140mm",
+      "Motherboard Support": "ATX / M-ATX / Mini-ITX"
+    }
+  },
+  {
+    "_id": "prod_case_007",
+    "__v": 0,
+    "brand_id": "brand_cooler_master",
+    "category_id": "cat_cabinet",
+    "description": "The TD500 Mesh V2's polygonal design takes on a new dimension with its three dimensional mesh front panel.",
+    "name": "Cooler Master MasterBox TD500 Mesh V2",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Black",
+      "Front Panel": "Fine Mesh",
+      "Fans Included": "3x 120mm ARGB",
+      "Side Panel": "Crystalline Tempered Glass"
+    }
+  },
+  {
+    "_id": "prod_case_008",
+    "__v": 0,
+    "brand_id": "brand_hyte",
+    "category_id": "cat_cabinet",
+    "description": "Designed to showcase your system with a panoramic three-piece tempered glass design, the Y60 is a modern classic.",
+    "name": "HYTE Y60",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Red/Black",
+      "Glass": "3-Piece Panoramic",
+      "Vertical GPU": "Included Riser Cable",
+      "Motherboard Support": "E-ATX, ATX, mATX, ITX"
+    }
+  },
+  {
+    "_id": "prod_case_009",
+    "__v": 0,
+    "brand_id": "brand_hyte",
+    "category_id": "cat_cabinet",
+    "description": "An S-Tier aesthetic case that doesn't compromise on performance, the Y40 features a clean tower design.",
+    "name": "HYTE Y40",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "White",
+      "Vertical GPU": "Included Gen 4 Riser",
+      "Motherboard Support": "ATX, mATX, ITX",
+      "Expansion Slots": "4 Vertical + 2 Half-Height"
+    }
+  },
+  {
+    "_id": "prod_case_010",
+    "__v": 0,
+    "brand_id": "brand_montech",
+    "category_id": "cat_cabinet",
+    "description": "The Sky Two is a clean, glass-fronted case that comes with 4 high-performance ARGB fans pre-installed.",
+    "name": "Montech Sky Two",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Blue",
+      "Fans Included": "4x 120mm ARGB PWM",
+      "Front I/O": "USB-C, 2x USB 3.0",
+      "Max GPU Length": "400mm"
+    }
+  },
+  {
+    "_id": "prod_case_011",
+    "__v": 0,
+    "brand_id": "brand_thermaltake",
+    "category_id": "cat_cabinet",
+    "description": "The Tower 500 is a vertically designed case with three 4mm tempered glass panels for panoramic viewing.",
+    "name": "Thermaltake The Tower 500",
+    "specs": {
+      "Type": "Mid Tower (Vertical)",
+      "Color": "Black",
+      "Dimensions": "608 x 388 x 388 mm",
+      "Motherboard Support": "E-ATX, ATX, mATX, ITX",
+      "Expansion Slots": "9"
+    }
+  },
+  {
+    "_id": "prod_case_012",
+    "__v": 0,
+    "brand_id": "brand_msi",
+    "category_id": "cat_cabinet",
+    "description": "The Gungnir 110R is a high-performance gaming case with a front panel design that blends tempered glass and brushed aluminum.",
+    "name": "MSI MPG Gungnir 110R",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Black",
+      "Fans Included": "4x 120mm ARGB",
+      "Front I/O": "USB-C, 2x USB 3.2 Gen 1",
+      "Radiator Support": "Up to 360mm"
+    }
+  },
+  {
+    "_id": "prod_case_013",
+    "__v": 0,
+    "brand_id": "brand_asus",
+    "category_id": "cat_cabinet",
+    "description": "Flexible, scalable, and divided in all the right ways: the TUF Gaming GT502 puts your prized hardware center stage.",
+    "name": "ASUS TUF Gaming GT502",
+    "specs": {
+      "Type": "Mid Tower (Dual Chamber)",
+      "Color": "Black",
+      "Chambers": "Dual Chamber Design",
+      "Fans Support": "Up to 13 fans",
+      "Front I/O": "USB-C 3.2 Gen 2, 2x USB 3.2 Gen 1"
+    }
+  },
+  {
+    "_id": "prod_case_014",
+    "__v": 0,
+    "brand_id": "brand_deepcool",
+    "category_id": "cat_cabinet",
+    "description": "The CH560 Digital is a high-performance mid-tower case with a built-in digital display for monitoring your system internals.",
+    "name": "Deepcool CH560 Digital",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Black",
+      "Display": "Integrated CPU/GPU status display",
+      "Fans Included": "3x 140mm ARGB + 1x 120mm ARGB",
+      "Side Panel": "Hybrid Mesh/Glass"
+    }
+  },
+  {
+    "_id": "prod_case_015",
+    "__v": 0,
+    "brand_id": "brand_aerocool",
+    "category_id": "cat_cabinet",
+    "description": "A budget-friendly mid-tower case with a stylish backslash RGB LED on the front panel.",
+    "name": "Aerocool Cylon RGB",
+    "specs": {
+      "Type": "Mid Tower",
+      "Color": "Black",
+      "Lighting": "13 lighting modes",
+      "Motherboard Support": "ATX/mATX/Mini-ITX",
+      "Expansion Slots": "7"
+    }
+  },
+  {
+    "_id": "prod_cpu_001",
+    "__v": 0,
+    "brand_id": "brand_intel",
+    "category_id": "cat_cpu",
+    "description": "Experience the pinnacle of desktop performance with the Intel Core i9-14900K. Featuring 24 cores and a max turbo frequency of 6.0 GHz, it's designed for elite gaming and serious multitasking.",
+    "name": "Intel Core i9-14900K",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Cores": "24 (8P + 16E)",
+      "Threads": "32",
+      "Base Clock": "3.2 GHz",
+      "Max Turbo": "6.0 GHz",
+      "Cache": "36MB L3",
+      "TDP": "125W (253W Boost)"
+    }
+  },
+  {
+    "_id": "prod_cpu_002",
+    "__v": 0,
+    "brand_id": "brand_amd",
+    "category_id": "cat_cpu",
+    "description": "The ultimate processor for gamers, the AMD Ryzen 9 7950X3D features AMD 3D V-Cache technology for massive L3 cache and dominant gaming performance.",
+    "name": "AMD Ryzen 9 7950X3D",
+    "specs": {
+      "Socket": "AM5",
+      "Cores": "16",
+      "Threads": "32",
+      "Base Clock": "4.2 GHz",
+      "Max Turbo": "5.7 GHz",
+      "Cache": "128MB L3",
+      "TDP": "120W"
+    }
+  },
+  {
+    "_id": "prod_cpu_003",
+    "__v": 0,
+    "brand_id": "brand_intel",
+    "category_id": "cat_cpu",
+    "description": "The Intel Core i7-14700K offers a great balance of performance and value, with 20 cores and high speeds suited for high-end gaming and content creation.",
+    "name": "Intel Core i7-14700K",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Cores": "20 (8P + 12E)",
+      "Threads": "28",
+      "Base Clock": "3.4 GHz",
+      "Max Turbo": "5.6 GHz",
+      "Cache": "33MB L3",
+      "TDP": "125W"
+    }
+  },
+  {
+    "_id": "prod_cpu_004",
+    "__v": 0,
+    "brand_id": "brand_amd",
+    "category_id": "cat_cpu",
+    "description": "Acclaimed as one of the best gaming CPUs, the Ryzen 7 7800X3D leverages 3D V-Cache to deliver ultra-smooth frames and low latency.",
+    "name": "AMD Ryzen 7 7800X3D",
+    "specs": {
+      "Socket": "AM5",
+      "Cores": "8",
+      "Threads": "16",
+      "Base Clock": "4.2 GHz",
+      "Max Turbo": "5.0 GHz",
+      "Cache": "96MB L3",
+      "TDP": "120W"
+    }
+  },
+  {
+    "_id": "prod_cpu_005",
+    "__v": 0,
+    "brand_id": "brand_intel",
+    "category_id": "cat_cpu",
+    "description": "Dominating the mid-range, the i5-14600K is a powerhouse for gaming and productive tasks, featuring 14 cores for efficient processing.",
+    "name": "Intel Core i5-14600K",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Cores": "14 (6P + 8E)",
+      "Threads": "20",
+      "Base Clock": "3.5 GHz",
+      "Max Turbo": "5.3 GHz",
+      "Cache": "24MB L3",
+      "TDP": "125W"
+    }
+  },
+  {
+    "_id": "prod_cpu_006",
+    "__v": 0,
+    "brand_id": "brand_amd",
+    "category_id": "cat_cpu",
+    "description": "The Ryzen 5 7600X is an excellent entry point for the AM5 platform, delivering high speeds and efficiency for modern gaming builds.",
+    "name": "AMD Ryzen 5 7600X",
+    "specs": {
+      "Socket": "AM5",
+      "Cores": "6",
+      "Threads": "12",
+      "Base Clock": "4.7 GHz",
+      "Max Turbo": "5.3 GHz",
+      "Cache": "32MB L3",
+      "TDP": "105W"
+    }
+  },
+  {
+    "_id": "prod_cpu_007",
+    "__v": 0,
+    "brand_id": "brand_intel",
+    "category_id": "cat_cpu",
+    "description": "Ideal for budget builds and home office PCs, the i3-14100 provides solid quad-core performance without breaking the bank.",
+    "name": "Intel Core i3-14100",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Cores": "4 (4P + 0E)",
+      "Threads": "8",
+      "Base Clock": "3.5 GHz",
+      "Max Turbo": "4.7 GHz",
+      "Cache": "12MB L3",
+      "TDP": "60W"
+    }
+  },
+  {
+    "_id": "prod_cpu_008",
+    "__v": 0,
+    "brand_id": "brand_amd",
+    "category_id": "cat_cpu",
+    "description": "For professionals who need high core counts for rendering and video editing, the Ryzen 9 7900X offers 12 powerful 'Zen 4' cores.",
+    "name": "AMD Ryzen 9 7900X",
+    "specs": {
+      "Socket": "AM5",
+      "Cores": "12",
+      "Threads": "24",
+      "Base Clock": "4.7 GHz",
+      "Max Turbo": "5.6 GHz",
+      "Cache": "64MB L3",
+      "TDP": "170W"
+    }
+  },
+  {
+    "_id": "prod_cpu_009",
+    "__v": 0,
+    "brand_id": "brand_intel",
+    "category_id": "cat_cpu",
+    "description": "The first desktop processor to reach 6.0 GHz out of the box, the i9-13900KS is for enthusiasts seeking the extreme limits of performance.",
+    "name": "Intel Core i9-13900KS",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Cores": "24 (8P + 16E)",
+      "Threads": "32",
+      "Base Clock": "3.2 GHz",
+      "Max Turbo": "6.0 GHz",
+      "Cache": "36MB L3",
+      "TDP": "150W (253W Boost)"
+    }
+  },
+  {
+    "_id": "prod_cpu_010",
+    "__v": 0,
+    "brand_id": "brand_amd",
+    "category_id": "cat_cpu",
+    "description": "A legendary CPU for gaming, the 5600X remains a top choice for value-conscious builders on the AM4 platform.",
+    "name": "AMD Ryzen 5 5600X",
+    "specs": {
+      "Socket": "AM4",
+      "Cores": "6",
+      "Threads": "12",
+      "Base Clock": "3.7 GHz",
+      "Max Turbo": "4.6 GHz",
+      "Cache": "32MB L3",
+      "TDP": "65W"
+    }
+  },
+  {
+    "_id": "prod_cpu_011",
+    "__v": 0,
+    "brand_id": "brand_intel",
+    "category_id": "cat_cpu",
+    "description": "Great high-end performance from the 13th Gen lineup, the i7-13700K keeps up with modern gaming and productivity needs effortlessly.",
+    "name": "Intel Core i7-13700K",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Cores": "16 (8P + 8E)",
+      "Threads": "24",
+      "Base Clock": "3.4 GHz",
+      "Max Turbo": "5.4 GHz",
+      "Cache": "30MB L3",
+      "TDP": "125W"
+    }
+  },
+  {
+    "_id": "prod_cpu_012",
+    "__v": 0,
+    "brand_id": "brand_amd",
+    "category_id": "cat_cpu",
+    "description": "Efficient 8-core performance for AM4, the Ryzen 7 5700X is a quiet and cool operator for everyday gaming and work.",
+    "name": "AMD Ryzen 7 5700X",
+    "specs": {
+      "Socket": "AM4",
+      "Cores": "8",
+      "Threads": "16",
+      "Base Clock": "3.4 GHz",
+      "Max Turbo": "4.6 GHz",
+      "Cache": "32MB L3",
+      "TDP": "65W"
+    }
+  },
+  {
+    "_id": "prod_cpu_013",
+    "__v": 0,
+    "brand_id": "brand_intel",
+    "category_id": "cat_cpu",
+    "description": "An incredible value choice, the i5-13400F features P-cores and E-cores for versatile performance in gaming and content creation.",
+    "name": "Intel Core i5-13400F",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Cores": "10 (6P + 4E)",
+      "Threads": "16",
+      "Base Clock": "2.5 GHz",
+      "Max Turbo": "4.6 GHz",
+      "Cache": "20MB L3",
+      "TDP": "65W"
+    }
+  },
+  {
+    "_id": "prod_cpu_014",
+    "__v": 0,
+    "brand_id": "brand_amd",
+    "category_id": "cat_cpu",
+    "description": "Essential performance for basic desktop usage and light gaming, the Ryzen 3 4100 is a very affordable 4-core processor.",
+    "name": "AMD Ryzen 3 4100",
+    "specs": {
+      "Socket": "AM4",
+      "Cores": "4",
+      "Threads": "8",
+      "Base Clock": "3.8 GHz",
+      "Max Turbo": "4.0 GHz",
+      "Cache": "4MB L3",
+      "TDP": "65W"
+    }
+  },
+  {
+    "_id": "prod_cpu_015",
+    "__v": 0,
+    "brand_id": "brand_intel",
+    "category_id": "cat_cpu",
+    "description": "Always a favorite for balanced budget builds, the i5-12400 delivers solid gaming performance on the LGA 1700 platform.",
+    "name": "Intel Core i5-12400",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Cores": "6 (6P + 0E)",
+      "Threads": "12",
+      "Base Clock": "2.5 GHz",
+      "Max Turbo": "4.4 GHz",
+      "Cache": "18MB L3",
+      "TDP": "65W"
+    }
+  },
+  {
+    "_id": "prod_gpu_001",
+    "__v": 0,
+    "brand_id": "brand_asus",
+    "category_id": "cat_graphic_card",
+    "description": "The ASUS ROG Strix GeForce RTX 4090 OC Edition 24GB GDDR6X is built to dominate with a massive cooling solution and incredible performance for 4K gaming and beyond.",
+    "name": "ASUS ROG Strix GeForce RTX 4090 OC Edition",
+    "specs": {
+      "VRAM": "24GB GDDR6X",
+      "Interface": "PCIe 4.0",
+      "Base Clock": "2235 MHz",
+      "Boost Clock": "2640 MHz",
+      "Cuda Cores": "16384",
+      "Power Connectors": "1x 16-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_002",
+    "__v": 0,
+    "brand_id": "brand_msi",
+    "category_id": "cat_graphic_card",
+    "description": "The MSI GeForce RTX 4080 Super Gaming X Slim offers top-tier performance in a thinner profile, making it compatible with more cases while maintaining excellent thermal performance.",
+    "name": "MSI GeForce RTX 4080 Super Gaming X Slim",
+    "specs": {
+      "VRAM": "16GB GDDR6X",
+      "Interface": "PCIe 4.0",
+      "Base Clock": "2295 MHz",
+      "Boost Clock": "2625 MHz",
+      "Cuda Cores": "10240",
+      "Power Connectors": "1x 16-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_003",
+    "__v": 0,
+    "brand_id": "brand_gigabyte",
+    "category_id": "cat_graphic_card",
+    "description": "Experience unprecedented performance, visuals, and efficiency at 4K and beyond with the AMD Radeon RX 7900 XTX graphics card, powered by AMD RDNA 3 technology.",
+    "name": "Gigabyte Radeon RX 7900 XTX Gaming OC",
+    "specs": {
+      "VRAM": "24GB GDDR6",
+      "Interface": "PCIe 4.0",
+      "Base Clock": "1900 MHz",
+      "Boost Clock": "2525 MHz",
+      "Stream Processors": "6144",
+      "Power Connectors": "2x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_004",
+    "__v": 0,
+    "brand_id": "brand_zotac",
+    "category_id": "cat_graphic_card",
+    "description": "The Zotac Gaming GeForce RTX 4070 Ti Super Trinity Black Edition features IceStorm 2.0 advanced cooling and RGB lighting for high-performance 1440p gaming.",
+    "name": "Zotac Gaming GeForce RTX 4070 Ti Super Trinity",
+    "specs": {
+      "VRAM": "16GB GDDR6X",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2610 MHz",
+      "Cuda Cores": "8448",
+      "Power Connectors": "1x 16-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_005",
+    "__v": 0,
+    "brand_id": "brand_sapphire",
+    "category_id": "cat_graphic_card",
+    "description": "The Sapphire Pulse AMD Radeon RX 7800 XT provides reliable 1440p gaming performance with AMD RDNA 3 architecture and Dual-X cooling technology.",
+    "name": "Sapphire Pulse AMD Radeon RX 7800 XT",
+    "specs": {
+      "VRAM": "16GB GDDR6",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2430 MHz",
+      "Stream Processors": "3840",
+      "Power Connectors": "2x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_006",
+    "__v": 0,
+    "brand_id": "brand_evga",
+    "category_id": "cat_graphic_card",
+    "description": "A classic for 1080p gaming, the EVGA GeForce RTX 3060 XC Gaming offers great performance and features like Ray Tracing and DLSS.",
+    "name": "EVGA GeForce RTX 3060 XC Gaming",
+    "specs": {
+      "VRAM": "12GB GDDR6",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "1882 MHz",
+      "Cuda Cores": "3584",
+      "Power Connectors": "1x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_007",
+    "__v": 0,
+    "brand_id": "brand_palit",
+    "category_id": "cat_graphic_card",
+    "description": "Efficient and powerful, the Palit GeForce RTX 4060 Ti Dual delivers solid performance for modern titles at 1080p and 1440p.",
+    "name": "Palit GeForce RTX 4060 Ti Dual",
+    "specs": {
+      "VRAM": "8GB GDDR6",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2535 MHz",
+      "Cuda Cores": "4352",
+      "Power Connectors": "1x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_008",
+    "__v": 0,
+    "brand_id": "brand_inno3d",
+    "category_id": "cat_graphic_card",
+    "description": "Compact and capable, the Inno3D RTX 4070 Super Twin X2 is perfect for small form factor builds without compromising on features.",
+    "name": "Inno3D GeForce RTX 4070 Super Twin X2",
+    "specs": {
+      "VRAM": "12GB GDDR6X",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2475 MHz",
+      "Cuda Cores": "7168",
+      "Power Connectors": "1x 16-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_009",
+    "__v": 0,
+    "brand_id": "brand_pny",
+    "category_id": "cat_graphic_card",
+    "description": "A powerhouse of a card, the PNY RTX 4090 Verto offers incredible rendering and gaming power for professionals and enthusiasts alike.",
+    "name": "PNY GeForce RTX 4090 Verto Triple Fan",
+    "specs": {
+      "VRAM": "24GB GDDR6X",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2520 MHz",
+      "Cuda Cores": "16384",
+      "Power Connectors": "1x 16-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_010",
+    "__v": 0,
+    "brand_id": "brand_xfx",
+    "category_id": "cat_graphic_card",
+    "description": "The XFX Speedster MERC 310 features high-end build quality and AMD's powerful RX 7900 XT GPU for elite gaming across all resolutions.",
+    "name": "XFX Speedster MERC 310 Radeon RX 7900 XT",
+    "specs": {
+      "VRAM": "20GB GDDR6",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2535 MHz",
+      "Stream Processors": "5376",
+      "Power Connectors": "2x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_011",
+    "__v": 0,
+    "brand_id": "brand_colorful",
+    "category_id": "cat_graphic_card",
+    "description": "The Colorful iGame Ultra W DUO features a striking white design and powerful cooling, ideal for white-themed gaming setups.",
+    "name": "Colorful iGame GeForce RTX 4060 Ultra W DUO",
+    "specs": {
+      "VRAM": "8GB GDDR6",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2460 MHz",
+      "Cuda Cores": "3072",
+      "Power Connectors": "1x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_012",
+    "__v": 0,
+    "brand_id": "brand_gainward",
+    "category_id": "cat_graphic_card",
+    "description": "Simple and effective, the Gainward Ghost RTX 4070 provides the power of Ada Lovelace in a standard dual-fan design.",
+    "name": "Gainward GeForce RTX 4070 Ghost",
+    "specs": {
+      "VRAM": "12GB GDDR6X",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2475 MHz",
+      "Cuda Cores": "5888",
+      "Power Connectors": "1x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_013",
+    "__v": 0,
+    "brand_id": "brand_powercolor",
+    "category_id": "cat_graphic_card",
+    "description": "Born for the hunt, the Hellhound RX 7700 XT delivers aggressive cooling and solid performance for high-refresh 1440p gaming.",
+    "name": "PowerColor Hellhound Radeon RX 7700 XT",
+    "specs": {
+      "VRAM": "12GB GDDR6",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2584 MHz",
+      "Stream Processors": "3456",
+      "Power Connectors": "2x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_014",
+    "__v": 0,
+    "brand_id": "brand_nvidia",
+    "category_id": "cat_graphic_card",
+    "description": "The quintessential design from NVIDIA, the RTX 4070 Super FE provides a premium aesthetic and efficient cooling in a dual-slot form factor.",
+    "name": "NVIDIA GeForce RTX 4070 Super Founders Edition",
+    "specs": {
+      "VRAM": "12GB GDDR6X",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2475 MHz",
+      "Cuda Cores": "7168",
+      "Power Connectors": "1x 16-pin"
+    }
+  },
+  {
+    "_id": "prod_gpu_015",
+    "__v": 0,
+    "brand_id": "brand_amd",
+    "category_id": "cat_graphic_card",
+    "description": "Compact and perfect for entry-level 1080p gaming, the AMD Radeon RX 7600 reference design is small yet packed with power.",
+    "name": "AMD Radeon RX 6700 XT Reference Design",
+    "specs": {
+      "VRAM": "8GB GDDR6",
+      "Interface": "PCIe 4.0",
+      "Boost Clock": "2655 MHz",
+      "Stream Processors": "2048",
+      "Power Connectors": "1x 8-pin"
+    }
+  },
+  {
+    "_id": "prod_psu_001",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_power_supply",
+    "description": "CORSAIR RMx series fully modular power supplies are built with the highest quality components to deliver 80 PLUS Gold efficient power to your PC.",
+    "name": "Corsair RM850x (2021) 850W 80+ Gold",
+    "specs": {
+      "Wattage": "850W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Form Factor": "ATX",
+      "Fan Size": "135mm",
+      "Capacitors": "100% Japanese 105°C"
+    }
+  },
+  {
+    "_id": "prod_psu_002",
+    "__v": 0,
+    "brand_id": "brand_seasonic",
+    "category_id": "cat_power_supply",
+    "description": "The FOCUS GX-750 satisfies the high power demands of high-end builds with its compact size and reliable efficiency.",
+    "name": "Seasonic FOCUS GX-750 750W 80+ Gold",
+    "specs": {
+      "Wattage": "750W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Form Factor": "ATX",
+      "Protection": "OPP, OVP, UVP, OCP, OTP, SCP"
+    }
+  },
+  {
+    "_id": "prod_psu_003",
+    "__v": 0,
+    "brand_id": "brand_evga",
+    "category_id": "cat_power_supply",
+    "description": "The SuperNOVA G6 line features a new design with high-quality components and a smaller form factor while keeping performance levels higher than ever.",
+    "name": "EVGA SuperNOVA 1000 G6 1000W 80+ Gold",
+    "specs": {
+      "Wattage": "1000W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Form Factor": "ATX",
+      "Connector": "1x 24-Pin, 2x 8-Pin CPU, 6x 8-Pin PCIe"
+    }
+  },
+  {
+    "_id": "prod_psu_004",
+    "__v": 0,
+    "brand_id": "brand_be_quiet",
+    "category_id": "cat_power_supply",
+    "description": "The be quiet! Straight Power 11 Platinum 850W raises the bar for systems that demand virtually inaudible operation and outstanding efficiency.",
+    "name": "be quiet! Straight Power 11 850W Platinum",
+    "specs": {
+      "Wattage": "850W",
+      "Efficiency": "80+ Platinum",
+      "Modular": "Fully Modular",
+      "Fan": "Silent Wings 3",
+      "Noise Level": "21.6 dB(A) at 100%"
+    }
+  },
+  {
+    "_id": "prod_psu_005",
+    "__v": 0,
+    "brand_id": "brand_msi",
+    "category_id": "cat_power_supply",
+    "description": "The MPG A850G PCIE5 power supply has an output port that is compliant with PCIe 5.0 and Intel PSDG ATX 3.0, specifically for high-end GPUs.",
+    "name": "MSI MPG A850G PCIE5 850W 80+ Gold",
+    "specs": {
+      "Wattage": "850W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Standards": "ATX 3.0, PCIe 5.0",
+      "Connector": "1x 12VHPWR (600W)"
+    }
+  },
+  {
+    "_id": "prod_psu_006",
+    "__v": 0,
+    "brand_id": "brand_asus",
+    "category_id": "cat_power_supply",
+    "description": "The second iteration of the ROG Thor 1200W Platinum features cooling and component upgrades that make it the quietest PSU in its class.",
+    "name": "ASUS ROG Thor 1200W Platinum II",
+    "specs": {
+      "Wattage": "1200W",
+      "Efficiency": "80+ Platinum",
+      "Modular": "Fully Modular",
+      "Display": "OLED Power Display",
+      "Lighting": "Aura Sync RGB"
+    }
+  },
+  {
+    "_id": "prod_psu_007",
+    "__v": 0,
+    "brand_id": "brand_gigabyte",
+    "category_id": "cat_power_supply",
+    "description": "A compact power supply with big performance, the P750GM offers fully modular cabling and high efficiency for gaming rigs.",
+    "name": "Gigabyte P750GM 750W 80+ Gold",
+    "specs": {
+      "Wattage": "750W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Fan": "120mm Hydraulic Bearing",
+      "Form Factor": "ATX"
+    }
+  },
+  {
+    "_id": "prod_psu_008",
+    "__v": 0,
+    "brand_id": "brand_cooler_master",
+    "category_id": "cat_power_supply",
+    "description": "The MWE Gold V2 is the next step in the evolution of Cooler Master's entry level 80 PLUS Gold power supply line.",
+    "name": "Cooler Master MWE Gold 850 V2",
+    "specs": {
+      "Wattage": "850W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Fan": "120mm HDB",
+      "Max Op Temp": "50°C"
+    }
+  },
+  {
+    "_id": "prod_psu_009",
+    "__v": 0,
+    "brand_id": "brand_thermaltake",
+    "category_id": "cat_power_supply",
+    "description": "Designed with a native PCIe 12+4pin connector, the Toughpower GF3 series is compatible with Intel’s ATX 3.0 specification.",
+    "name": "Thermaltake Toughpower GF3 1000W",
+    "specs": {
+      "Wattage": "1000W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Standards": "ATX 3.0",
+      "Connector": "1x 12VHPWR"
+    }
+  },
+  {
+    "_id": "prod_psu_010",
+    "__v": 0,
+    "brand_id": "brand_nzxt",
+    "category_id": "cat_power_supply",
+    "description": "The new C-series power supply from NZXT features safe, reliable power while ensuring optimal efficiency and quieter performance.",
+    "name": "NZXT C850 Gold (2022) 850W",
+    "specs": {
+      "Wattage": "850W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Form Factor": "ATX",
+      "Fan": "135mm FDB"
+    }
+  },
+  {
+    "_id": "prod_psu_011",
+    "__v": 0,
+    "brand_id": "brand_silverstone",
+    "category_id": "cat_power_supply",
+    "description": "Leading the small form factor category, the SX750-PT is a high density PSU with 80 PLUS Platinum efficiency and fully modular cables.",
+    "name": "SilverStone SX750 Platinum 750W SFX",
+    "specs": {
+      "Wattage": "750W",
+      "Efficiency": "80+ Platinum",
+      "Modular": "Fully Modular",
+      "Form Factor": "SFX",
+      "Fan": "92mm FDB"
+    }
+  },
+  {
+    "_id": "prod_psu_012",
+    "__v": 0,
+    "brand_id": "brand_fsp",
+    "category_id": "cat_power_supply",
+    "description": "Compared to the previous generation, the Hydro G Pro is an IEC62368 certified PSU that has been greatly improved in its safety design.",
+    "name": "FSP Hydro G Pro 850W Gold",
+    "specs": {
+      "Wattage": "850W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Certification": "IEC62368",
+      "Conformal Coating": "Yes"
+    }
+  },
+  {
+    "_id": "prod_psu_013",
+    "__v": 0,
+    "brand_id": "brand_adata",
+    "category_id": "cat_power_supply",
+    "description": "The XPG CORE REACTOR is a modular, 80 PLUS GOLD power supply unit equipped with 100% Japanese capacitors.",
+    "name": "ADATA XPG Core Reactor 750W Gold",
+    "specs": {
+      "Wattage": "750W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Capacitors": "100% Japanese",
+      "Protection": "8 Protections (OVP, etc.)"
+    }
+  },
+  {
+    "_id": "prod_psu_014",
+    "__v": 0,
+    "brand_id": "brand_inwin",
+    "category_id": "cat_power_supply",
+    "description": "Classic and reliable power, the InWin P85 offers a stable multi-GPU power source for enthusiasts.",
+    "name": "InWin P85 850W 80+ Gold",
+    "specs": {
+      "Wattage": "850W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Fan": "135mm Fluid Dynamic Bearing"
+    }
+  },
+  {
+    "_id": "prod_psu_015",
+    "__v": 0,
+    "brand_id": "brand_deepcool",
+    "category_id": "cat_power_supply",
+    "description": "The PQ850M series is Deepcool's entry into the high-end power supply market, bringing premium quality to more builders.",
+    "name": "Deepcool PQ850M 850W Gold",
+    "specs": {
+      "Wattage": "850W",
+      "Efficiency": "80+ Gold",
+      "Modular": "Fully Modular",
+      "Fan": "120mm FDB with Hybrid Mode",
+      "Warranty": "10 Years"
+    }
+  },
+  {
+    "_id": "prod_ram_001",
+    "__v": 0,
+    "brand_id": "brand_gskill",
+    "category_id": "cat_ram",
+    "description": "Trident Z5 RGB series DDR5 memory is the flagship G.Skill memory designed for ultra-high performance on next-gen DDR5 platforms.",
+    "name": "G.Skill Trident Z5 RGB 32GB (2x16GB) DDR5-6000",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "6000 MT/s",
+      "Latency": "CL30-38-38-96",
+      "Voltage": "1.35V",
+      "Color": "Matte Black",
+      "RGB": "Yes"
+    }
+  },
+  {
+    "_id": "prod_ram_002",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_ram",
+    "description": "Corsair Vengeance RGB DDR5 memory delivers DDR5 performance, higher frequencies, and greater capacities optimized for Intel motherboards while lighting up your PC with dynamic, individually addressable ten-zone RGB lighting.",
+    "name": "Corsair Vengeance RGB 32GB (2x16GB) DDR5-5600",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "5600 MT/s",
+      "Latency": "CL36-36-36-76",
+      "Voltage": "1.25V",
+      "Color": "Black",
+      "RGB": "Yes"
+    }
+  },
+  {
+    "_id": "prod_ram_003",
+    "__v": 0,
+    "brand_id": "brand_kingston",
+    "category_id": "cat_ram",
+    "description": "Push the limits like never before with Kingston FURY Renegade DDR5 memory, designed for extreme performance on next-generation DDR5 platforms.",
+    "name": "Kingston FURY Renegade RGB 32GB (2x16GB) DDR5-6400",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "6400 MT/s",
+      "Latency": "CL32-39-39",
+      "Voltage": "1.4V",
+      "Color": "Silver/Black",
+      "RGB": "Yes"
+    }
+  },
+  {
+    "_id": "prod_ram_004",
+    "__v": 0,
+    "brand_id": "brand_teamgroup",
+    "category_id": "cat_ram",
+    "description": "Inspired by stealth aircraft, the T-Force Delta RGB DDR5 offers a 120-degree ultra-wide-angle RGB lighting coupled with high-speed performance.",
+    "name": "TeamGroup T-Force Delta RGB 32GB (2x16GB) DDR5-6200",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "6200 MT/s",
+      "Latency": "CL38-38-38-78",
+      "Voltage": "1.25V",
+      "Color": "White",
+      "RGB": "Yes"
+    }
+  },
+  {
+    "_id": "prod_ram_005",
+    "__v": 0,
+    "brand_id": "brand_crucial",
+    "category_id": "cat_ram",
+    "description": "Crucial DDR5 desktop memory has the high speed needed for the next generation of multi-core CPUs, with no-frills, reliable performance.",
+    "name": "Crucial Classic 16GB (1x16GB) DDR5-4800",
+    "specs": {
+      "Capacity": "16GB (1 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "4800 MT/s",
+      "Latency": "CL40-39-39",
+      "Voltage": "1.1V",
+      "Color": "Black (Green PCB)",
+      "RGB": "No"
+    }
+  },
+  {
+    "_id": "prod_ram_006",
+    "__v": 0,
+    "brand_id": "brand_adata",
+    "category_id": "cat_ram",
+    "description": "The XPG Lancer DDR5 raises the bar for gaming memory. It provides increased bandwidth, allocates more capacity per CPU core, and reaches frequencies up to 5200 MT/s.",
+    "name": "ADATA XPG Lancer RGB 32GB (2x16GB) DDR5-5200",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "5200 MT/s",
+      "Latency": "CL38-38-38",
+      "Voltage": "1.25V",
+      "Color": "Black",
+      "RGB": "Yes"
+    }
+  },
+  {
+    "_id": "prod_ram_007",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_ram",
+    "description": "Push the limits of performance with Corsair Dominator Platinum RGB DDR5 memory optimized for Intel. DDR5 delivers higher frequencies and greater capacities than previous generation memory.",
+    "name": "Corsair Dominator Platinum RGB 32GB (2x16GB) DDR5-6200",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "6200 MT/s",
+      "Latency": "CL36-39-39-76",
+      "Voltage": "1.30V",
+      "Color": "Black/Gold",
+      "RGB": "Yes (Capellix)"
+    }
+  },
+  {
+    "_id": "prod_ram_008",
+    "__v": 0,
+    "brand_id": "brand_gskill",
+    "category_id": "cat_ram",
+    "description": "Ripjaws S5 is a high-performance DDR5 memory series tailored for the latest DDR5-enabled platforms. Each module is built with hand-screened memory ICs.",
+    "name": "G.Skill Ripjaws S5 32GB (2x16GB) DDR5-5200",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "5200 MT/s",
+      "Latency": "CL40-40-40-83",
+      "Voltage": "1.10V",
+      "Color": "Matte White",
+      "RGB": "No"
+    }
+  },
+  {
+    "_id": "prod_ram_009",
+    "__v": 0,
+    "brand_id": "brand_patriot",
+    "category_id": "cat_ram",
+    "description": "Experience extreme speeds with Viper Venom DDR5, Patriot's fastest memory ever. Built for incredible performance on high-end enthusiast platforms.",
+    "name": "Patriot Viper Venom RGB 32GB (2x16GB) DDR5-7400",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "7400 MT/s",
+      "Latency": "CL36-44-44-110",
+      "Voltage": "1.45V",
+      "Color": "Carbon Fiber/Black",
+      "RGB": "Yes"
+    }
+  },
+  {
+    "_id": "prod_ram_010",
+    "__v": 0,
+    "brand_id": "brand_lexar",
+    "category_id": "cat_ram",
+    "description": "The Lexar Ares RGB DDR5 memory enables hardcore gamers and PC enthusiasts to experience superior performance with next-gen DDR5 and high-quality RGB lighting.",
+    "name": "Lexar Ares RGB 32GB (2x16GB) DDR5-6000",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR5",
+      "Speed": "6000 MT/s",
+      "Latency": "CL34-38-38",
+      "Voltage": "1.35V",
+      "Color": "Gray",
+      "RGB": "Yes"
+    }
+  },
+  {
+    "_id": "prod_ram_011",
+    "__v": 0,
+    "brand_id": "brand_pny",
+    "category_id": "cat_ram",
+    "description": "A classic DDR4 choice, the XLR8 Gaming Epic-X RGB combines brilliant RGB lighting with high speeds for a top-tier gaming experience on older platforms.",
+    "name": "PNY XLR8 Gaming EPIC-X RGB 16GB (2x8GB) DDR4-3200",
+    "specs": {
+      "Capacity": "16GB (2 x 8GB)",
+      "Type": "DDR4",
+      "Speed": "3200 MT/s",
+      "Latency": "CL16",
+      "Voltage": "1.35V",
+      "Color": "Black",
+      "RGB": "Yes"
+    }
+  },
+  {
+    "_id": "prod_ram_012",
+    "__v": 0,
+    "brand_id": "brand_thermalright",
+    "category_id": "cat_ram",
+    "description": "Simple, sleek, and reliable, the Vulcan Z offers high-performance cooling for its memory chips with its beautiful, stylized heat spreader.",
+    "name": "Thermalright T-Force Vulcan Z 16GB (1x16GB) DDR4-3200",
+    "specs": {
+      "Capacity": "16GB (1 x 16GB)",
+      "Type": "DDR4",
+      "Speed": "3200 MT/s",
+      "Latency": "CL16-20-20-40",
+      "Voltage": "1.35V",
+      "Color": "Red",
+      "RGB": "No"
+    }
+  },
+  {
+    "_id": "prod_ram_013",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_ram",
+    "description": "Vengeance LPX is designed for high-performance overclocking. The heatspreader is made of pure aluminum for faster heat dissipation.",
+    "name": "Corsair Vengeance LPX 16GB (2x8GB) DDR4-3600",
+    "specs": {
+      "Capacity": "16GB (2 x 8GB)",
+      "Type": "DDR4",
+      "Speed": "3600 MT/s",
+      "Latency": "CL18-22-22-42",
+      "Voltage": "1.35V",
+      "Color": "Black",
+      "RGB": "No"
+    }
+  },
+  {
+    "_id": "prod_ram_014",
+    "__v": 0,
+    "brand_id": "brand_mushkin",
+    "category_id": "cat_ram",
+    "description": "Mushkin Enhanced Redline Stiletto modules are designed for extreme gamers and enthusiasts looking for high capacity and speed on the DDR4 platform.",
+    "name": "Mushkin Enhanced Redline Stiletto 32GB (2x16GB) DDR4-3600",
+    "specs": {
+      "Capacity": "32GB (2 x 16GB)",
+      "Type": "DDR4",
+      "Speed": "3600 MT/s",
+      "Latency": "CL16-19-19-39",
+      "Voltage": "1.35V",
+      "Color": "Red",
+      "RGB": "No"
+    }
+  },
+  {
+    "_id": "prod_ram_015",
+    "__v": 0,
+    "brand_id": "brand_silicon_power",
+    "category_id": "cat_ram",
+    "description": "Specifically designed for gamers seeking reliability and performance at a great price point, Silicon Power Value Gaming memory is a rock-solid choice.",
+    "name": "Silicon Power Value Gaming 16GB (2x8GB) DDR4-3200",
+    "specs": {
+      "Capacity": "16GB (2 x 8GB)",
+      "Type": "DDR4",
+      "Speed": "3200 MT/s",
+      "Latency": "CL16-18-18-38",
+      "Voltage": "1.35V",
+      "Color": "Gray",
+      "RGB": "No"
+    }
+  },
+  {
+    "_id": "prod_ssd_001",
+    "__v": 0,
+    "brand_id": "brand_samsung",
+    "category_id": "cat_storage_ssd",
+    "description": "The Samsung 990 Pro reaches near max performance of PCIe 4.0 with read/write speeds up to 7450/6900 MB/s. It's the ultimate choice for gamers and creative professionals.",
+    "name": "Samsung 990 Pro 2TB NVMe SSD",
+    "specs": {
+      "Capacity": "2TB",
+      "Interface": "PCIe Gen 4.0 x4, NVMe 2.0",
+      "Form Factor": "M.2 (2280)",
+      "NAND Type": "Samsung V-NAND 3-bit MLC",
+      "Cache": "2GB Low Power DDR4 SDRAM"
+    }
+  },
+  {
+    "_id": "prod_ssd_002",
+    "__v": 0,
+    "brand_id": "brand_wd",
+    "category_id": "cat_storage_ssd",
+    "description": "Crush load times and slash throttling, lagging, and model pop-ins with the WD_BLACK SN850X NVMe SSD, the purpose-built gaming drive.",
+    "name": "WD_BLACK SN850X 1TB NVMe SSD",
+    "specs": {
+      "Capacity": "1TB",
+      "Interface": "PCIe Gen4 x4",
+      "Form Factor": "M.2 (2280)",
+      "Read Speed": "7300 MB/s",
+      "Write Speed": "6300 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_003",
+    "__v": 0,
+    "brand_id": "brand_crucial",
+    "category_id": "cat_storage_ssd",
+    "description": "The Crucial T705 PCIe 5.0 NVMe SSD offers speeds up to 14,500 MB/s, redefining what's possible for high-end rendering and extreme gaming.",
+    "name": "Crucial T705 2TB PCIe 5.0 NVMe SSD",
+    "specs": {
+      "Capacity": "2TB",
+      "Interface": "PCIe Gen 5.0 x4",
+      "Form Factor": "M.2 (2280)",
+      "Read Speed": "14500 MB/s",
+      "Write Speed": "12700 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_004",
+    "__v": 0,
+    "brand_id": "brand_kingston",
+    "category_id": "cat_storage_ssd",
+    "description": "Kingston's NV2 PCIe 4.0 NVMe SSD is a substantial next-gen storage solution powered by a Gen 4x4 NVMe controller, providing solid budget performance.",
+    "name": "Kingston NV2 1TB NVMe SSD",
+    "specs": {
+      "Capacity": "1TB",
+      "Interface": "PCIe 4.0 x4",
+      "Form Factor": "M.2 (2280)",
+      "Read Speed": "3500 MB/s",
+      "Write Speed": "2100 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_005",
+    "__v": 0,
+    "brand_id": "brand_seagate",
+    "category_id": "cat_storage_ssd",
+    "description": "Exhilarating performance, the FireCuda 530 redefines speed—up to 7300 MB/s—with absolute power to dominate PCIe Gen4.",
+    "name": "Seagate FireCuda 530 2TB NVMe SSD",
+    "specs": {
+      "Capacity": "2TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "7300 MB/s",
+      "Endurance": "2550 TBW"
+    }
+  },
+  {
+    "_id": "prod_ssd_006",
+    "__v": 0,
+    "brand_id": "brand_lexar",
+    "category_id": "cat_storage_ssd",
+    "description": "Designed for gamers and professionals, the NM790 M.2 2280 NVMe SSD provides 2x the speed of PCIe Gen3 SSDs and exceptional power efficiency.",
+    "name": "Lexar NM790 2TB NVMe SSD",
+    "specs": {
+      "Capacity": "2TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "7400 MB/s",
+      "Write Speed": "6500 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_007",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_storage_ssd",
+    "description": "The Corsair MP600 PRO Core XT PCIe 4.0 x4 NVMe M.2 SSD provides great storage performance using Gen4 PCIe technology to reach blazing fast sequential read speeds.",
+    "name": "Corsair MP600 Pro Core XT 1TB",
+    "specs": {
+      "Capacity": "1TB",
+      "Interface": "PCIe Gen4 x4",
+      "NAND": "3D QLC",
+      "Read Speed": "5000 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_008",
+    "__v": 0,
+    "brand_id": "brand_pny",
+    "category_id": "cat_storage_ssd",
+    "description": "The PNY CS2241 M.2 NVMe Gen4 x4 SSD is an excellent choice for a mainstream NVMe upgrade from a SATA based SSD or a hard drive.",
+    "name": "PNY CS2241 1TB NVMe SSD",
+    "specs": {
+      "Capacity": "1TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "5100 MB/s",
+      "Write Speed": "3200 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_009",
+    "__v": 0,
+    "brand_id": "brand_sabrent",
+    "category_id": "cat_storage_ssd",
+    "description": "Designed for maximum performance and durability, the Sabrent Rocket 4 Plus is a leading Gen4 SSD.",
+    "name": "Sabrent Rocket 4 Plus 2TB",
+    "specs": {
+      "Capacity": "2TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "7100 MB/s",
+      "Write Speed": "6600 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_010",
+    "__v": 0,
+    "brand_id": "brand_teamgroup",
+    "category_id": "cat_storage_ssd",
+    "description": "MP44L M.2 PCIe 4.0 SSD features high speed performance and a unique graphene heat dissipation label for cool operation.",
+    "name": "TeamGroup MP44L 1TB NVMe SSD",
+    "specs": {
+      "Capacity": "1TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "5000 MB/s",
+      "Write Speed": "4500 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_011",
+    "__v": 0,
+    "brand_id": "brand_adata",
+    "category_id": "cat_storage_ssd",
+    "description": "Featuring the benchmark-leading PCIe Gen4 interface, the GAMMIX S70 Blade will help you dominate the competition.",
+    "name": "ADATA XPG GAMMIX S70 Blade 1TB",
+    "specs": {
+      "Capacity": "1TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "7400 MB/s",
+      "Write Speed": "6800 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_012",
+    "__v": 0,
+    "brand_id": "brand_silicon_power",
+    "category_id": "cat_storage_ssd",
+    "description": "Upgrade your computer's storage with UD90 M.2 PCIe 4.0 SSD for improved speed and capacity.",
+    "name": "Silicon Power UD90 1TB",
+    "specs": {
+      "Capacity": "1TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "4800 MB/s",
+      "Write Speed": "4200 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_013",
+    "__v": 0,
+    "brand_id": "brand_patriot",
+    "category_id": "cat_storage_ssd",
+    "description": "The Patriot Viper VP4300 series SSD provides lightning-fast speeds and incredible efficiency.",
+    "name": "Patriot Viper VP4300 2TB",
+    "specs": {
+      "Capacity": "2TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "7400 MB/s",
+      "Write Speed": "6800 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_014",
+    "__v": 0,
+    "brand_id": "brand_mshkin",
+    "category_id": "cat_storage_ssd",
+    "description": "High-performance storage for gamers and professionals looking for the best Gen4 speeds.",
+    "name": "Mushkin Vortex Redline 2TB",
+    "specs": {
+      "Capacity": "2TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "7410 MB/s",
+      "Write Speed": "6800 MB/s"
+    }
+  },
+  {
+    "_id": "prod_ssd_015",
+    "__v": 0,
+    "brand_id": "brand_inland",
+    "category_id": "cat_storage_ssd",
+    "description": "Reliable and fast Gen 4 storage solution from Inland, perfect for high-speed builds.",
+    "name": "Inland Performance Plus 2TB",
+    "specs": {
+      "Capacity": "2TB",
+      "Interface": "PCIe Gen4 x4",
+      "Read Speed": "7000 MB/s",
+      "Write Speed": "6850 MB/s"
+    }
+  },
+  {
+    "_id": "prod_acc_001",
+    "__v": 0,
+    "brand_id": "brand_logitech",
+    "category_id": "cat_accessories",
+    "description": "The world's fastest and lightest pro gaming mouse, featuring the HERO 2 sensor and LIGHTSPEED wireless technology.",
+    "name": "Logitech G Pro X Superlight 2",
+    "specs": {
+      "Type": "Gaming Mouse",
+      "Sensor": "HERO 2",
+      "Max DPI": "32000",
+      "Weight": "60g",
+      "Battery Life": "95 hours",
+      "Connectivity": "LIGHTSPEED Wireless"
+    }
+  },
+  {
+    "_id": "prod_acc_002",
+    "__v": 0,
+    "brand_id": "brand_razer",
+    "category_id": "cat_accessories",
+    "description": "A high-end mechanical gaming keyboard featuring Razer Orange tactile switches, dedicated macro keys, and per-key RGB lighting.",
+    "name": "Razer BlackWidow V4 Pro",
+    "specs": {
+      "Type": "Mechanical Keyboard",
+      "Switches": "Tactile Orange",
+      "Form Factor": "Full Size",
+      "Media Keys": "Yes (Dedicated)",
+      "RGB": "Razer Chroma",
+      "Polling Rate": "8000Hz"
+    }
+  },
+  {
+    "_id": "prod_acc_003",
+    "__v": 0,
+    "brand_id": "brand_steelseries",
+    "category_id": "cat_accessories",
+    "description": "Premium gaming headset with high-fidelity audio, active noise cancellation, and a dual-battery swapping system.",
+    "name": "SteelSeries Arctis Nova Pro Wireless",
+    "specs": {
+      "Type": "Wireless Headset",
+      "Driver": "40mm Neodymium",
+      "Frequency Response": "10Hz - 40kHz",
+      "ANC": "Yes",
+      "Connectivity": "2.4GHz + Bluetooth",
+      "Platform": "PC/Console"
+    }
+  },
+  {
+    "_id": "prod_acc_004",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_accessories",
+    "description": "An extra-large mouse pad with 360-degree dynamic RGB lighting and a built-in 2-port USB hub.",
+    "name": "Corsair MM700 RGB Extended Mouse Pad",
+    "specs": {
+      "Type": "Mouse Pad",
+      "Size": "930mm x 400mm",
+      "Surface": "Micro-weave cloth",
+      "RGB Zones": "3",
+      "Hub": "2-Port USB",
+      "Cable": "Detachable USB-C"
+    }
+  },
+  {
+    "_id": "prod_acc_005",
+    "__v": 0,
+    "brand_id": "brand_elgato",
+    "category_id": "cat_accessories",
+    "description": "The ultimate control interface for streamers and content creators, featuring 15 customizable LCD keys for endless actions.",
+    "name": "Elgato Stream Deck MK.2",
+    "specs": {
+      "Type": "Stream Controller",
+      "Keys": "15 LCD Keys",
+      "Interface": "USB 2.0",
+      "Compatibility": "Windows/Mac",
+      "Software": "Stream Deck Store",
+      "Faceplate": "Interchangeable"
+    }
+  },
+  {
+    "_id": "prod_acc_006",
+    "__v": 0,
+    "brand_id": "brand_ducky",
+    "category_id": "cat_accessories",
+    "description": "A premium mechanical keyboard with QUACK Mechanics, hot-swappable switches, and a unique Daybreak color scheme.",
+    "name": "Ducky One 3 Daybreak",
+    "specs": {
+      "Type": "Mechanical Keyboard",
+      "Switches": "Cherry MX Silver",
+      "Stabilizers": "V2 Lubricated",
+      "Keycaps": "PBT Double-shot",
+      "Form Factor": "Tenkeyless (TKL)",
+      "Hot-swap": "Yes"
+    }
+  },
+  {
+    "_id": "prod_acc_007",
+    "__v": 0,
+    "brand_id": "brand_hyperx",
+    "category_id": "cat_accessories",
+    "description": "An RGB USB condenser microphone that looks as good as it sounds, featuring a built-in pop filter and shock mount.",
+    "name": "HyperX QuadCast S",
+    "specs": {
+      "Type": "USB Microphone",
+      "Polar Patterns": "4 (Cardioid, Omni, Bi-dir, Stereo)",
+      "Sample Rate": "48kHz",
+      "Lighting": "Dynamic RGB",
+      "Mount": "Shock Mount Included",
+      "Mute": "Tap-to-mute"
+    }
+  },
+  {
+    "_id": "prod_acc_008",
+    "__v": 0,
+    "brand_id": "brand_zowie",
+    "category_id": "cat_accessories",
+    "description": "The legendary EC ergonomic shape now with wireless connectivity for consistent professional-grade performance.",
+    "name": "Zowie EC2-CW",
+    "specs": {
+      "Type": "Gaming Mouse",
+      "Connectivity": "Wireless (2.4GHz)",
+      "Shape": "Ergonomic Right-hand",
+      "Weight": "77g",
+      "Receiver": "Enhanced with Charging Station",
+      "Polling Rate": "1000Hz"
+    }
+  },
+  {
+    "_id": "prod_acc_009",
+    "__v": 0,
+    "brand_id": "brand_shure",
+    "category_id": "cat_accessories",
+    "description": "The industry standard for podcasts, streaming, and professional vocals. Requires an XLR interface.",
+    "name": "Shure SM7B Vocal Microphone",
+    "specs": {
+      "Type": "Dynamic XLR Mic",
+      "Polar Pattern": "Cardioid",
+      "Frequency Response": "50Hz - 20kHz",
+      "Interface": "XLR (3-pin)",
+      "Mount": "Yoke Mount",
+      "Windscreen": "Detachable Close-talk"
+    }
+  },
+  {
+    "_id": "prod_acc_010",
+    "__v": 0,
+    "brand_id": "brand_razer",
+    "category_id": "cat_accessories",
+    "description": "The world's first beamforming soundbar with head-tracking AI, delivering personalized 3D audio for your desk.",
+    "name": "Razer Leviathan V2 Pro",
+    "specs": {
+      "Type": "Soundbar + Subwoofer",
+      "Drivers": "Full Range (Beamforming)",
+      "Audio": "THX Spatial Audio",
+      "Lighting": "Razer Chroma RGB",
+      "Connectivity": "USB, Bluetooth",
+      "Sensors": "IR Head-tracking"
+    }
+  },
+  {
+    "_id": "prod_acc_011",
+    "__v": 0,
+    "brand_id": "brand_wooting",
+    "category_id": "cat_accessories",
+    "description": "The best-in-class analog mechanical keyboard for gaming, featuring Hall Effect sensors for adjustable actuation.",
+    "name": "Wooting 60HE+",
+    "specs": {
+      "Type": "Analog Keyboard",
+      "Switches": "Lekker Hall Effect",
+      "Actuation": "0.1mm - 4.0mm",
+      "Features": "Rapid Trigger, Tachyon Mode",
+      "Form Factor": "60%",
+      "Build": "Aluminum compatible plate"
+    }
+  },
+  {
+    "_id": "prod_acc_012",
+    "__v": 0,
+    "brand_id": "brand_steelseries",
+    "category_id": "cat_accessories",
+    "description": "The choice of professional gamers for its thick non-slip rubber base that eliminates unwanted movement.",
+    "name": "SteelSeries QcK Heavy XXL",
+    "specs": {
+      "Type": "Desktop Mouse Pad",
+      "Size": "900mm x 400mm",
+      "Thickness": "4mm",
+      "Surface": "Micro-woven cloth",
+      "Compatibility": "Optic/Laser",
+      "Washable": "Yes"
+    }
+  },
+  {
+    "_id": "prod_acc_013",
+    "__v": 0,
+    "brand_id": "brand_sony",
+    "category_id": "cat_accessories",
+    "description": "A high-performance controller for PC and PS5, featuring customizable controls and swappable stick modules.",
+    "name": "Sony PlayStation DualSense Edge",
+    "specs": {
+      "Type": "Pro Controller",
+      "Features": "Adjustable Triggers, Back Buttons",
+      "Modules": "Swappable Thumbsticks",
+      "Polling": "Bluetooth/Wired",
+      "Feedback": "Haptic/Adaptive Triggers",
+      "Battery": "Charging Case Included"
+    }
+  },
+  {
+    "_id": "prod_acc_014",
+    "__v": 0,
+    "brand_id": "brand_razer",
+    "category_id": "cat_accessories",
+    "description": "The ultimate gaming chair designed for all-day comfort, upholstered with sustainable Alcantara and dual-density cushion.",
+    "name": "Razer Enki Pro",
+    "specs": {
+      "Type": "Gaming Chair",
+      "Material": "Alcantara/Synthetic Leather",
+      "Base": "Aluminum Alloy",
+      "Lumbar": "Built-in Arc",
+      "Tilt": "Reactive 152-degree",
+      "Upholstery": "Carbon Fiber"
+    }
+  },
+  {
+    "_id": "prod_acc_015",
+    "__v": 0,
+    "brand_id": "brand_secretlab",
+    "category_id": "cat_accessories",
+    "description": "The world's first sit-to-stand metal desk with integrated power supply and advanced cable management.",
+    "name": "Secretlab MAGNUS Pro XL",
+    "specs": {
+      "Type": "Standing Desk",
+      "Material": "Steel/MDF",
+      "Adjustment": "Electric Motor Dual",
+      "Max Load": "120kg",
+      "Cable Management": "Cable Tray + Magnetic",
+      "Display": "Digital Headset Hook"
+    }
+  },
+  {
+    "_id": "prod_clr_001",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_cpu_cooler",
+    "description": "A top-of-the-line 360mm AIO liquid cooler with a built-in LCD screen for real-time monitoring and custom GIFs.",
+    "name": "Corsair iCUE H150i Elite LCD XT",
+    "specs": {
+      "Type": "Liquid AIO",
+      "Radiator Size": "360mm",
+      "Fans": "3x AF120 RGB ELITE",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Color": "Black",
+      "Noise Level": "Up to 34 dBA"
+    }
+  },
+  {
+    "_id": "prod_clr_002",
+    "__v": 0,
+    "brand_id": "brand_noctua",
+    "category_id": "cat_cpu_cooler",
+    "description": "The legendary dual-tower cooler now in an all-black chromax design. Offers world-class air cooling performance and whisper-quiet operation.",
+    "name": "Noctua NH-D15 chromax.black",
+    "specs": {
+      "Type": "Air Cooler",
+      "Tower Type": "Dual Tower",
+      "Fans": "2x NF-A15 HS-PWM",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Height": "165mm",
+      "Heatpipes": "6"
+    }
+  },
+  {
+    "_id": "prod_clr_003",
+    "__v": 0,
+    "brand_id": "brand_nzxt",
+    "category_id": "cat_cpu_cooler",
+    "description": "Keep your system cool and looking premium with the Kraken Elite. High-performance cooling with a 2.36\" wide-angle LCD.",
+    "name": "NZXT Kraken Elite 360 RGB White",
+    "specs": {
+      "Type": "Liquid AIO",
+      "Radiator Size": "360mm",
+      "Fans": "3x F120 RGB Core",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Color": "White",
+      "LCD Size": "2.36\""
+    }
+  },
+  {
+    "_id": "prod_clr_004",
+    "__v": 0,
+    "brand_id": "brand_bequiet",
+    "category_id": "cat_cpu_cooler",
+    "description": "No-compromise silence and performance for overclocked systems and demanding workstations.",
+    "name": "be quiet! Dark Rock Pro 5",
+    "specs": {
+      "Type": "Air Cooler",
+      "Tower Type": "Dual Tower",
+      "Fans": "1x 120mm + 1x 135mm Silent Wings",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Noise Level": "23.3 dBA (Max)",
+      "TDP": "270W"
+    }
+  },
+  {
+    "_id": "prod_clr_005",
+    "__v": 0,
+    "brand_id": "brand_arctic",
+    "category_id": "cat_cpu_cooler",
+    "description": "Known for its incredible value and unique VRM cooling fan, the Liquid Freezer III is a top performer in its class.",
+    "name": "Arctic Liquid Freezer III 360",
+    "specs": {
+      "Type": "Liquid AIO",
+      "Radiator Size": "360mm",
+      "Fans": "3x P12 PWM PST",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "VRM Fan": "Yes",
+      "Radiator Thickness": "38mm"
+    }
+  },
+  {
+    "_id": "prod_clr_006",
+    "__v": 0,
+    "brand_id": "brand_coolermaster",
+    "category_id": "cat_cpu_cooler",
+    "description": "A refined version of the legendary Hyper 212, featuring a sleek black finish and Halo RGB fan for modern builds.",
+    "name": "Cooler Master Hyper 212 Halo Black",
+    "specs": {
+      "Type": "Air Cooler",
+      "Tower Type": "Single Tower",
+      "Fans": "1x MF120 Halo",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Height": "154mm",
+      "Color": "Black"
+    }
+  },
+  {
+    "_id": "prod_clr_007",
+    "__v": 0,
+    "brand_id": "brand_deepcool",
+    "category_id": "cat_cpu_cooler",
+    "description": "Featuring a real-time status display and stellar cooling performance, the AK620 Digital is both smart and powerful.",
+    "name": "Deepcool AK620 Digital",
+    "specs": {
+      "Type": "Air Cooler",
+      "Tower Type": "Dual Tower",
+      "Fans": "2x 120mm PWM",
+      "Status Display": "CPU Temp/Usage",
+      "Height": "162mm",
+      "TDP": "260W"
+    }
+  },
+  {
+    "_id": "prod_clr_008",
+    "__v": 0,
+    "brand_id": "brand_lianli",
+    "category_id": "cat_cpu_cooler",
+    "description": "The Galahad II LCD combines Lian Li's sleek aesthetic with an integrated display and high-efficiency cooling.",
+    "name": "Lian Li Galahad II LCD 360",
+    "specs": {
+      "Type": "Liquid AIO",
+      "Radiator Size": "360mm",
+      "Fans": "3x SL-Infinity Fans",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "LCD Type": "IPS",
+      "Display Size": "2.88\""
+    }
+  },
+  {
+    "_id": "prod_clr_009",
+    "__v": 0,
+    "brand_id": "brand_thermalright",
+    "category_id": "cat_cpu_cooler",
+    "description": "Widely regarded as the king of value air coolers, delivering high-end dual tower performance at a fraction of the cost.",
+    "name": "Thermalright Peerless Assassin 120 SE",
+    "specs": {
+      "Type": "Air Cooler",
+      "Tower Type": "Dual Tower",
+      "Fans": "2x 120mm PWM",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Heatpipes": "6",
+      "Height": "155mm"
+    }
+  },
+  {
+    "_id": "prod_clr_010",
+    "__v": 0,
+    "brand_id": "brand_asus",
+    "category_id": "cat_cpu_cooler",
+    "description": "Featuring a Magnetic ARGB fan system and an LCD display, the Ryujin III is the ultimate cooler for ROG enthusiasts.",
+    "name": "ASUS ROG Ryujin III 360 ARGB",
+    "specs": {
+      "Type": "Liquid AIO",
+      "Radiator Size": "360mm",
+      "Fans": "3x ROG Magnetic ARGB",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Display Size": "3.5\"",
+      "Pump": "8th Gen Asetek"
+    }
+  },
+  {
+    "_id": "prod_clr_011",
+    "__v": 0,
+    "brand_id": "brand_scythe",
+    "category_id": "cat_cpu_cooler",
+    "description": "A high-performance dual-tower air cooler designed with offset heatpipes for maximum RAM compatibility.",
+    "name": "Scythe Fuma 3",
+    "specs": {
+      "Type": "Air Cooler",
+      "Tower Type": "Dual Tower",
+      "Fans": "2x Kaze Flex II PWM",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Height": "154mm",
+      "Heatpipes": "6"
+    }
+  },
+  {
+    "_id": "prod_clr_012",
+    "__v": 0,
+    "brand_id": "brand_msi",
+    "category_id": "cat_cpu_cooler",
+    "description": "A reliable 360mm AIO with ARGB lighting and durable components for mainstream gaming systems.",
+    "name": "MSI MAG Coreliquid M360",
+    "specs": {
+      "Type": "Liquid AIO",
+      "Radiator Size": "360mm",
+      "Fans": "3x ARGB Fan",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Noise Level": "32.9 dBA",
+      "Pump Type": "Block-integrated"
+    }
+  },
+  {
+    "_id": "prod_clr_013",
+    "__v": 0,
+    "brand_id": "brand_noctua",
+    "category_id": "cat_cpu_cooler",
+    "description": "Pushing the limits of the 120mm air cooling class, the NH-U12A provides 140mm level performance in a 120mm size.",
+    "name": "Noctua NH-U12A chromax.black",
+    "specs": {
+      "Type": "Air Cooler",
+      "Tower Type": "Single Tower",
+      "Fans": "2x NF-A12x25 PWM",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Height": "158mm",
+      "Heatpipes": "7"
+    }
+  },
+  {
+    "_id": "prod_clr_014",
+    "__v": 0,
+    "brand_id": "brand_idcooling",
+    "category_id": "cat_cpu_cooler",
+    "description": "A budget-friendly air cooler that punches well above its weight class, featuring ARGB lighting and a clean look.",
+    "name": "ID-COOLING SE-224-XTS",
+    "specs": {
+      "Type": "Air Cooler",
+      "Tower Type": "Single Tower",
+      "Fans": "1x 120mm ARGB PWM",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "Heatpipes": "4",
+      "Height": "151mm"
+    }
+  },
+  {
+    "_id": "prod_clr_015",
+    "__v": 0,
+    "brand_id": "brand_razer",
+    "category_id": "cat_cpu_cooler",
+    "description": "High-performance liquid cooling with customizable ARGB lighting, fully integrated into the Razer Chroma ecosystem.",
+    "name": "Razer Hanbo Chroma 360mm",
+    "specs": {
+      "Type": "Liquid AIO",
+      "Radiator Size": "360mm",
+      "Fans": "3x Razer Kunai Fans",
+      "Socket Support": "LGA1700, AM5, AM4",
+      "RGB Type": "Razer Chroma",
+      "Pump": "High-performance"
+    }
+  },
+  {
+    "_id": "prod_mon_001",
+    "__v": 0,
+    "brand_id": "brand_asus",
+    "category_id": "cat_monitor",
+    "description": "The ROG Swift OLED PG27AQDM is a 27-inch 1440p OLED gaming monitor with a 240Hz refresh rate and 0.03ms response time for competitive gaming.",
+    "name": "ASUS ROG Swift PG27AQDM",
+    "specs": {
+      "Size": "27-inch",
+      "Resolution": "2560 x 1440",
+      "Panel Type": "OLED",
+      "Refresh Rate": "240Hz",
+      "Response Time": "0.03ms",
+      "HDR": "HDR10"
+    }
+  },
+  {
+    "_id": "prod_mon_002",
+    "__v": 0,
+    "brand_id": "brand_samsung",
+    "category_id": "cat_monitor",
+    "description": "Experience immersive gaming with the 49-inch curved Odyssey Neo G9, featuring Quantum Mini-LED technology and 240Hz refresh rate.",
+    "name": "Samsung Odyssey Neo G9",
+    "specs": {
+      "Size": "49-inch",
+      "Resolution": "5120 x 1440",
+      "Panel Type": "VA (Mini-LED)",
+      "Curvature": "1000R",
+      "Refresh Rate": "240Hz",
+      "Aspect Ratio": "32:9"
+    }
+  },
+  {
+    "_id": "prod_mon_003",
+    "__v": 0,
+    "brand_id": "brand_dell",
+    "category_id": "cat_monitor",
+    "description": "The world's first QD-OLED gaming monitor, offering breathtaking color and infinite contrast for a truly cinematic gaming experience.",
+    "name": "Alienware AW3423DWF",
+    "specs": {
+      "Size": "34-inch",
+      "Resolution": "3440 x 1440",
+      "Panel Type": "QD-OLED",
+      "Refresh Rate": "165Hz",
+      "Curvature": "1800R",
+      "Color Space": "99.3% DCI-P3"
+    }
+  },
+  {
+    "_id": "prod_mon_004",
+    "__v": 0,
+    "brand_id": "brand_lg",
+    "category_id": "cat_monitor",
+    "description": "A high-speed Nano IPS gaming monitor with a 165Hz refresh rate (OC to 180Hz) and 1ms GtG response time.",
+    "name": "LG UltraGear 27GP850-B",
+    "specs": {
+      "Size": "27-inch",
+      "Resolution": "2560 x 1440",
+      "Panel Type": "Nano IPS",
+      "Refresh Rate": "165Hz (180Hz OC)",
+      "Response Time": "1ms GtG",
+      "Sync": "G-Sync Compatible/FreeSync"
+    }
+  },
+  {
+    "_id": "prod_mon_005",
+    "__v": 0,
+    "brand_id": "brand_gigabyte",
+    "category_id": "cat_monitor",
+    "description": "A versatile gaming monitor with an integrated KVM switch, perfect for gamers who switch between their gaming PC and work laptop.",
+    "name": "Gigabyte M27Q-P",
+    "specs": {
+      "Size": "27-inch",
+      "Resolution": "2560 x 1440",
+      "Panel Type": "IPS",
+      "Refresh Rate": "165Hz",
+      "KVM Switch": "Yes",
+      "Color Depth": "10-bit"
+    }
+  },
+  {
+    "_id": "prod_mon_006",
+    "__v": 0,
+    "brand_id": "brand_msi",
+    "category_id": "cat_monitor",
+    "description": "An esports-ready 1080p IPS monitor featuring a 144Hz refresh rate and wide color gamut for competitive play.",
+    "name": "MSI Optix G241",
+    "specs": {
+      "Size": "23.8-inch",
+      "Resolution": "1920 x 1080",
+      "Panel Type": "IPS",
+      "Refresh Rate": "144Hz",
+      "Response Time": "1ms",
+      "Contrast": "1000:1"
+    }
+  },
+  {
+    "_id": "prod_mon_007",
+    "__v": 0,
+    "brand_id": "brand_benq",
+    "category_id": "cat_monitor",
+    "description": "The choice of professional CS:GO players, featuring DyAc+ technology and a native 240Hz refresh rate for ultimate clarity.",
+    "name": "BenQ Zowie XL2546K",
+    "specs": {
+      "Size": "24.5-inch",
+      "Resolution": "1920 x 1080",
+      "Panel Type": "TN",
+      "Refresh Rate": "240Hz",
+      "Sync": "FreeSync Premium",
+      "Clarity Technology": "DyAc+"
+    }
+  },
+  {
+    "_id": "prod_mon_008",
+    "__v": 0,
+    "brand_id": "brand_acer",
+    "category_id": "cat_monitor",
+    "description": "An excellent all-rounder with Quad HD resolution and accurate colors, making it great for both gaming and creative work.",
+    "name": "Acer Nitro XV272U",
+    "specs": {
+      "Size": "27-inch",
+      "Resolution": "2560 x 1440",
+      "Panel Type": "IPS",
+      "Refresh Rate": "144Hz",
+      "Color Accuracy": "99% sRGB",
+      "HDR": "DisplayHDR 400"
+    }
+  },
+  {
+    "_id": "prod_mon_009",
+    "__v": 0,
+    "brand_id": "brand_viewsonic",
+    "category_id": "cat_monitor",
+    "description": "A premium G-Sync gaming monitor with Nano IPS technology and a refined ELITE design for enthusiasts.",
+    "name": "ViewSonic Elite XG270QG",
+    "specs": {
+      "Size": "27-inch",
+      "Resolution": "2560 x 1440",
+      "Panel Type": "Nano IPS",
+      "Refresh Rate": "144Hz (165Hz OC)",
+      "Sync": "NVIDIA G-Sync",
+      "Glow": "ELITE RGB"
+    }
+  },
+  {
+    "_id": "prod_mon_010",
+    "__v": 0,
+    "brand_id": "brand_corsair",
+    "category_id": "cat_monitor",
+    "description": "A stunning 27-inch OLED monitor that delivers deep blacks and vibrant colors at a smooth 240Hz refresh rate.",
+    "name": "Corsair XENEON 27QHD240",
+    "specs": {
+      "Size": "27-inch",
+      "Resolution": "2560 x 1440",
+      "Panel Type": "OLED",
+      "Refresh Rate": "240Hz",
+      "Response Time": "0.03ms",
+      "Peak Brightness": "1000 nits"
+    }
+  },
+  {
+    "_id": "prod_mon_011",
+    "__v": 0,
+    "brand_id": "brand_hp",
+    "category_id": "cat_monitor",
+    "description": "Designed for versatility, the Omen 27qs features a sharp QHD display and a fast 240Hz refresh rate for all gaming genres.",
+    "name": "HP Omen 27qs",
+    "specs": {
+      "Size": "27-inch",
+      "Resolution": "2560 x 1440",
+      "Panel Type": "IPS",
+      "Refresh Rate": "240Hz",
+      "Input": "2x HDMI, 1x DP",
+      "Adjustability": "Swivel, Pivot, Tilt"
+    }
+  },
+  {
+    "_id": "prod_mon_012",
+    "__v": 0,
+    "brand_id": "brand_aoc",
+    "category_id": "cat_monitor",
+    "description": "An affordable curved gaming monitor that doesn't compromise on immersion, featuring a 165Hz refresh rate.",
+    "name": "AOC C27G2",
+    "specs": {
+      "Size": "27-inch",
+      "Resolution": "1920 x 1080",
+      "Panel Type": "VA",
+      "Refresh Rate": "165Hz",
+      "Curvature": "1500R",
+      "Response Time": "1ms MPRT"
+    }
+  },
+  {
+    "_id": "prod_mon_013",
+    "__v": 0,
+    "brand_id": "brand_huawei",
+    "category_id": "cat_monitor",
+    "description": "An ultrawide curved monitor with a built-in soundbar, offering high-end audio and visuals for a complete setup.",
+    "name": "Huawei MateView GT 34",
+    "specs": {
+      "Size": "34-inch",
+      "Resolution": "3440 x 1440",
+      "Panel Type": "VA",
+      "Refresh Rate": "165Hz",
+      "Audio": "Built-in Soundbar (5W x 2)",
+      "Curvature": "1500R"
+    }
+  },
+  {
+    "_id": "prod_mon_014",
+    "__v": 0,
+    "brand_id": "brand_lenovo",
+    "category_id": "cat_monitor",
+    "description": "Designed for hyper-fast esports, this monitor features a 240Hz refresh rate and a native resolution perfect for high-frame gaming.",
+    "name": "Lenovo Legion Y25-30",
+    "specs": {
+      "Size": "24.5-inch",
+      "Resolution": "1920 x 1080",
+      "Panel Type": "IPS",
+      "Refresh Rate": "240Hz (280Hz OC)",
+      "Peak Brightness": "400 nits",
+      "Color Gamut": "99% sRGB"
+    }
+  },
+  {
+    "_id": "prod_mon_015",
+    "__v": 0,
+    "brand_id": "brand_philips",
+    "category_id": "cat_monitor",
+    "description": "A massive 42-inch OLED gaming monitor with 4K resolution and Ambiglow lighting for an unparalleled immersion.",
+    "name": "Philips Evnia 42M2N8900",
+    "specs": {
+      "Size": "42-inch",
+      "Resolution": "3840 x 2160",
+      "Panel Type": "OLED",
+      "Refresh Rate": "138Hz",
+      "Lighting": "Ambiglow",
+      "Sync": "Adaptive-Sync"
+    }
+  },
+  {
+    "_id": "prod_mb_001",
+    "__v": 0,
+    "brand_id": "brand_asus",
+    "category_id": "cat_motherboard",
+    "description": "The ROG Maximus Z790 Hero is a powerhouse motherboard for 13th and 14th Gen Intel processors, featuring robust power delivery and advanced cooling for enthusiasts.",
+    "name": "ASUS ROG Maximus Z790 Hero",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel Z790",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR5",
+      "Max Memory": "192GB",
+      "PCIe Slots": "2x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_002",
+    "__v": 0,
+    "brand_id": "brand_msi",
+    "category_id": "cat_motherboard",
+    "description": "Ready for high-performance AMD Ryzen 7000 and 8000 series processors, the B650 Carbon WiFi provides a balanced mix of features and performance.",
+    "name": "MSI MPG B650 Carbon WiFi",
+    "specs": {
+      "Socket": "AM5",
+      "Chipset": "AMD B650",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR5",
+      "Max Memory": "192GB",
+      "PCIe Slots": "1x PCIe 4.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_003",
+    "__v": 0,
+    "brand_id": "brand_gigabyte",
+    "category_id": "cat_motherboard",
+    "description": "The Z790 AORUS Elite AX brings high-end features to the mainstream, offering excellent value for Intel enthusiasts building gaming rigs.",
+    "name": "Gigabyte Z790 AORUS Elite AX",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel Z790",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR5",
+      "Max Memory": "192GB",
+      "PCIe Slots": "1x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_004",
+    "__v": 0,
+    "brand_id": "brand_asrock",
+    "category_id": "cat_motherboard",
+    "description": "Celebrating 20 years of craftsmanship, the Taichi Carrara features a distinctive marble aesthetic and top-tier specs for the AM5 platform.",
+    "name": "ASRock X670E Taichi Carrara",
+    "specs": {
+      "Socket": "AM5",
+      "Chipset": "AMD X670E",
+      "Form Factor": "E-ATX",
+      "RAM Slots": "4x DDR5",
+      "Max Memory": "192GB",
+      "PCIe Slots": "2x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_005",
+    "__v": 0,
+    "brand_id": "brand_nzxt",
+    "category_id": "cat_motherboard",
+    "description": "Designed for builders who value clean aesthetics, the NZXT N7 Z790 features a sleek metal cover that blends perfectly with NZXT cases.",
+    "name": "NZXT N7 Z790 White",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel Z790",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR5",
+      "Max Memory": "128GB",
+      "PCIe Slots": "1x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_006",
+    "__v": 0,
+    "brand_id": "brand_asus",
+    "category_id": "cat_motherboard",
+    "description": "The TUF Gaming B760M-Plus WIFI is a Micro-ATX motherboard built with durable components for stable performance in multi-core systems.",
+    "name": "ASUS TUF Gaming B760M-Plus WIFI",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel B760",
+      "Form Factor": "mATX",
+      "RAM Slots": "4x DDR5",
+      "Max Memory": "192GB",
+      "PCIe Slots": "1x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_007",
+    "__v": 0,
+    "brand_id": "brand_msi",
+    "category_id": "cat_motherboard",
+    "description": "A focused professional motherboard, the MSI PRO Z790-P WIFI provides clean power delivery and essential connectivity for modern Intel systems.",
+    "name": "MSI PRO Z790-P WIFI",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel Z790",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR5",
+      "Max Memory": "192GB",
+      "PCIe Slots": "1x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_008",
+    "__v": 0,
+    "brand_id": "brand_gigabyte",
+    "category_id": "cat_motherboard",
+    "description": "An excellent entry-level AM5 motherboard that doesn't compromise on essentials, perfect for budget gaming builds.",
+    "name": "Gigabyte B650M DS3H",
+    "specs": {
+      "Socket": "AM5",
+      "Chipset": "AMD B650",
+      "Form Factor": "mATX",
+      "RAM Slots": "4x DDR5",
+      "Max Memory": "192GB",
+      "PCIe Slots": "1x PCIe 4.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_009",
+    "__v": 0,
+    "brand_id": "brand_rog",
+    "category_id": "cat_motherboard",
+    "description": "The ROG Strix X670E-E Gaming WiFi brings flagship-level features to a premium gaming board for high-performance AMD Ryzen builds.",
+    "name": "ROG Strix X670E-E Gaming WiFi",
+    "specs": {
+      "Socket": "AM5",
+      "Chipset": "AMD X670E",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR5",
+      "PCIe Slots": "3x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_010",
+    "__v": 0,
+    "brand_id": "brand_msi",
+    "category_id": "cat_motherboard",
+    "description": "The Tomahawk series is known for reliability and essentials, and the B760 model follows that legacy for 12th/13th/14th Gen Intel CPUs.",
+    "name": "MSI MAG B760 Tomahawk WiFi",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel B760",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR5",
+      "PCIe Slots": "1x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_011",
+    "__v": 0,
+    "brand_id": "brand_asus",
+    "category_id": "cat_motherboard",
+    "description": "A professional entry-level motherboard for commercial and home usage, featuring DDR4 support for cost-effective builds.",
+    "name": "ASUS Prime H610M-E D4",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel H610",
+      "Form Factor": "mATX",
+      "RAM Slots": "2x DDR4",
+      "PCIe Slots": "1x PCIe 4.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_012",
+    "__v": 0,
+    "brand_id": "brand_asrock",
+    "category_id": "cat_motherboard",
+    "description": "Part of the Phantom Gaming series, the PC Lightning offers a dark design and robust connectivity for mainstream AM5 builds.",
+    "name": "ASRock B650 PC Lightning",
+    "specs": {
+      "Socket": "AM5",
+      "Chipset": "AMD B650",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR5",
+      "PCIe Slots": "1x PCIe 4.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_013",
+    "__v": 0,
+    "brand_id": "brand_evga",
+    "category_id": "cat_motherboard",
+    "description": "Designed for record-breaking overclocking, the DARK K|NGP|N is the ultimate board for performance seekers on the Intel platform.",
+    "name": "EVGA Z790 DARK K|NGP|N",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel Z790",
+      "Form Factor": "E-ATX",
+      "RAM Slots": "2x DDR5",
+      "PCIe Slots": "2x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_014",
+    "__v": 0,
+    "brand_id": "brand_gigabyte",
+    "category_id": "cat_motherboard",
+    "description": "A high-performance Mini-ITX motherboard for AM4 systems, featuring premium power delivery and thermal management for small builds.",
+    "name": "Gigabyte B550I AORUS Pro AX",
+    "specs": {
+      "Socket": "AM4",
+      "Chipset": "AMD B550",
+      "Form Factor": "ITX",
+      "RAM Slots": "2x DDR4",
+      "PCIe Slots": "1x PCIe 4.0 x16"
+    }
+  },
+  {
+    "_id": "prod_mb_015",
+    "__v": 0,
+    "brand_id": "brand_nzxt",
+    "category_id": "cat_motherboard",
+    "description": "The NZXT N5 Z690 offers the essentials for 12th Gen Intel CPUs while maintaining the signature minimalist aesthetic and NZXT CAM support.",
+    "name": "NZXT N5 Z690 Black",
+    "specs": {
+      "Socket": "LGA 1700",
+      "Chipset": "Intel Z690",
+      "Form Factor": "ATX",
+      "RAM Slots": "4x DDR4",
+      "PCIe Slots": "1x PCIe 5.0 x16"
+    }
+  },
+  {
+    "_id": "prod_os_001",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "The latest version of Windows for home users, featuring a revamped interface, improved snap layouts, and integrated Microsoft Teams.",
+    "name": "Windows 11 Home",
+    "specs": {
+      "Type": "Full Version",
+      "Architecture": "64-bit",
+      "License": "Perpetual",
+      "Media": "USB/Digital",
+      "System Requirements": "TPM 2.0, 4GB RAM, 64GB SSD",
+      "Language": "English"
+    }
+  },
+  {
+    "_id": "prod_os_002",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "Built for business. Windows 11 Pro includes all Home features plus professional tools for encryption, remote log-in, and creating virtual machines.",
+    "name": "Windows 11 Pro",
+    "specs": {
+      "Type": "Full Version",
+      "Architecture": "64-bit",
+      "License": "Business",
+      "Media": "Digital License",
+      "Security": "BitLocker, WIP",
+      "Management": "Intune, Group Policy"
+    }
+  },
+  {
+    "_id": "prod_os_003",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "The reliable classic. Windows 10 Home (OEM) is ideal for new system builds where a budget-friendly, reliable OS is needed.",
+    "name": "Windows 10 Home (OEM)",
+    "specs": {
+      "Type": "OEM",
+      "Architecture": "64-bit",
+      "License": "System Builder",
+      "Media": "DVD/Digital",
+      "Version": "22H2",
+      "Support": "Until 2025"
+    }
+  },
+  {
+    "_id": "prod_os_004",
+    "__v": 0,
+    "brand_id": "brand_redhat",
+    "category_id": "cat_operating_system",
+    "description": "Standardize your professional workstation on a highly secure, reliable, and enterprise-supported Linux platform.",
+    "name": "Red Hat Enterprise Linux Desktop",
+    "specs": {
+      "Type": "Enterprise",
+      "Support": "1-Year Subscription",
+      "Security": "SELinux, EAL4+",
+      "Updates": "Regular Patches",
+      "System": "x86_64",
+      "License": "Commercial"
+    }
+  },
+  {
+    "_id": "prod_os_005",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "A powerful server solution for small businesses with up to 25 users and 50 devices.",
+    "name": "Windows Server 2022 Essentials",
+    "specs": {
+      "Type": "Server",
+      "License": "25 Users / 50 Devices",
+      "Media": "DVD/Digital",
+      "Version": "2022",
+      "Features": "Active Directory, File Server",
+      "Max RAM": "64GB"
+    }
+  },
+  {
+    "_id": "prod_os_006",
+    "__v": 0,
+    "brand_id": "brand_ubuntu",
+    "category_id": "cat_operating_system",
+    "description": "Get professional grade security and compliance for your Ubuntu machines with a 1-year Pro subscription.",
+    "name": "Ubuntu Pro 1-Year Support",
+    "specs": {
+      "Type": "Professional Support",
+      "Term": "1 Year",
+      "Nodes": "Up to 5",
+      "Compliance": "FIPS, CIS",
+      "Kernel": "Livepatch",
+      "Legacy": "Extended Security Maintenance"
+    }
+  },
+  {
+    "_id": "prod_os_007",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "One-time purchase for 1 PC or Mac. Includes classic 2021 versions of Word, Excel, and PowerPoint.",
+    "name": "Office Home & Student 2021",
+    "specs": {
+      "Type": "Productivity Suite",
+      "Apps": "Word, Excel, PowerPoint",
+      "Term": "Perpetual (No Subscription)",
+      "Devices": "1 PC/Mac",
+      "Account": "Microsoft Account Required",
+      "Region": "Global"
+    }
+  },
+  {
+    "_id": "prod_os_008",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "The high-end Windows 11 Pro for professional system builders. Includes advanced networking and device management.",
+    "name": "Windows 11 Pro (OEM)",
+    "specs": {
+      "Type": "OEM",
+      "Architecture": "64-bit",
+      "License": "System Builder Pro",
+      "Media": "DVD/Digital",
+      "Security": "Domain Join, Azure AD",
+      "Version": "Latest"
+    }
+  },
+  {
+    "_id": "prod_os_009",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "The complete package for power users. Includes Word, Excel, PowerPoint, Outlook, Publisher, and Access.",
+    "name": "Office Professional 2021",
+    "specs": {
+      "Type": "Premium Suite",
+      "Apps": "Full 2021 Pro Suite",
+      "Term": "Perpetual",
+      "Devices": "1 Device",
+      "Platform": "Windows Only",
+      "Export": "Global License"
+    }
+  },
+  {
+    "_id": "prod_os_010",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "Full Package Product for Windows 10 Pro, including transfer rights and support until its lifecycle end.",
+    "name": "Windows 10 Pro (FPP)",
+    "specs": {
+      "Type": "FPP Retail",
+      "Architecture": "64-bit",
+      "License": "Full Retail (Transferable)",
+      "Media": "USB Flash Drive",
+      "Version": "22H2 Pro",
+      "Transition": "Free Upgrade to Win 11"
+    }
+  },
+  {
+    "_id": "prod_os_011",
+    "__v": 0,
+    "brand_id": "brand_vmware",
+    "category_id": "cat_operating_system",
+    "description": "Industry-standard software for running multiple operating systems as virtual machines on a single Linux or Windows PC.",
+    "name": "VMware Workstation 17 Pro",
+    "specs": {
+      "Type": "Virtualization Software",
+      "Version": "17 Pro",
+      "License": "Perpetual (Individual)",
+      "Features": "Snapshot, Clone, Remote vSphere",
+      "Platform": "Windows/Linux",
+      "Support": "1-Year Basic"
+    }
+  },
+  {
+    "_id": "prod_os_012",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "Annual subscription including premium Office apps, 1TB cloud storage, and advanced security for all your devices.",
+    "name": "Microsoft 365 Personal (1-Year)",
+    "specs": {
+      "Type": "Subscription",
+      "Term": "1 Year",
+      "Devices": "Up to 5 (Sync)",
+      "Apps": "All Premium Apps",
+      "Storage": "1TB OneDrive",
+      "Support": "Microsoft Expert Support"
+    }
+  },
+  {
+    "_id": "prod_os_013",
+    "__v": 0,
+    "brand_id": "brand_symantec",
+    "category_id": "cat_operating_system",
+    "description": "Comprehensive malware protection, plus Secure VPN, Password Manager, and PC Cloud Backup for your digital life.",
+    "name": "Norton 360 Deluxe (3 Devices)",
+    "specs": {
+      "Type": "Antivirus/Security",
+      "Term": "1 Year",
+      "Devices": "3 PC/Mac/Mobile",
+      "Features": "VPN, Dark Web Monitoring",
+      "Cloud Storage": "25GB",
+      "Promise": "100% Virus Protection"
+    }
+  },
+  {
+    "_id": "prod_os_014",
+    "__v": 0,
+    "brand_id": "brand_malwarebytes",
+    "category_id": "cat_operating_system",
+    "description": "Advanced real-time protection and cleaning for your PC. Removes malware and blocks ransomware effectively.",
+    "name": "Malwarebytes Premium (1 PC)",
+    "specs": {
+      "Type": "Anti-Malware",
+      "Term": "1 Year",
+      "Devices": "1 PC",
+      "Real-time Protection": "Yes",
+      "Browser Guard": "Included",
+      "Automation": "Scan Scheduling"
+    }
+  },
+  {
+    "_id": "prod_os_015",
+    "__v": 0,
+    "brand_id": "brand_microsoft",
+    "category_id": "cat_operating_system",
+    "description": "Essential Windows 11 Home for system builders. This OEM version is tied to the first machine it is installed on.",
+    "name": "Windows 11 Home (OEM)",
+    "specs": {
+      "Type": "OEM",
+      "Architecture": "64-bit",
+      "License": "Single Machine (Non-transferable)",
+      "Media": "DVD/Digital",
+      "Security": "Windows Hello, Firewall",
+      "Version": "Latest Home"
+    }
+  }
+]

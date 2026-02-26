@@ -74,6 +74,7 @@ const SearchResultsPage = () => {
                                     <ProductCard
                                         key={item.product_id || item._id || index}
                                         id={item.product_id || item._id}
+                                        variantId={item.variant_id}
                                         title={item.name}
                                         price={item.price ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(item.price) : '---'}
                                         image={item.image_url || gpuImg}
