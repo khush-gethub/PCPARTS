@@ -2439,22 +2439,6 @@
     }
   },
   {
-    "_id": "prod_os_006",
-    "__v": 0,
-    "brand_id": "brand_ubuntu",
-    "category_id": "cat_operating_system",
-    "description": "Get professional grade security and compliance for your Ubuntu machines with a 1-year Pro subscription.",
-    "name": "Ubuntu Pro 1-Year Support",
-    "specs": {
-      "Type": "Professional Support",
-      "Term": "1 Year",
-      "Nodes": "Up to 5",
-      "Compliance": "FIPS, CIS",
-      "Kernel": "Livepatch",
-      "Legacy": "Extended Security Maintenance"
-    }
-  },
-  {
     "_id": "prod_os_007",
     "__v": 0,
     "brand_id": "brand_microsoft",
