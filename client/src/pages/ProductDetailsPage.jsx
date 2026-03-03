@@ -9,7 +9,6 @@ import ProductInfo from '../components/ProductInfo.jsx';
 import ProductSpecsAccordion from '../components/ProductSpecsAccordion.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import ProductCarousel from '../components/ProductCarousel.jsx';
-import gpuImg from '../assets/gpu.jpg'; // Fallback
 
 const ProductDetailsPage = () => {
     const { id } = useParams();

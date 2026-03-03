@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import PCCard from '../components/PCCard.jsx';
-import gpuImg from '../assets/gpu.jpg'; // Fallback
 import heroPC from '../assets/hero-pc.png'; // Fallback
 
 const SearchResultsPage = () => {

@@ -12,12 +12,12 @@ import FeaturesSection from '../components/FeaturesSection.jsx';
 
 import Hero from '../components/Hero.jsx';
 import heroPC from '../assets/hero-pc.png';
-import gpuImg from '../assets/gpu.jpg';
-import pcBuildImg from '../assets/pc-build.jpg';
+import pcBuildImg from '../assets/3d-hero-pc.png';
+import gpu from '../assets/3d-gpu.png';
 
 
 const HomePage = () => {
-    const heroImages = [heroPC, gpuImg, pcBuildImg];
+    const heroImages = [heroPC, gpu, pcBuildImg];
 
     return (
         <div className="min-h-screen bg-white font-sans">
