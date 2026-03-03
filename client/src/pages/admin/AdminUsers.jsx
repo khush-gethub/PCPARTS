@@ -52,7 +52,7 @@ const AdminUsers = () => {
             </div>
 
             <AdminTable
-                headers={['Name', 'Email', 'Role', 'Joined Date']}
+                headers={['Name', 'Email', 'Joined Date']}
                 actions={false} // Removed actions (Edit)
             >
                 {users.map((user) => (
@@ -69,17 +69,8 @@ const AdminUsers = () => {
                             </div>
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-600 font-mono font-medium">{user.email}</td>
-                        <td className="px-6 py-4">
-                            <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md bg-gray-100 text-gray-500 border border-gray-200">
-                                {user.role || 'customer'}
-                            </span>
-                        </td>
                         <td className="px-6 py-4 text-sm font-bold text-gray-500">
-                            {user.created_at ? new Date(user.created_at).toLocaleDateString(undefined, {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                            }) : 'N/A'}
+                            {user.created_at ? new Date(user.created_at).toLocaleDateString('en-GB') : 'N/A'}
                         </td>
                     </tr>
                 ))}

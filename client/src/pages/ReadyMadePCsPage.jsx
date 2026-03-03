@@ -154,16 +154,6 @@ const ReadyMadePCsPage = () => {
                     <div className="w-full lg:w-72 flex-shrink-0">
                         <PCFilters filters={filters} onFilterChange={handleFilterChange} />
 
-                        {/* DEBUG DATA */}
-                        <div className="mt-4 p-4 bg-red-100 border border-red-300 text-xs text-red-800 rounded">
-                            <p><strong>Debug Info:</strong></p>
-                            <p>Loading: {loading ? 'Yes' : 'No'}</p>
-                            <p>Total PCs Fetched: {pcs.length}</p>
-                            <p>Filtered PCs: {filteredPCs.length}</p>
-                            <p>First PC Name: {pcs[0]?.name || 'N/A'}</p>
-                            <p>First PC Price: {pcs[0]?.price || 'N/A'}</p>
-                            <p>Mapped UseCase: {pcs[0]?.useCase || 'N/A'}</p>
-                        </div>
                     </div>
 
                     {/* Right Product Grid */}
@@ -205,34 +195,51 @@ const ReadyMadePCsPage = () => {
                                 {/* Pagination Controls */}
                                 {totalPages > 1 && (
                                     <div className="mt-12 flex justify-center items-center gap-2">
-                                        <button
-                                            onClick={() => paginate(currentPage - 1)}
-                                            disabled={currentPage === 1}
-                                            className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                        >
-                                            Previous
-                                        </button>
+                                        {(() => {
+                                            const getPageNumbers = () => {
+                                                if (totalPages <= 7) return [...Array(totalPages)].map((_, i) => i + 1);
+                                                if (currentPage <= 4) return [1, 2, 3, 4, 5, '...', totalPages];
+                                                if (currentPage >= totalPages - 3) return [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+                                                return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+                                            };
+                                            const pageNumbers = getPageNumbers();
+                                            return (
+                                                <>
+                                                    <button
+                                                        onClick={() => paginate(currentPage - 1)}
+                                                        disabled={currentPage === 1}
+                                                        className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                                    >
+                                                        Previous
+                                                    </button>
 
-                                        {[...Array(totalPages)].map((_, i) => (
-                                            <button
-                                                key={i + 1}
-                                                onClick={() => paginate(i + 1)}
-                                                className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${currentPage === i + 1
-                                                    ? 'bg-orange-600 text-white shadow-lg shadow-orange-500/30'
-                                                    : 'bg-white border border-gray-200 text-gray-700 hover:border-orange-500 hover:text-orange-500'
-                                                    }`}
-                                            >
-                                                {i + 1}
-                                            </button>
-                                        ))}
+                                                    {pageNumbers.map((num, i) => (
+                                                        num === '...' ? (
+                                                            <span key={`dots-${i}`} className="w-10 h-10 flex items-center justify-center text-gray-500 font-bold tracking-widest">...</span>
+                                                        ) : (
+                                                            <button
+                                                                key={i}
+                                                                onClick={() => paginate(num)}
+                                                                className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${currentPage === num
+                                                                    ? 'bg-orange-600 text-white shadow-lg shadow-orange-500/30'
+                                                                    : 'bg-white border border-gray-200 text-gray-700 hover:border-orange-500 hover:text-orange-500'
+                                                                    }`}
+                                                            >
+                                                                {num}
+                                                            </button>
+                                                        )
+                                                    ))}
 
-                                        <button
-                                            onClick={() => paginate(currentPage + 1)}
-                                            disabled={currentPage === totalPages}
-                                            className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                        >
-                                            Next
-                                        </button>
+                                                    <button
+                                                        onClick={() => paginate(currentPage + 1)}
+                                                        disabled={currentPage === totalPages}
+                                                        className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                                    >
+                                                        Next
+                                                    </button>
+                                                </>
+                                            );
+                                        })()}
                                     </div>
                                 )}
                             </>

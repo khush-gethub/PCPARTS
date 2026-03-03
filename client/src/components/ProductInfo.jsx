@@ -44,29 +44,6 @@ const ProductInfo = ({ title, brand, rating, reviewsCount, price, originalPrice,
                 ))}
             </div>
 
-            {/* Delivery */}
-            <div className="flex items-center space-x-8 mb-6 text-sm">
-                <div className="text-gray-500 w-20 font-medium">Delivery</div>
-                <div className="flex-1">
-                    <div className="flex border-b-2 border-orange-500 w-64 pb-1 justify-between">
-                        <div className="flex items-center text-gray-900 font-medium">
-                            <svg className="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <input
-                                type="text"
-                                placeholder="Enter Delivery Pincode"
-                                value={pincode}
-                                onChange={(e) => setPincode(e.target.value)}
-                                className="outline-none w-full bg-transparent placeholder-gray-400"
-                            />
-                        </div>
-                        <button className="text-orange-600 font-bold uppercase hover:text-orange-700">Check</button>
-                    </div>
-                    <div className="text-xs text-green-600 mt-2 font-medium">
-                        Expected Delivery by <b>Tomorrow, 11 PM</b>
-                    </div>
-                </div>
-            </div>
-
 
             {/* CTA Buttons */}
             <div className="flex space-x-4 mt-auto">

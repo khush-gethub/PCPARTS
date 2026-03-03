@@ -373,7 +373,7 @@ const ProfilePage = () => {
                                         <div className="flex flex-wrap justify-between items-center gap-4 mb-4">
                                             <div>
                                                 <p className="text-sm font-bold text-orange-600">ID: {order._id}</p>
-                                                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{new Date(order.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                                                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{new Date(order.created_at).toLocaleDateString('en-GB')}</p>
                                             </div>
                                             <div className="flex items-center gap-4">
                                                 <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${order.order_status === 'completed' ? 'bg-green-100 text-green-700' :
@@ -482,18 +482,30 @@ const ProfilePage = () => {
                                                 <span>Payment Method</span>
                                                 <span className="text-gray-900 font-black">{selectedOrder.payment_method?.toUpperCase()}</span>
                                             </div>
+                                            <div className="flex justify-between items-center text-sm font-medium text-gray-500 uppercase tracking-widest">
+                                                <span>Subtotal</span>
+                                                <span className="text-gray-900 font-black">₹{selectedOrder.subtotal || 0}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center text-sm font-medium text-gray-500 uppercase tracking-widest">
+                                                <span>Tax (8%)</span>
+                                                <span className="text-gray-900 font-black">₹{selectedOrder.tax || 0}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center text-sm font-medium text-gray-500 uppercase tracking-widest">
+                                                <span>Shipping</span>
+                                                <span className="text-gray-900 font-black">₹{selectedOrder.shipping_cost || 0}</span>
+                                            </div>
                                             {selectedOrder.coupon_id && (
                                                 <div className="flex justify-between items-center text-sm font-medium text-green-600 uppercase tracking-widest">
                                                     <span>Coupon Applied</span>
                                                     <span className="font-black">{selectedOrder.coupon_id.code}</span>
                                                 </div>
                                             )}
-                                            <div className="flex justify-between items-center text-sm font-medium text-gray-500 uppercase tracking-widest">
-                                                <span>Total Savings</span>
-                                                <span className="text-green-600 font-black">
-                                                    {selectedOrder.coupon_id ? (selectedOrder.coupon_id.discount_type === 'percentage' ? `${selectedOrder.coupon_id.discount_value}%` : `₹${selectedOrder.coupon_id.discount_value}`) : '₹0'}
-                                                </span>
-                                            </div>
+                                            {selectedOrder.discount > 0 && (
+                                                <div className="flex justify-between items-center text-sm font-medium text-gray-500 uppercase tracking-widest">
+                                                    <span>Discount</span>
+                                                    <span className="text-green-600 font-black">-₹{selectedOrder.discount}</span>
+                                                </div>
+                                            )}
                                             <div className="flex justify-between items-center">
                                                 <span className="text-gray-900 font-black uppercase tracking-widest text-sm">Grand Total</span>
                                                 <span className="text-3xl font-black text-orange-600">₹{selectedOrder.total_price}</span>
@@ -501,10 +513,68 @@ const ProfilePage = () => {
                                         </section>
                                     </div>
 
-                                    <div className="p-8 bg-gray-50/50 border-t border-gray-100">
+                                    <div className="p-8 bg-gray-50/50 border-t border-gray-100 flex gap-4">
+                                        <button
+                                            onClick={() => {
+                                                import('jspdf').then(({ default: jsPDF }) => {
+                                                    import('jspdf-autotable').then(() => {
+                                                        const doc = new jsPDF();
+                                                        doc.setFontSize(22);
+                                                        doc.setTextColor(234, 88, 12);
+                                                        doc.text('PC Parts Invoice', 14, 20);
+                                                        doc.setFontSize(10);
+                                                        doc.setTextColor(100);
+                                                        doc.text(`Order ID: ${selectedOrder._id}`, 14, 30);
+                                                        doc.text(`Date: ${new Date(selectedOrder.created_at).toLocaleDateString('en-GB')}`, 14, 35);
+
+                                                        doc.setTextColor(0);
+                                                        doc.setFontSize(12);
+                                                        doc.text('Billed To:', 14, 45);
+                                                        doc.setFontSize(10);
+                                                        doc.text(`${selectedOrder.address_id?.firstName || ''} ${selectedOrder.address_id?.lastName || ''}`, 14, 52);
+                                                        doc.text(`${selectedOrder.address_id?.line1 || ''}`, 14, 57);
+                                                        doc.text(`${selectedOrder.address_id?.city || ''}, ${selectedOrder.address_id?.state || ''} ${selectedOrder.address_id?.pincode || ''}`, 14, 62);
+
+                                                        const tableColumn = ["Item", "Quantity", "Price", "Total"];
+                                                        const tableRows = [];
+                                                        selectedOrder.items?.forEach(item => {
+                                                            tableRows.push([
+                                                                item.product_name,
+                                                                item.quantity,
+                                                                `Rs. ${item.price}`,
+                                                                `Rs. ${Number(item.price) * item.quantity}`
+                                                            ]);
+                                                        });
+                                                        doc.autoTable({
+                                                            startY: 70,
+                                                            head: [tableColumn],
+                                                            body: tableRows,
+                                                            theme: 'striped',
+                                                            headStyles: { fillColor: [234, 88, 12] }
+                                                        });
+
+                                                        const finalY = doc.lastAutoTable.finalY || 70;
+                                                        doc.text(`Subtotal: Rs. ${selectedOrder.subtotal || 0}`, 140, finalY + 10);
+                                                        doc.text(`Tax: Rs. ${selectedOrder.tax || 0}`, 140, finalY + 17);
+                                                        doc.text(`Shipping: Rs. ${selectedOrder.shipping_cost || 0}`, 140, finalY + 24);
+                                                        if (selectedOrder.discount > 0) {
+                                                            doc.text(`Discount: -Rs. ${selectedOrder.discount}`, 140, finalY + 31);
+                                                        }
+                                                        doc.setFontSize(12);
+                                                        doc.setTextColor(234, 88, 12);
+                                                        doc.text(`Total: Rs. ${selectedOrder.total_price}`, 140, selectedOrder.discount > 0 ? finalY + 40 : finalY + 33);
+
+                                                        doc.save(`invoice_${selectedOrder._id}.pdf`);
+                                                    });
+                                                });
+                                            }}
+                                            className="w-1/2 py-4 bg-orange-600 text-white text-xs font-black rounded-2xl hover:bg-orange-700 transition-all uppercase tracking-[0.2em] shadow-lg shadow-orange-200"
+                                        >
+                                            Download Invoice
+                                        </button>
                                         <button
                                             onClick={() => setSelectedOrder(null)}
-                                            className="w-full py-4 bg-gray-900 text-white text-xs font-black rounded-2xl hover:bg-black transition-all uppercase tracking-[0.2em] shadow-lg shadow-gray-200"
+                                            className="w-1/2 py-4 bg-gray-900 text-white text-xs font-black rounded-2xl hover:bg-black transition-all uppercase tracking-[0.2em] shadow-lg shadow-gray-200"
                                         >
                                             Close Summary
                                         </button>
@@ -577,7 +647,7 @@ const ProfilePage = () => {
                                         </div>
 
                                         <p className="text-xs text-gray-500 font-bold mb-4 leading-relaxed">
-                                            {coupon.user_status === 'eligible' ? 'Available to use at checkout for your next hardware upgrade.' : `Used on ${new Date(coupon.used_at).toLocaleDateString()}`}
+                                            {coupon.user_status === 'eligible' ? 'Available to use at checkout for your next hardware upgrade.' : `Used on ${new Date(coupon.used_at).toLocaleDateString('en-GB')}`}
                                         </p>
 
                                         <div className="flex justify-between items-center relative z-10">
@@ -596,7 +666,7 @@ const ProfilePage = () => {
                                                 )}
                                             </div>
                                             {coupon.expires_at && (
-                                                <span className="text-[10px] text-gray-400 font-bold">Expires: {new Date(coupon.expires_at).toLocaleDateString()}</span>
+                                                <span className="text-[10px] text-gray-400 font-bold">Expires: {new Date(coupon.expires_at).toLocaleDateString('en-GB')}</span>
                                             )}
                                         </div>
                                         {/* Decorative ticket look */}

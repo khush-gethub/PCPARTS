@@ -4,6 +4,8 @@ import { api } from '../api.js';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const OrderConfirmationPage = () => {
     const location = useLocation();
@@ -30,9 +32,67 @@ const OrderConfirmationPage = () => {
         }
     };
 
-    const date = order?.created_at
-        ? new Date(order.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-        : new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    const orderDate = order?.created_at
+        ? new Date(order.created_at).toLocaleDateString('en-GB')
+        : new Date().toLocaleDateString('en-GB');
+
+    const handleDownloadInvoice = () => {
+        if (!order) return;
+        const doc = new jsPDF();
+
+        // Header
+        doc.setFontSize(22);
+        doc.setTextColor(234, 88, 12); // Orange
+        doc.text('PC Parts Invoice', 14, 20);
+
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text(`Order ID: ${order._id}`, 14, 30);
+        doc.text(`Date: ${new Date(order.created_at).toLocaleDateString('en-GB')}`, 14, 35);
+
+        // Billing Info
+        doc.setTextColor(0);
+        doc.setFontSize(12);
+        doc.text('Billed To:', 14, 45);
+        doc.setFontSize(10);
+        doc.text(`${order.address_id.firstName} ${order.address_id.lastName}`, 14, 52);
+        doc.text(`${order.address_id.line1}`, 14, 57);
+        doc.text(`${order.address_id.city}, ${order.address_id.state} ${order.address_id.pincode}`, 14, 62);
+
+        // Items Table
+        const tableColumn = ["Item", "Quantity", "Price", "Total"];
+        const tableRows = [];
+        order.items.forEach(item => {
+            tableRows.push([
+                item.product_name,
+                item.quantity,
+                `Rs. ${item.price}`,
+                `Rs. ${Number(item.price) * item.quantity}`
+            ]);
+        });
+
+        doc.autoTable({
+            startY: 70,
+            head: [tableColumn],
+            body: tableRows,
+            theme: 'striped',
+            headStyles: { fillColor: [234, 88, 12] }
+        });
+
+        // Totals
+        const finalY = doc.lastAutoTable.finalY || 70;
+        doc.text(`Subtotal: Rs. ${order.subtotal || 0}`, 140, finalY + 10);
+        doc.text(`Tax: Rs. ${order.tax || 0}`, 140, finalY + 17);
+        doc.text(`Shipping: Rs. ${order.shipping_cost || 0}`, 140, finalY + 24);
+        if (order.discount > 0) {
+            doc.text(`Discount: -Rs. ${order.discount}`, 140, finalY + 31);
+        }
+        doc.setFontSize(12);
+        doc.setTextColor(234, 88, 12);
+        doc.text(`Total: Rs. ${order.total_price}`, 140, order.discount > 0 ? finalY + 40 : finalY + 33);
+
+        doc.save(`invoice_${order._id}.pdf`);
+    };
 
     return (
         <div className="min-h-screen bg-[#eef2f2] flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900">
@@ -96,7 +156,7 @@ const OrderConfirmationPage = () => {
                                     </div>
                                     <div className="text-right">
                                         <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Order Date</p>
-                                        <p className="text-lg font-black text-gray-900">{date}</p>
+                                        <p className="text-lg font-black text-gray-900">{orderDate}</p>
                                     </div>
                                 </div>
 
@@ -141,10 +201,39 @@ const OrderConfirmationPage = () => {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
-                                        <p className="text-sm font-black text-gray-900 uppercase tracking-widest">Total Amount</p>
-                                        <p className="text-2xl font-black text-orange-600">₹{order?.total_price}</p>
+                                    <div className="pt-4 border-t border-gray-200 space-y-2">
+                                        <div className="flex justify-between items-center text-sm font-bold text-gray-500">
+                                            <p>Subtotal</p>
+                                            <p>₹{order?.subtotal || 0}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center text-sm font-bold text-gray-500">
+                                            <p>Tax (8%)</p>
+                                            <p>₹{order?.tax || 0}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center text-sm font-bold text-gray-500">
+                                            <p>Shipping</p>
+                                            <p>₹{order?.shipping_cost || 0}</p>
+                                        </div>
+                                        {order?.discount > 0 && (
+                                            <div className="flex justify-between items-center text-sm font-bold text-green-500">
+                                                <p>Discount</p>
+                                                <p>-₹{order?.discount}</p>
+                                            </div>
+                                        )}
+                                        <div className="pt-2 mt-2 border-t border-gray-100 flex justify-between items-center">
+                                            <p className="text-sm font-black text-gray-900 uppercase tracking-widest">Total Amount</p>
+                                            <p className="text-2xl font-black text-orange-600">₹{order?.total_price}</p>
+                                        </div>
                                     </div>
+                                </div>
+                                <div className="pt-4">
+                                    <button
+                                        onClick={handleDownloadInvoice}
+                                        className="py-3 px-6 bg-gray-900 text-white text-sm font-black rounded-xl hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 mx-auto"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                        Download Invoice PDF
+                                    </button>
                                 </div>
 
                                 <div className="flex flex-col sm:flex-row gap-4 pt-4">

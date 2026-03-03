@@ -50,7 +50,7 @@ const SavedBuildsPage = () => {
             doc.setFontSize(12);
             doc.setTextColor(100);
             doc.text(`Build Name: ${build.name}`, 14, 30);
-            doc.text(`Date: ${build.created_at ? new Date(build.created_at).toLocaleDateString() : new Date().toLocaleDateString()}`, 14, 37);
+            doc.text(`Date: ${build.created_at ? new Date(build.created_at).toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB')}`, 14, 37);
             doc.text(`Total Price: ₹${build.total_price?.toLocaleString('en-IN') || '0'}`, 14, 44);
 
             // Components Table
@@ -153,7 +153,7 @@ const SavedBuildsPage = () => {
                                     <div className="flex justify-between items-start mb-4">
                                         <h3 className="text-xl font-black text-gray-900 truncate flex-1">{build.name}</h3>
                                         <span className="bg-gray-100 px-3 py-1 rounded-full text-xs font-black text-gray-500 whitespace-nowrap ml-2">
-                                            {new Date(build.created_at).toLocaleDateString()}
+                                            {new Date(build.created_at).toLocaleDateString('en-GB')}
                                         </span>
                                     </div>
 

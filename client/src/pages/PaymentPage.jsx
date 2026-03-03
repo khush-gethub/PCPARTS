@@ -59,22 +59,6 @@ const PaymentPage = () => {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             const userId = storedUser ? storedUser.id : 'guest_user';
 
-            // Calculate total
-            const subtotal = cartItems.reduce((sum, item) => sum + (Number(item.price) * item.quantity), 0);
-            const shippingCost = shippingData.shippingMethod === 'express' ? 500 : 0;
-            // Note: Tax calculation logic should be consistent with CartPage if tax is applied here too.
-            // In CartPage: tax = subtotal * 0.08
-            const tax = subtotal * 0.08;
-            let total = subtotal + shippingCost + tax;
-
-            if (appliedCoupon) {
-                if (appliedCoupon.discount_type === 'percentage') {
-                    total -= (total * (appliedCoupon.discount_value / 100));
-                } else {
-                    total -= appliedCoupon.discount_value;
-                }
-            }
-
             // Construct Order Payload
             const orderData = {
                 user_id: userId,
@@ -95,7 +79,11 @@ const PaymentPage = () => {
                     quantity: item.quantity
                 })),
                 payment_method: selectedMethod,
-                total_price: Math.round(total),
+                total_price: Math.round(finalTotal),
+                subtotal: Math.round(subtotal),
+                tax: Math.round(tax),
+                shipping_cost: shippingCost,
+                discount: Math.round(discountValue),
                 coupon_id: appliedCoupon ? appliedCoupon._id : null,
                 payment_id: selectedMethod === 'cod' ? `cod_${Date.now()}_${Math.random().toString(36).substr(2, 5)}` : `pay_${Date.now()}`
             };
@@ -119,6 +107,23 @@ const PaymentPage = () => {
     };
 
     if (!shippingData) return null;
+
+    // Calculate totals for UI rendering and backend submission
+    const subtotal = cartItems.reduce((sum, item) => sum + (Number(item.price) * item.quantity), 0);
+    const shippingCost = shippingData.shippingMethod === 'express' ? 500 : 0;
+    const tax = subtotal * 0.08;
+
+    // Apply discount onto (subtotal + tax)? Wait, previously it applied to total (subtotal + shipping + tax). I will stick to previous calculation for consistency.
+    let baseTotal = subtotal + shippingCost + tax;
+    let discountValue = 0;
+    if (appliedCoupon) {
+        if (appliedCoupon.discount_type === 'percentage') {
+            discountValue = (baseTotal * (appliedCoupon.discount_value / 100));
+        } else {
+            discountValue = appliedCoupon.discount_value;
+        }
+    }
+    const finalTotal = baseTotal - discountValue;
 
     return (
         <div className="min-h-screen bg-[#eef2f2] flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900">
@@ -290,14 +295,40 @@ const PaymentPage = () => {
                             )}
                         </div>
 
-                        {appliedCoupon && (
-                            <div className="pt-6 border-t border-gray-100">
-                                <p className="text-sm text-green-600 font-bold flex items-center gap-2">
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                    Coupon Applied: {appliedCoupon.name} (-{appliedCoupon.discount_type === 'percentage' ? `${appliedCoupon.discount_value}%` : `₹${appliedCoupon.discount_value}`})
-                                </p>
+                        {/* Order Summary & Coupon Details */}
+                        <div className="pt-6 border-t border-gray-100 space-y-3 px-2">
+                            <h3 className="font-black tracking-widest text-xs uppercase text-gray-400 mb-4">Order Summary</h3>
+
+                            <div className="flex justify-between items-center text-sm font-bold text-gray-600">
+                                <span>Subtotal ({cartCount} items)</span>
+                                <span>₹{Math.round(subtotal).toLocaleString('en-IN')}</span>
                             </div>
-                        )}
+
+                            <div className="flex justify-between items-center text-sm font-bold text-gray-600">
+                                <span>Tax (8%)</span>
+                                <span>₹{Math.round(tax).toLocaleString('en-IN')}</span>
+                            </div>
+
+                            <div className="flex justify-between items-center text-sm font-bold text-gray-600">
+                                <span>Shipping</span>
+                                <span>{shippingCost === 0 ? 'Free' : `₹${shippingCost.toLocaleString('en-IN')}`}</span>
+                            </div>
+
+                            {appliedCoupon && (
+                                <div className="flex justify-between items-center text-sm font-black text-green-600 bg-green-50 p-3 rounded-xl mt-2">
+                                    <div className="flex items-center gap-2">
+                                        <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                        <span>Coupon Applied: {appliedCoupon.code}</span>
+                                    </div>
+                                    <span>-₹{Math.round(discountValue).toLocaleString('en-IN')}</span>
+                                </div>
+                            )}
+
+                            <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
+                                <span className="font-black text-gray-900 text-lg">Total to Pay</span>
+                                <span className="font-black text-orange-600 text-2xl">₹{Math.round(finalTotal).toLocaleString('en-IN')}</span>
+                            </div>
+                        </div>
 
                         <div className="pt-4">
                             {!isSuccess ? (

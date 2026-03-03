@@ -49,26 +49,6 @@ const ReadyMadePCInfo = ({ title, useCase, rating, reviewsCount, price, original
                 </div>
             )}
 
-            {/* Delivery */}
-            <div className="flex items-center space-x-8 mb-6 text-sm">
-                <div className="text-gray-500 w-20 font-medium">Delivery</div>
-                <div className="flex-1">
-                    <div className="flex border-b-2 border-orange-500 w-64 pb-1 justify-between">
-                        <div className="flex items-center text-gray-900 font-medium">
-                            <span className="text-gray-400 mr-2">📍</span>
-                            <input
-                                type="text"
-                                placeholder="Enter Delivery Pincode"
-                                value={pincode}
-                                onChange={(e) => setPincode(e.target.value)}
-                                className="outline-none w-full bg-transparent placeholder-gray-400"
-                            />
-                        </div>
-                        <button className="text-orange-600 font-bold uppercase hover:text-orange-700">Check</button>
-                    </div>
-                </div>
-            </div>
-
             {/* CTA Buttons */}
             <div className="flex space-x-4 mt-auto">
                 <button

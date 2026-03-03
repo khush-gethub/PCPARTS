@@ -8,6 +8,8 @@ const AdminCoupons = () => {
     const [coupons, setCoupons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [showUsagesModal, setShowUsagesModal] = useState(false);
+    const [selectedCouponUsages, setSelectedCouponUsages] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [currentCouponId, setCurrentCouponId] = useState(null);
     const [newCoupon, setNewCoupon] = useState({
@@ -68,8 +70,23 @@ const AdminCoupons = () => {
         setShowModal(true);
     };
 
+    const handleShowUsagesModal = (coupon) => {
+        setSelectedCouponUsages(coupon);
+        setShowUsagesModal(true);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (Number(newCoupon.discount_value) < 0) {
+            alert("Discount value cannot be negative.");
+            return;
+        }
+        if (Number(newCoupon.min_completed_orders) < 0) {
+            alert("Minimum orders required cannot be negative.");
+            return;
+        }
+
         try {
             if (isEditing) {
                 await api.updateCoupon(currentCouponId, newCoupon);
@@ -111,7 +128,7 @@ const AdminCoupons = () => {
                 </div>
             ) : (
                 <AdminTable
-                    headers={['Name / Code', 'Discount', 'Requirement', 'Expiry Date', 'Status', 'Actions']}
+                    headers={['Name / Code', 'Discount', 'Requirement', 'Usage', 'Expiry Date', 'Status', 'Actions']}
                     actions={true}
                 >
                     {coupons.map((coupon) => (
@@ -130,8 +147,16 @@ const AdminCoupons = () => {
                             <td className="px-6 py-4 text-sm text-gray-600 font-medium">
                                 {coupon.min_completed_orders > 0 ? `${coupon.min_completed_orders} Completed Orders` : 'None'}
                             </td>
+                            <td className="px-6 py-4 text-sm font-bold text-gray-500">
+                                <button
+                                    onClick={() => handleShowUsagesModal(coupon)}
+                                    className="text-orange-600 hover:text-orange-700 underline underline-offset-2"
+                                >
+                                    {coupon.use_count || 0} Uses
+                                </button>
+                            </td>
                             <td className="px-6 py-4 text-sm text-gray-500 font-medium">
-                                {coupon.expires_at ? new Date(coupon.expires_at).toLocaleDateString() : 'No Limit'}
+                                {coupon.expires_at ? new Date(coupon.expires_at).toLocaleDateString('en-GB') : 'No Limit'}
                             </td>
                             <td className="px-6 py-4">
                                 <AdminBadge
@@ -213,7 +238,7 @@ const AdminCoupons = () => {
                                 <div className="space-y-2">
                                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Discount Value</label>
                                     <input
-                                        type="number" required
+                                        type="number" required min="0"
                                         placeholder="10"
                                         className="w-full px-5 py-3 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-bold"
                                         value={newCoupon.discount_value}
@@ -226,7 +251,7 @@ const AdminCoupons = () => {
                                 <div className="space-y-2">
                                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Min Orders Req.</label>
                                     <input
-                                        type="number"
+                                        type="number" min="0"
                                         placeholder="2"
                                         className="w-full px-5 py-3 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-bold"
                                         value={newCoupon.min_completed_orders}
@@ -262,6 +287,42 @@ const AdminCoupons = () => {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Usages Modal */}
+            {showUsagesModal && selectedCouponUsages && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowUsagesModal(false)}></div>
+                    <div className="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden animate-scaleUp">
+                        <div className="p-8 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                            <div>
+                                <h2 className="text-2xl font-black text-gray-900 leading-none">Coupon <span className="text-orange-600">Usages</span></h2>
+                                <p className="text-sm text-gray-500 mt-2 font-mono">{selectedCouponUsages.code}</p>
+                            </div>
+                            <button onClick={() => setShowUsagesModal(false)} className="p-2 hover:bg-gray-200 rounded-full transition-colors text-gray-400">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
+                        <div className="p-6 max-h-96 overflow-y-auto">
+                            {!selectedCouponUsages.usages || selectedCouponUsages.usages.length === 0 ? (
+                                <p className="text-center text-gray-500 py-4">No usages yet.</p>
+                            ) : (
+                                <ul className="space-y-4">
+                                    {selectedCouponUsages.usages.map((u, i) => (
+                                        <li key={i} className="flex flex-col p-4 bg-gray-50 rounded-xl relative">
+                                            <span className="text-sm font-black text-gray-900">{u.user}</span>
+                                            <span className="text-xs font-bold text-gray-500">{u.email}</span>
+                                            <span className="text-[10px] text-gray-400 font-mono mt-2">{new Date(u.used_at).toLocaleString()}</span>
+                                            <div className="absolute top-4 right-4 h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

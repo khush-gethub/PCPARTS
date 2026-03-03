@@ -240,15 +240,28 @@ const BenchmarksPage = () => {
                             >
                                 Previous
                             </button>
-                            {Array.from({ length: totalPages }, (_, i) => (
-                                <button
-                                    key={i + 1}
-                                    className={`px-3 py-1 border rounded text-sm transition-colors ${currentPage === i + 1 ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-300 hover:bg-slate-50'}`}
-                                    onClick={() => setCurrentPage(i + 1)}
-                                >
-                                    {i + 1}
-                                </button>
-                            ))}
+                            {(() => {
+                                const getPageNumbers = () => {
+                                    if (totalPages <= 7) return [...Array(totalPages)].map((_, i) => i + 1);
+                                    if (currentPage <= 4) return [1, 2, 3, 4, 5, '...', totalPages];
+                                    if (currentPage >= totalPages - 3) return [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+                                    return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+                                };
+                                const pageNumbers = getPageNumbers();
+                                return pageNumbers.map((num, i) => (
+                                    num === '...' ? (
+                                        <span key={`dots-${i}`} className="px-3 py-1 text-sm text-slate-500 font-bold">...</span>
+                                    ) : (
+                                        <button
+                                            key={i}
+                                            className={`px-3 py-1 border rounded text-sm transition-colors ${currentPage === num ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-300 hover:bg-slate-50'}`}
+                                            onClick={() => setCurrentPage(num)}
+                                        >
+                                            {num}
+                                        </button>
+                                    )
+                                ));
+                            })()}
                             <button
                                 className="px-3 py-1 border border-slate-300 rounded text-sm hover:bg-slate-50 disabled:opacity-50"
                                 disabled={currentPage === totalPages}

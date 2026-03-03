@@ -136,6 +136,16 @@ const AdminReadyMadePCs = () => {
             items: itemsToSave
         };
 
+        if (itemsToSave.length === 0) {
+            alert("Please select at least one component for the PC build.");
+            return;
+        }
+
+        if (!payload.price || payload.price <= 0) {
+            alert("The total price must be greater than 0. Please select valid components.");
+            return;
+        }
+
         try {
             if (editingPC) {
                 await api.updateReadyMadePC(editingPC._id || editingPC.pc_id, payload);

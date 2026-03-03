@@ -350,8 +350,13 @@ app.put('/products/:id', async (req, res) => {
             // 3. Update Stock
             const stockRecord = await Stock.findOne({ variant_id: variant._id });
             if (stockRecord) {
+                const oldStock = stockRecord.quantity;
                 stockRecord.quantity = Number(stock);
                 await stockRecord.save();
+
+                if (Number(stock) > oldStock) {
+                    console.log(`[ALERT] Admin Notification: Stock for ${name} increased from ${oldStock} to ${Number(stock)}.`);
+                }
             } else {
                 // Create if missing
                 const newStock = new Stock({
@@ -752,8 +757,21 @@ app.delete('/readymade-pcs/items/:item_id', async (req, res) => {
 // 12. Coupons (Admin & User)
 app.get('/api/coupons', async (req, res) => {
     try {
-        const coupons = await Coupon.find().sort({ created_at: -1 });
-        res.json(coupons);
+        const coupons = await Coupon.find().sort({ created_at: -1 }).lean();
+        const enrichedCoupons = await Promise.all(coupons.map(async (coupon) => {
+            const usages = await UserCoupon.find({ coupon_id: coupon._id, status: 'used' })
+                .populate('user_id', 'name email');
+            return {
+                ...coupon,
+                use_count: usages.length,
+                usages: usages.map(u => ({
+                    user: u.user_id ? u.user_id.name : 'Unknown User',
+                    email: u.user_id ? u.user_id.email : 'N/A',
+                    used_at: u.used_at
+                }))
+            };
+        }));
+        res.json(enrichedCoupons);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -931,9 +949,8 @@ app.get('/search', async (req, res) => {
 
         // Enrich products with primary image and basic variant for price
         const enrichedProducts = await Promise.all(products.map(async (p) => {
-            const productSuffix = p._id.split('_').pop();
             const [image, variant] = await Promise.all([
-                ProductImage.findOne({ product_id: { $regex: productSuffix + '$' } }).sort('position'),
+                ProductImage.findOne({ product_id: p._id }).sort('position'),
                 ProductVariant.findOne({ product_id: p._id })
             ]);
             return {
@@ -974,23 +991,56 @@ app.get('/search', async (req, res) => {
 // Admin Dashboard Stats
 app.get('/api/admin/stats', async (req, res) => {
     try {
-        const [totalRevenueResult, totalOrders, activeUsers, lowStockCount] = await Promise.all([
+        const now = new Date();
+        const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+        const [
+            totalRevenueResult,
+            lastMonthRevenueResult,
+            totalOrders,
+            lastMonthOrders,
+            activeUsers,
+            lastMonthUsers,
+            lowStockCount
+        ] = await Promise.all([
             Order.aggregate([
-                { $match: { payment_status: 'paid' } },
+                { $match: { order_status: { $nin: ['cancelled', 'denied'] } } },
+                { $group: { _id: null, total: { $sum: '$total_price' } } }
+            ]),
+            Order.aggregate([
+                { $match: { order_status: { $nin: ['cancelled', 'denied'] }, created_at: { $gte: firstDayLastMonth, $lt: firstDayThisMonth } } },
                 { $group: { _id: null, total: { $sum: '$total_price' } } }
             ]),
             Order.countDocuments(),
-            User.countDocuments(),
-            Stock.countDocuments({ quantity: { $gt: 0, $lte: 10 } })
+            Order.countDocuments({ created_at: { $gte: firstDayLastMonth, $lt: firstDayThisMonth } }),
+            User.countDocuments({ role: { $ne: 'admin' } }),
+            User.countDocuments({ role: { $ne: 'admin' }, created_at: { $gte: firstDayLastMonth, $lt: firstDayThisMonth } }),
+            Stock.countDocuments({ quantity: { $gt: 0, $lt: 10 } })
         ]);
 
         const totalRevenue = totalRevenueResult.length > 0 ? totalRevenueResult[0].total : 0;
+        const lastMonthRevenue = lastMonthRevenueResult.length > 0 ? lastMonthRevenueResult[0].total : 0;
+
+        const calcChange = (current, last) => {
+            if (last === 0) return current > 0 ? 100 : 0;
+            return ((current - last) / last) * 100;
+        };
+
+        const revenueChange = calcChange(totalRevenue, lastMonthRevenue);
+        const ordersChange = calcChange(totalOrders, lastMonthOrders);
+        const usersChange = calcChange(activeUsers, lastMonthUsers);
 
         res.json({
             totalRevenue,
             totalOrders,
             activeUsers,
-            lowStockAlerts: lowStockCount
+            lowStockAlerts: lowStockCount,
+            changes: {
+                revenue: revenueChange.toFixed(1) + '%',
+                orders: ordersChange.toFixed(1) + '%',
+                users: usersChange.toFixed(1) + '%'
+            }
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -1045,7 +1095,7 @@ app.get('/api/orders/user/:user_id', async (req, res) => {
 app.get('/api/orders', async (req, res) => {
     try {
         const orders = await Order.find()
-            .populate('user_id', 'full_name email') // Populate basic user info
+            .populate('user_id', 'name email') // Populate basic user info
             .populate('address_id')
             .populate('coupon_id')
             .sort({ created_at: -1 });
@@ -1075,7 +1125,6 @@ app.get('/api/orders/:id', async (req, res) => {
     }
 });
 
-// Admin: Update order status
 app.put('/api/orders/:id/status', async (req, res) => {
     try {
         const { status } = req.body;
@@ -1097,9 +1146,24 @@ app.put('/api/orders/:id/status', async (req, res) => {
     }
 });
 
+app.put('/api/orders/:id/payment-status', async (req, res) => {
+    try {
+        const { status } = req.body;
+        const updatedOrder = await Order.findByIdAndUpdate(
+            req.params.id,
+            { payment_status: status },
+            { new: true }
+        );
+        if (!updatedOrder) return res.status(404).json({ error: 'Order not found' });
+        res.json(updatedOrder);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.post('/orders', async (req, res) => {
     try {
-        const { user_id, address_data, items, payment_method, total_price, payment_id, coupon_id } = req.body;
+        const { user_id, address_data, items, payment_method, total_price, subtotal, tax, shipping_cost, discount, payment_id, coupon_id } = req.body;
 
         if (!items || items.length === 0) {
             throw new Error('Order must contain items');
@@ -1138,6 +1202,10 @@ app.post('/orders', async (req, res) => {
             user_id,
             address_id: addressId,
             total_price,
+            subtotal,
+            tax,
+            shipping_cost,
+            discount,
             payment_method: payment_method || 'card',
             payment_status: payment_method === 'cod' ? 'pending' : 'paid',
             order_status: 'processing',
@@ -1174,7 +1242,7 @@ app.post('/orders', async (req, res) => {
                 }
             }
 
-            // 3.3 Check and Update Stock (only for individual components for now)
+            // 3.3 Check and Update Stock
             if (!isReadyMade) {
                 const stock = await Stock.findOne({ variant_id: variant_id });
                 if (!stock || stock.quantity < item.quantity) {
@@ -1184,6 +1252,32 @@ app.post('/orders', async (req, res) => {
                 // Decrement Stock
                 stock.quantity -= item.quantity;
                 await stock.save();
+            } else {
+                // Find all items in this pc
+                const pcItems = await ReadyMadePCItem.find({ pc_id: variant_id });
+                if (!pcItems || pcItems.length === 0) {
+                    console.warn(`ReadyMade PC definition not found or is empty: ${variant_id}`);
+                    continue; // Might be a misconfigured PC, skip strictly failing for now, or just don't have stock to deduct
+                }
+
+                // First pass: Pre-check all stock to ensure we can fulfill the PC order completely
+                const stocksToUpdate = [];
+                for (const pcItem of pcItems) {
+                    // query by variant_id if it exists, fallback to product_id
+                    const stockQuery = pcItem.variant_id ? { variant_id: pcItem.variant_id } : { product_id: pcItem.product_id };
+                    const stock = await Stock.findOne(stockQuery);
+
+                    if (!stock || stock.quantity < item.quantity) {
+                        throw new Error(`Insufficient stock for a component of ReadyMade PC: ${item.name}`);
+                    }
+                    stocksToUpdate.push(stock);
+                }
+
+                // Second pass: Deduct stock
+                for (const stock of stocksToUpdate) {
+                    stock.quantity -= item.quantity;
+                    await stock.save();
+                }
             }
 
             // 3.4 Create Order Item

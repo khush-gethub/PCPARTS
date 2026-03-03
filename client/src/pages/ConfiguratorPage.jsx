@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
 import BuilderRow from '../components/BuilderRow.jsx';
 import PartSelectionModal from '../components/PartSelectionModal.jsx';
 import { useCart } from '../context/CartContext.jsx';
+import { api } from '../api';
 
 // --- CONFIGURATION ---
 const COMPONENT_ROWS = [
@@ -47,6 +48,76 @@ const ConfiguratorPage = () => {
     const [categoryProducts, setCategoryProducts] = useState([]);
     const [isLoadingProducts, setIsLoadingProducts] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    // --- SHARE LINK EFFECT ---
+    const [shareUrl, setShareUrl] = useState('');
+    const [shareCopied, setShareCopied] = useState(false);
+
+    // Initial Load from URL
+    useEffect(() => {
+        const loadBuildFromUrl = async () => {
+            const partsToLoad = {};
+            let hasParts = false;
+            for (const [key, value] of searchParams.entries()) {
+                if (COMPONENT_ROWS.find(row => row.id === key) && value) {
+                    partsToLoad[key] = value;
+                    hasParts = true;
+                }
+            }
+            if (!hasParts) return;
+
+            try {
+                const newSelected = { ...selectedParts };
+                await Promise.all(
+                    Object.entries(partsToLoad).map(async ([key, id]) => {
+                        try {
+                            const product = await api.getProductById(id);
+                            if (product) {
+                                newSelected[key] = product;
+                            }
+                        } catch (err) {
+                            console.error(`Failed to load product ${id} for ${key}`);
+                        }
+                    })
+                );
+                setSelectedParts(newSelected);
+            } catch (err) {
+                console.error("Error loading build from URL", err);
+            }
+        };
+
+        if (searchParams.toString()) {
+            loadBuildFromUrl();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Sync state to URL and Share Link
+    useEffect(() => {
+        const params = new URLSearchParams();
+        Object.entries(selectedParts).forEach(([key, part]) => {
+            if (part && (part.product_id || part._id)) {
+                params.set(key, part.product_id || part._id);
+            }
+        });
+        const qs = params.toString();
+
+        // Only replace if it changed
+        if (qs !== searchParams.toString()) {
+            setSearchParams(params, { replace: true });
+        }
+
+        const url = `${window.location.origin}${window.location.pathname}${qs ? `?${qs}` : ''}`;
+        setShareUrl(url);
+        setShareCopied(false);
+    }, [selectedParts, searchParams, setSearchParams]);
+
+    const handleCopyShare = () => {
+        navigator.clipboard.writeText(shareUrl);
+        setShareCopied(true);
+        setTimeout(() => setShareCopied(false), 2000);
+    };
 
     // --- FETCHING ---
     const fetchProductsForCategory = async (categoryId) => {
@@ -116,7 +187,7 @@ const ConfiguratorPage = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: user.id || user._id,
-                    name: `My Custom Build - ${new Date().toLocaleDateString()}`,
+                    name: `My Custom Build - ${new Date().toLocaleDateString('en-GB')}`,
                     total_price: totalPrice,
                     items: buildItems
                 })
@@ -309,12 +380,14 @@ const ConfiguratorPage = () => {
                                 </button>
                             </div>
 
-                            {/* Share Link (Mock) */}
+                            {/* Share Link */}
                             <div className="mt-6 pt-6 border-t border-gray-100">
                                 <label className="text-xs font-bold text-gray-400 uppercase tracking-wide block mb-2">Share Link</label>
                                 <div className="flex bg-gray-50 rounded-lg p-1 border border-gray-200">
-                                    <input type="text" readOnly value="https://pcbuilder.com/list/xyz123" className="bg-transparent text-xs text-gray-500 w-full px-2 focus:outline-none font-mono" />
-                                    <button className="text-xs font-bold text-orange-600 px-3 py-1 hover:bg-white rounded-md transition-colors shadow-sm">Copy</button>
+                                    <input type="text" readOnly value={shareUrl} className="bg-transparent text-xs text-gray-500 w-full px-2 focus:outline-none font-mono" />
+                                    <button onClick={handleCopyShare} className="text-xs font-bold text-orange-600 px-3 py-1 hover:bg-white rounded-md transition-colors shadow-sm">
+                                        {shareCopied ? 'Copied!' : 'Copy'}
+                                    </button>
                                 </div>
                             </div>
                         </div>

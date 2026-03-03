@@ -35,6 +35,16 @@ const AdminOrders = () => {
         }
     };
 
+    const handlePaymentStatusUpdate = async (orderId, newStatus) => {
+        try {
+            await api.updatePaymentStatus(orderId, newStatus);
+            setOrders(orders.map(o => o._id === orderId ? { ...o, payment_status: newStatus } : o));
+        } catch (error) {
+            console.error(`Error updating payment status:`, error);
+            alert(`Failed to update payment status`);
+        }
+    };
+
     const getStatusType = (status) => {
         switch (status?.toLowerCase()) {
             case 'completed':
@@ -94,24 +104,31 @@ const AdminOrders = () => {
                             <td className="px-6 py-4">
                                 <div className="flex items-center">
                                     <div className="h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center text-xs font-bold text-orange-600 mr-3 shadow-sm">
-                                        {(order.user_id?.full_name || 'G').charAt(0)}
+                                        {(order.user_id?.name || 'G').charAt(0)}
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-sm font-black text-gray-900 leading-none mb-1">{order.user_id?.full_name || 'Guest User'}</span>
+                                        <span className="text-sm font-black text-gray-900 leading-none mb-1">{order.user_id?.name || 'Guest User'}</span>
                                         <span className="text-[10px] text-gray-400 font-bold leading-none">{order.user_id?.email || 'No Email'}</span>
                                     </div>
                                 </div>
                             </td>
                             <td className="px-6 py-4 text-sm text-gray-500 font-medium">
-                                {new Date(order.created_at).toLocaleDateString()}
+                                {new Date(order.created_at).toLocaleDateString('en-GB')}
                             </td>
                             <td className="px-6 py-4 text-sm font-black text-gray-900">₹{order.total_price}</td>
                             <td className="px-6 py-4">
                                 <div className="flex flex-col items-start gap-1">
-                                    <span className={`text-[10px] font-black uppercase tracking-widest ${order.payment_status === 'paid' ? 'text-green-600' : 'text-gray-400'}`}>
-                                        {order.payment_status}
-                                    </span>
+                                    <select
+                                        value={order.payment_status}
+                                        onChange={(e) => handlePaymentStatusUpdate(order._id, e.target.value)}
+                                        className={`text-[10px] font-black uppercase tracking-widest bg-transparent cursor-pointer ${order.payment_status === 'paid' ? 'text-green-600' : order.payment_status === 'failed' ? 'text-red-500' : 'text-yellow-600'} outline-none`}
+                                    >
+                                        <option value="pending" className="text-gray-900">PENDING</option>
+                                        <option value="paid" className="text-gray-900">PAID</option>
+                                        <option value="failed" className="text-gray-900">FAILED</option>
+                                    </select>
                                     <span className="text-[10px] text-gray-400 font-bold uppercase">{order.payment_method}</span>
+                                    {order.payment_id && <span className="text-[9px] text-gray-400 break-all w-32 font-mono" title="Payment ID">{order.payment_id}</span>}
                                 </div>
                             </td>
                             <td className="px-6 py-4">

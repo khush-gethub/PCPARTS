@@ -111,7 +111,7 @@ const CategoryPage = () => {
                         image: image,
                         brand: p.brand_id?.name || "Brand",
                         stockStatus,
-                        specs: p.specs ? Object.entries(p.specs).slice(0, 3).map(([k, v]) => ({ label: k, val: v })) : []
+                        specs: p.specs ? Object.entries(p.specs).map(([k, v]) => ({ label: k, val: v })) : []
                     };
                 }));
 
@@ -264,34 +264,49 @@ const CategoryPage = () => {
                         {/* Dynamic Pagination */}
                         {totalPages > 1 && (
                             <div className="mt-12 flex justify-center">
-                                <nav className="flex items-center gap-2">
-                                    <button
-                                        onClick={() => paginate(currentPage - 1)}
-                                        disabled={currentPage === 1}
-                                        className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-500 disabled:opacity-50"
-                                    >
-                                        ←
-                                    </button>
-                                    {[...Array(totalPages)].map((_, i) => (
-                                        <button
-                                            key={i + 1}
-                                            onClick={() => paginate(i + 1)}
-                                            className={`w-10 h-10 flex items-center justify-center rounded-lg font-bold transition-all ${currentPage === i + 1
-                                                ? 'bg-orange-600 text-white shadow-sm'
-                                                : 'border border-gray-200 text-gray-700 hover:bg-gray-50'
-                                                }`}
-                                        >
-                                            {i + 1}
-                                        </button>
-                                    ))}
-                                    <button
-                                        onClick={() => paginate(currentPage + 1)}
-                                        disabled={currentPage === totalPages}
-                                        className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-500 disabled:opacity-50"
-                                    >
-                                        →
-                                    </button>
-                                </nav>
+                                {(() => {
+                                    const getPageNumbers = () => {
+                                        if (totalPages <= 7) return [...Array(totalPages)].map((_, i) => i + 1);
+                                        if (currentPage <= 4) return [1, 2, 3, 4, 5, '...', totalPages];
+                                        if (currentPage >= totalPages - 3) return [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+                                        return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+                                    };
+                                    const pageNumbers = getPageNumbers();
+                                    return (
+                                        <nav className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => paginate(currentPage - 1)}
+                                                disabled={currentPage === 1}
+                                                className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-500 disabled:opacity-50"
+                                            >
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                                            </button>
+                                            {pageNumbers.map((num, i) => (
+                                                num === '...' ? (
+                                                    <span key={`dots-${i}`} className="w-10 h-10 flex items-center justify-center text-gray-500 font-bold tracking-widest">...</span>
+                                                ) : (
+                                                    <button
+                                                        key={i}
+                                                        onClick={() => paginate(num)}
+                                                        className={`w-10 h-10 flex items-center justify-center rounded-lg font-bold transition-all ${currentPage === num
+                                                            ? 'bg-orange-600 text-white shadow-sm'
+                                                            : 'border border-gray-200 text-gray-700 hover:bg-gray-50'
+                                                            }`}
+                                                    >
+                                                        {num}
+                                                    </button>
+                                                )
+                                            ))}
+                                            <button
+                                                onClick={() => paginate(currentPage + 1)}
+                                                disabled={currentPage === totalPages}
+                                                className="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-500 disabled:opacity-50"
+                                            >
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                                            </button>
+                                        </nav>
+                                    );
+                                })()}
                             </div>
                         )}
                     </div>

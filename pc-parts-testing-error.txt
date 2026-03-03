@@ -1,0 +1,124 @@
+1. when we search the product image on card is shows defferent and product detail page shows defferent so solve this the priority is product detail page image.
+
+2. check the filter on category page make sure the filter is working proper and the price filter is working on size of card so make it working on price not size adjest of card. make color filter workable.
+
+3. in checkout conformation page download invoice (make the bill pdf download).
+
+4. when user make order show them all charges that includes on bill and also make sure all cahrges are add in total amount and  also show in checkout conformation page (bill).
+
+5. remove the address input from product detail page.
+
+6. dont show carowsel arrows if there is not more than 4 products - detailes page similer system.
+7. in all pagination make less then 7 after show direct last page.
+
+8. in pc builder sher link is not working make it working.
+
+9. when user logout make sure the card will be empty and when user login fetch last data from uid.
+
+10. remove debug info that show on readymade pc page.
+
+11. also make a stock for ready made pc and make sure when user ordered that the stock will be minus from stock.
+
+12. update notification on admin side when product stock is increse.
+
+13. in dashboard the total revenue is not showing correct revenue.
+
+14. when product add by admin price and stock is should not allowd in minus or < 0 figgure.
+
+15. add pagination and search in product management in admin.
+
+16. in dashboard where shows active user also count a admin , make admin not count in active user.
+
+17. all charges that included in order show on order deatile page.
+
+18. make sure that coupen detailes will shows on checkout.
+
+19. in admin site in coupen show how many user used coupen , show user detaile in pop. 
+
+20. "Showing 1 to 10 of 50 results" it showing all or this is not fetching correct data show the correct counted result.
+
+21. validation on add form in ready-made pc.
+
+22. check the low stock shows correct low-stock in admin dashboard if not fix it and make sure the admin dashboard is shows correct low-stock.
+
+23. correct the percentages that has in admin dashboard. make sure that percentages is well counted and shows correct value.
+
+24. in admin dashboard order management not showing username of user that make order it shows gestuser in that place.
+
+25. show the date fromate in dd/mm/yyyy all place were it use.
+
+26. in order management payment is not update according the completation and id showing unknowen.
+
+27. remove roll from user management.
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+There are multiple functional and logical errors across the system. Please review and fix the following issues carefully. Ensure all fixes maintain data consistency, correct calculations, proper validation, and clean UI/UX behavior.
+
+1. When searching for a product, the product image shown on the card is different from the image on the product detail page. Fix this and prioritize the product detail page image as the main image source.
+
+2. On the category page, fix the filters:
+Ensure all filters work properly.
+The price filter must filter by product price, not card size.
+Make the color filter functional.
+
+3. On the checkout confirmation page, implement a downloadable invoice in PDF format (generate proper bill PDF).
+
+4. When a user places an order, display all charges (tax, delivery, etc.) clearly. Ensure all charges are included in the    total amount and shown on both checkout confirmation and bill.
+
+5. Remove the address input field from the product detail page.
+
+6. Do not show carousel arrows if there are fewer than 4 products. Apply similar logic on the details page.
+
+7. Update pagination: show a maximum of 7 page numbers, then directly show the last page link.
+
+8. Fix the PC Builder share link feature so it works correctly.
+
+9. When a user logs out, the cart should be cleared. When logging back in, fetch and restore the previous cart data using the    user’s UID.
+
+10. Remove debug information from the Readymade PC page.
+
+11. Add stock management for Readymade PCs. When a user orders, automatically reduce stock quantity.
+
+12. Add admin notification when product stock increases.
+
+13. Fix incorrect total revenue calculation in the admin dashboard.
+
+14. When admin adds a product, price and stock must not allow negative values or values less than 0.
+
+15. Add pagination and search functionality in Admin Product Management.
+
+16. In the dashboard, exclude admin accounts from the active user count.
+
+17. Show all applied charges clearly on the Order Detail page.
+
+18. Ensure coupon details are displayed properly on the checkout page.
+
+19. In Admin Coupon Management:
+Show how many users used each coupon.
+Display user details in a popup/modal.
+
+20. Fix incorrect product result count in: ‘Showing 1 to 10 of 50 results’. Ensure accurate count based on actual data.
+
+21. Add proper validation to the Add Readymade PC form.
+
+22. Ensure low-stock products are correctly detected and displayed in the admin dashboard.
+
+23. Correct percentage calculations in the admin dashboard and ensure accurate values.
+
+24. In Admin Order Management, display the correct username instead of ‘guestuser’.
+
+25. Standardize all date formats across the website to dd/mm/yyyy.
+
+26. In Order Management, fix payment status updates and ensure payment ID is displayed correctly.
+
+27. Remove the ‘role’ field from User Management.
+
+Ensure all fixes are properly tested and do not break existing functionality. Maintain consistent UI/UX and follow clean coding practices."

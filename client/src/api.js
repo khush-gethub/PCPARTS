@@ -123,6 +123,10 @@ export const api = {
         method: 'PUT',
         body: JSON.stringify({ status })
     }),
+    updatePaymentStatus: (orderId, status) => fetchJson(`/api/orders/${orderId}/payment-status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status })
+    }),
 
     // Coupons
     getCoupons: () => fetchJson('/api/coupons'),

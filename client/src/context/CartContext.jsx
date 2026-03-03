@@ -12,9 +12,50 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(() => {
-        const savedCart = localStorage.getItem('cart');
+        const userStr = localStorage.getItem('user');
+        const user = userStr ? JSON.parse(userStr) : null;
+        const storageKey = user ? `cart_${user.id || user._id}` : 'cart_guest';
+        const savedCart = localStorage.getItem(storageKey);
         return savedCart ? JSON.parse(savedCart) : [];
     });
+
+    // Track user changes
+    const [currentUserId, setCurrentUserId] = useState(() => {
+        const userStr = localStorage.getItem('user');
+        const user = userStr ? JSON.parse(userStr) : null;
+        return user ? (user.id || user._id) : null;
+    });
+
+    useEffect(() => {
+        const checkUser = () => {
+            const userStr = localStorage.getItem('user');
+            const user = userStr ? JSON.parse(userStr) : null;
+            const newId = user ? (user.id || user._id) : null;
+
+            if (newId !== currentUserId) {
+                if (newId) {
+                    // Logged in: Restore cart for this user
+                    const savedCart = localStorage.getItem(`cart_${newId}`);
+                    if (savedCart) {
+                        setCartItems(JSON.parse(savedCart));
+                    }
+                } else {
+                    // Logged out: Clear cart
+                    setCartItems([]);
+                }
+                setCurrentUserId(newId);
+            }
+        };
+
+        // Check user changes every 500ms (simple way to detect cross-tab or same-tab storage changes without modifying all login/logout functions)
+        const intervalId = setInterval(checkUser, 500);
+        window.addEventListener('storage', checkUser);
+
+        return () => {
+            clearInterval(intervalId);
+            window.removeEventListener('storage', checkUser);
+        };
+    }, [currentUserId]);
 
     const [appliedCoupon, setAppliedCoupon] = useState(() => {
         const savedCoupon = localStorage.getItem('appliedCoupon');
@@ -22,8 +63,9 @@ export const CartProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cartItems));
-    }, [cartItems]);
+        const storageKey = currentUserId ? `cart_${currentUserId}` : 'cart_guest';
+        localStorage.setItem(storageKey, JSON.stringify(cartItems));
+    }, [cartItems, currentUserId]);
 
     useEffect(() => {
         if (appliedCoupon) {
@@ -66,6 +108,8 @@ export const CartProvider = ({ children }) => {
     const clearCart = () => {
         setCartItems([]);
         setAppliedCoupon(null);
+        const storageKey = currentUserId ? `cart_${currentUserId}` : 'cart_guest';
+        localStorage.removeItem(storageKey);
     };
 
     const applyCoupon = (coupon) => {

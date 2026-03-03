@@ -13,6 +13,11 @@ const AdminProducts = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentProduct, setCurrentProduct] = useState(null);
 
+    // Search and Pagination
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
     // Form State
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
@@ -137,6 +142,9 @@ const AdminProducts = () => {
 
             if (currentProduct) {
                 await api.updateProduct(currentProduct._id, payload);
+                if (payload.stock > currentProduct.stock) {
+                    alert(`Notification: Stock for ${payload.name} has been increased from ${currentProduct.stock} to ${payload.stock}.`);
+                }
             } else {
                 await api.createProduct(payload);
             }
@@ -172,6 +180,38 @@ const AdminProducts = () => {
         return 'Out of Stock';
     };
 
+    const filteredProducts = useMemo(() => {
+        let res = products;
+        if (searchTerm) {
+            const lowerSearch = searchTerm.toLowerCase();
+            res = res.filter(p =>
+                p.name?.toLowerCase().includes(lowerSearch) ||
+                p.variant_id?.toLowerCase().includes(lowerSearch) ||
+                p.category_id?.name?.toLowerCase().includes(lowerSearch) ||
+                p.brand_id?.name?.toLowerCase().includes(lowerSearch)
+            );
+        }
+        return res;
+    }, [products, searchTerm]);
+
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    const paginationProps = {
+        total: filteredProducts.length,
+        start: filteredProducts.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1,
+        end: Math.min(currentPage * itemsPerPage, filteredProducts.length),
+        onNext: () => setCurrentPage(p => Math.min(totalPages, p + 1)),
+        onPrev: () => setCurrentPage(p => Math.max(1, p - 1)),
+        hasNext: currentPage < totalPages,
+        hasPrev: currentPage > 1
+    };
+
+    // Reset pagination on search
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
+
     if (loading) return <div className="p-8 text-center text-gray-500">Loading products...</div>;
     if (error) return <div className="p-8 text-center text-red-500">Error: {error}</div>;
 
@@ -183,11 +223,25 @@ const AdminProducts = () => {
                 primaryAction={{ label: 'Add Product', icon: 'M12 4v16m8-8H4', onClick: () => handleOpenModal() }}
             />
 
+            <div className="mb-6">
+                <div className="relative max-w-md">
+                    <input
+                        type="text"
+                        placeholder="Search products by name, SKU, category, brand..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all"
+                    />
+                    <svg className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+
             <AdminTable
                 headers={['Product', 'Category', 'Brand', 'Price', 'Stock', 'Status']}
                 actions={true}
+                pagination={paginationProps}
             >
-                {products.map((product) => (
+                {paginatedProducts.map((product) => (
                     <tr key={product._id} className="hover:bg-gray-50/50 transition-colors">
                         <td className="px-6 py-4">
                             <div className="flex items-center space-x-3">
@@ -255,11 +309,11 @@ const AdminProducts = () => {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Price ($)</label>
-                                    <input required type="number" name="price" value={formData.price} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                                    <input required type="number" min="0" name="price" value={formData.price} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Stock Quantity</label>
-                                    <input required type="number" name="stock" value={formData.stock} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                                    <input required type="number" min="0" name="stock" value={formData.stock} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
                                 </div>
                                 <div className="col-span-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
