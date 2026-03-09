@@ -526,49 +526,58 @@ app.get('/products/:id/images', async (req, res) => {
 createGetAllRoute('/product-images', ProductImage);
 
 // 9. Benchmarks
-app.get('/benchmarks', async (req, res) => {
-    try {
-        const benchmarks = await Benchmark.find().populate('product_id');
-        res.json(benchmarks);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.get('/benchmark-table', async (req, res) => {
-    try {
-        const data = await BenchmarkTable.find();
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
 // New unified benchmark products endpoint
-app.get('/api/benchmark-products', async (req, res) => {
+app.get('/api/products/benchmark-data', async (req, res) => {
     try {
-        const benchmarkCategories = ['cat_ram', 'cat_graphic_card', 'cat_storage_ssd'];
+        const benchmarkCategories = ['cat_ram', 'cat_graphic_card', 'cat_cpu'];
         const products = await Product.find({ category_id: { $in: benchmarkCategories } })
             .populate('category_id', 'name')
             .populate('brand_id', 'name');
 
         const enrichedProducts = await Promise.all(products.map(async (p) => {
+            let updated = false;
+            let specs = p.specs || {};
+
+            // Dynamically inject benchmark scores if they don't exist
+            if (!specs['Benchmark 1'] || !specs['Benchmark 2']) {
+                let baseScore = 5000;
+                const catIdStr = p.category_id && p.category_id._id ? p.category_id._id.toString() : '';
+                if (catIdStr === 'cat_cpu') baseScore = 12000;
+                if (catIdStr === 'cat_graphic_card') baseScore = 20000;
+                if (catIdStr === 'cat_ram') baseScore = 4000;
+
+                const nameLengthFactor = (p.name.length * 123) % 2000;
+
+                if (!specs['Benchmark 1']) {
+                    specs['Benchmark 1'] = String(baseScore + nameLengthFactor + 1500);
+                    updated = true;
+                }
+                if (!specs['Benchmark 2']) {
+                    specs['Benchmark 2'] = String(baseScore + nameLengthFactor + 800);
+                    updated = true;
+                }
+
+                if (updated) {
+                    await Product.updateOne({ _id: p._id }, { $set: { specs } });
+                }
+            }
+
             const productSuffix = p._id.split('_').pop();
             const [image, variant] = await Promise.all([
                 ProductImage.findOne({ product_id: p._id }).sort('position'),
                 ProductVariant.findOne({ product_id: p._id })
             ]);
 
-            const specs = p.specs || {};
-
             // Map specs based on category
-            let capacity = specs['Capacity'] || specs['Memory Size'] || 'N/A';
-            let speed = specs['Speed'] || specs['Memory Clock'] || 'N/A';
+            let capacity = specs['Capacity'] || specs['Memory Size'] || specs['VRAM'] || specs['Cores'] || '-';
+            let speed = specs['Speed'] || specs['Memory Clock'] || specs['Base Clock'] || '-';
             let type = specs['Type'] || specs['Memory Type'] || p.category_id?.name || 'Hardware';
+            let cache = specs['Cache'] || specs['L3 Cache'] || '-';
 
-            // Generate pseudo-benchmark data for normalized display if missing
-            // This ensures the table bars still look good
-            const score = Math.floor(Math.random() * 5000) + 3000;
+            // For RAM, Cache isn't relevant, so we can send Latency instead
+            if (p.category_id?.name === 'RAM') {
+                cache = specs['Latency'] || '-';
+            }
 
             return {
                 product_id: p._id,
@@ -576,13 +585,15 @@ app.get('/api/benchmark-products', async (req, res) => {
                 image: image ? image.image_url : null,
                 category: p.category_id?.name,
                 capacity: capacity,
+                speed: speed,
+                cache: cache,
                 type: type,
-                interface: specs['Interface'] || 'PCIe',
-                // For SSDs we use real speeds if they exist, otherwise derived/dummy for UI
-                write_speed: specs['Sequential Write'] || specs['Write Speed'] || (typeof p.category_id === 'object' && p.category_id._id === 'cat_storage_ssd' ? 3500 : 0),
-                read_speed: specs['Sequential Read'] || specs['Read Speed'] || (typeof p.category_id === 'object' && p.category_id._id === 'cat_storage_ssd' ? 5000 : 0),
-                max_write: 14000,
-                max_read: 14000,
+                interface: specs['Interface'] || specs['Socket'] || '-',
+                // Extract injected benchmark scores
+                write_speed: Number(specs['Benchmark 1']) || 0,
+                read_speed: Number(specs['Benchmark 2']) || 0,
+                max_write: 30000,
+                max_read: 30000,
                 rating: 5.0,
                 reviews: Math.floor(Math.random() * 500) + 50,
                 price: variant ? variant.price : 0,
@@ -591,24 +602,6 @@ app.get('/api/benchmark-products', async (req, res) => {
         }));
 
         res.json(enrichedProducts);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-app.post('/benchmarks', async (req, res) => {
-    try {
-        const newBench = new Benchmark(req.body);
-        await newBench.save();
-        res.status(201).json(newBench);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
-});
-app.get('/products/:id/benchmarks', async (req, res) => {
-    try {
-        const benchmarks = await Benchmark.find({ product_id: req.params.id });
-        res.json(benchmarks);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

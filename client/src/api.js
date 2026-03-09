@@ -42,9 +42,7 @@ export const api = {
     getBrands: () => fetchJson('/brands'),
 
     // Benchmarks
-    getBenchmarks: () => fetchJson('/benchmarks'),
-    getBenchmarkTable: () => fetchJson('/api/benchmark-products'),
-    getProductBenchmarks: (productId) => fetchJson(`/products/${productId}/benchmarks`),
+    getBenchmarkTable: () => fetchJson('/api/products/benchmark-data'),
 
     // ReadyMade PCs
     getReadyMadePCs: () => fetchJson('/readymade-pcs'),

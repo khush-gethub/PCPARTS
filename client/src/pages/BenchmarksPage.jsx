@@ -146,11 +146,12 @@ const BenchmarksPage = () => {
                                 <tr className="bg-slate-50 border-b border-slate-200">
                                     <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight pl-6">Name</th>
                                     <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Cap.</th>
-                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Cache</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Speed</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Cache / Latency</th>
                                     <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Type</th>
                                     <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Interface</th>
-                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Seq. Write</th>
-                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Seq. Read</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Bench. Score 1</th>
+                                    <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Bench. Score 2</th>
                                     <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight">Rating</th>
                                     <th className="p-3 font-semibold text-slate-500 uppercase tracking-tight text-right pr-6">Price</th>
                                     <th className="p-3"></th>
@@ -167,6 +168,7 @@ const BenchmarksPage = () => {
                                                 </div>
                                             </td>
                                             <td className="p-3 whitespace-nowrap font-medium text-slate-600">{product.capacity}</td>
+                                            <td className="p-3 whitespace-nowrap text-slate-600 font-semibold">{product.speed}</td>
                                             <td className="p-3 whitespace-nowrap text-slate-500">{product.cache}</td>
                                             <td className="p-3 whitespace-nowrap text-slate-500">{product.type}</td>
                                             <td className="p-3 whitespace-nowrap text-slate-500">{product.interface}</td>
@@ -178,7 +180,7 @@ const BenchmarksPage = () => {
                                                             style={{ width: `${Math.min(100, (product.writeSpeed / product.maxWrite) * 100)}%` }}
                                                         ></div>
                                                     </div>
-                                                    <span className="text-[10px] font-bold text-slate-500 mt-1 block leading-none">{product.writeSpeed.toLocaleString()} MB/s</span>
+                                                    <span className="text-[10px] font-bold text-slate-500 mt-1 block leading-none">{product.writeSpeed.toLocaleString()} pts</span>
                                                 </div>
                                             </td>
                                             <td className="p-3">
@@ -189,7 +191,7 @@ const BenchmarksPage = () => {
                                                             style={{ width: `${Math.min(100, (product.readSpeed / product.maxRead) * 100)}%` }}
                                                         ></div>
                                                     </div>
-                                                    <span className="text-[10px] font-bold text-slate-500 mt-1 block leading-none">{product.readSpeed.toLocaleString()} MB/s</span>
+                                                    <span className="text-[10px] font-bold text-slate-500 mt-1 block leading-none">{product.readSpeed.toLocaleString()} pts</span>
                                                 </div>
                                             </td>
                                             <td className="p-3">
