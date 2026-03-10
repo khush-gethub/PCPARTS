@@ -23,6 +23,7 @@ const BenchmarksPage = () => {
 
                 const formattedProducts = data.map(item => ({
                     id: item.product_id,
+                    variant_id: item.variant_id,
                     name: item.name,
                     image: item.image,
                     capacity: item.capacity,
@@ -57,6 +58,7 @@ const BenchmarksPage = () => {
 
         addToCart({
             id: product.id,
+            variant_id: product.variant_id,
             title: product.name,
             price: product.price,
             image: product.image,

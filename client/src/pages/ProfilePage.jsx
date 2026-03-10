@@ -14,6 +14,7 @@ const ProfilePage = () => {
     const [loading, setLoading] = useState(true);
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [editingAddressId, setEditingAddressId] = useState(null);
+    const [profileData, setProfileData] = useState({ name: '', phone: '' });
     const [newAddress, setNewAddress] = useState({
         line1: '',
         line2: '',
@@ -22,6 +23,12 @@ const ProfilePage = () => {
         pincode: '',
         country: 'India'
     });
+    const [passwordData, setPasswordData] = useState({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+    const [passwordMessage, setPasswordMessage] = useState({ type: '', text: '' });
     const [selectedOrder, setSelectedOrder] = useState(null);
     const navigate = useNavigate();
 
@@ -67,6 +74,7 @@ const ProfilePage = () => {
         }
         const userData = JSON.parse(loggedInUser);
         setUser(userData);
+        setProfileData({ name: userData.name || '', phone: userData.phone || '' });
         fetchUserData(userData.id);
     }, [navigate]);
 
@@ -99,6 +107,18 @@ const ProfilePage = () => {
         navigate('/');
     };
 
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await api.updateUser(user.id, profileData);
+            setUser(res.user);
+            localStorage.setItem('user', JSON.stringify(res.user));
+            alert('Profile updated successfully!');
+        } catch (err) {
+            alert('Failed to update profile: ' + err.message);
+        }
+    };
+
     const handleAddAddress = async (e) => {
         e.preventDefault();
 
@@ -129,6 +149,27 @@ const ProfilePage = () => {
             fetchUserData(user.id);
         } catch (err) {
             alert('Operation failed: ' + err.message);
+        }
+    };
+
+    const handleChangePassword = async (e) => {
+        e.preventDefault();
+        setPasswordMessage({ type: '', text: '' });
+
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            return setPasswordMessage({ type: 'error', text: 'Confirm password is different from new password' });
+        }
+
+        try {
+            const res = await api.changePassword(user.id, passwordData.oldPassword, passwordData.newPassword);
+            setPasswordMessage({ type: 'success', text: 'Password updated successfully' });
+            setPasswordData({ oldPassword: '', newPassword: '', confirmPassword: '' });
+        } catch (err) {
+            if (err.message.toLowerCase().includes('incorrect old password') || err.message.toLowerCase().includes('401')) {
+                setPasswordMessage({ type: 'error', text: 'Wrong old password' });
+            } else {
+                setPasswordMessage({ type: 'error', text: err.message || 'Failed to update password' });
+            }
         }
     };
 
@@ -181,12 +222,14 @@ const ProfilePage = () => {
                 return (
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 animate-fadeIn">
                         <h2 className="text-2xl font-bold text-gray-900 mb-6">Profile Settings</h2>
-                        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <form onSubmit={handleUpdateProfile} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
                                 <input
                                     type="text"
-                                    defaultValue={user?.name}
+                                    required
+                                    value={profileData.name}
+                                    onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
                                     className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
                                 />
                             </div>
@@ -203,17 +246,65 @@ const ProfilePage = () => {
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
                                 <input
                                     type="tel"
-                                    defaultValue={user?.phone}
+                                    required
+                                    value={profileData.phone}
+                                    onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
                                     maxLength="10"
                                     className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
                                 />
                             </div>
                             <div className="md:col-span-2">
-                                <button type="button" className="bg-orange-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                                <button type="submit" className="bg-orange-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-orange-700 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
                                     Save Changes
                                 </button>
                             </div>
                         </form>
+
+                        <div className="mt-12 border-t pt-8">
+                            <h3 className="text-xl font-bold text-gray-900 mb-6">Change Password</h3>
+                            <form onSubmit={handleChangePassword} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+                                <div className="md:col-span-2">
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Current Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordData.oldPassword}
+                                        onChange={e => setPasswordData({ ...passwordData, oldPassword: e.target.value })}
+                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">New Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordData.newPassword}
+                                        onChange={e => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Confirm New Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordData.confirmPassword}
+                                        onChange={e => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                                    />
+                                </div>
+                                {passwordMessage.text && (
+                                    <div className={`md:col-span-2 p-4 rounded-lg font-bold text-sm ${passwordMessage.type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-600 border border-green-200'}`}>
+                                        {passwordMessage.text}
+                                    </div>
+                                )}
+                                <div className="md:col-span-2">
+                                    <button type="submit" className="bg-gray-900 text-white px-8 py-3 rounded-lg font-bold hover:bg-black transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                                        Update Password
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 );
             case 'addresses':

@@ -17,6 +17,8 @@ const userSchema = new Schema({
     password_: { type: String },
     phone: { type: String },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    reset_otp: { type: String },
+    reset_otp_expiry: { type: Date },
     created_at: { type: Date, default: Date.now }
 }, schemaOptions);
 userSchema.virtual('user_id').get(function () { return this._id; });

@@ -94,9 +94,29 @@ export const api = {
         method: 'POST',
         body: JSON.stringify(userData),
     }),
+    updateUser: (userId, userData) => fetchJson(`/api/users/${userId}`, {
+        method: 'PUT',
+        body: JSON.stringify(userData),
+    }),
     login: (credentials) => fetchJson('/api/login', {
         method: 'POST',
         body: JSON.stringify(credentials),
+    }),
+    requestPasswordReset: (email) => fetchJson('/api/forgot-password', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+    }),
+    verifyResetOtp: (email, otp) => fetchJson('/api/verify-otp', {
+        method: 'POST',
+        body: JSON.stringify({ email, otp }),
+    }),
+    resetPassword: (email, otp, newPassword) => fetchJson('/api/reset-password', {
+        method: 'POST',
+        body: JSON.stringify({ email, otp, newPassword }),
+    }),
+    changePassword: (userId, oldPassword, newPassword) => fetchJson(`/api/users/${userId}/password`, {
+        method: 'PUT',
+        body: JSON.stringify({ oldPassword, newPassword })
     }),
 
     // Addresses

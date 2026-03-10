@@ -16,6 +16,16 @@ const path = require('path');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
+const nodemailer = require('nodemailer');
+
+// --- Nodemailer Setup (Gmail) ---
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'sonargharekhush@gmail.com',
+        pass: 'jwnc makk suag bcpz' // We will need the app password for this to work
+    }
+});
 
 const JWT_SECRET = 'your_super_secret_key_123'; // In production, use environment variables
 
@@ -151,6 +161,159 @@ app.post('/api/login', async (req, res) => {
                 role: user.role
             }
         });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Forgot Password Flow
+app.post('/api/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ error: 'Email is required' });
+
+        const user = await User.findOne({ email });
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        // Generate 6 digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        // Set expiry to 3 minutes from now
+        const expiry = new Date(Date.now() + 3 * 60 * 1000);
+
+        user.reset_otp = otp;
+        user.reset_otp_expiry = expiry;
+        await user.save();
+
+        try {
+            await transporter.sendMail({
+                from: '"PC Store Support" <sonargharekhush@gmail.com>',
+                to: user.email,
+                subject: 'Password Reset OTP',
+                text: `Your password reset OTP is: ${otp}. It expires in 3 minutes.`
+            });
+            res.json({ message: 'OTP sent to your email successfully.' });
+        } catch (mailErr) {
+            console.error('Failed to send email:', mailErr);
+            res.status(500).json({ error: 'Failed to send email. Please check SMTP configuration.' });
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/verify-otp', async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+        if (!email || !otp) return res.status(400).json({ error: 'Email and OTP are required' });
+
+        const user = await User.findOne({ email });
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        if (!user.reset_otp || user.reset_otp !== otp) {
+            return res.status(400).json({ error: 'Invalid OTP' });
+        }
+
+        if (new Date() > user.reset_otp_expiry) {
+            return res.status(400).json({ error: 'OTP has expired' });
+        }
+
+        res.json({ message: 'OTP verified successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/reset-password', async (req, res) => {
+    try {
+        const { email, otp, newPassword } = req.body;
+        if (!email || !otp || !newPassword) return res.status(400).json({ error: 'All fields are required' });
+
+        const user = await User.findOne({ email });
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        if (!user.reset_otp || user.reset_otp !== otp) {
+            return res.status(400).json({ error: 'Invalid OTP' });
+        }
+
+        if (new Date() > user.reset_otp_expiry) {
+            return res.status(400).json({ error: 'OTP has expired' });
+        }
+
+        // Complex password validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[*#@!$%&])[A-Za-z\d*#@!$%&]{8,}$/;
+        if (!passwordRegex.test(newPassword)) {
+            return res.status(400).json({ error: 'Password must be 8+ chars and include uppercase, lowercase, number, and special character (*#@!$%&)' });
+        }
+
+        // Update plain text password
+        user.password_ = newPassword;
+        user.reset_otp = undefined;
+        user.reset_otp_expiry = undefined;
+        await user.save();
+
+        res.json({ message: 'Password reset successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Update User Profile (Name & Phone)
+app.put('/api/users/:user_id', async (req, res) => {
+    try {
+        const { name, phone } = req.body;
+        const user = await User.findById(req.params.user_id);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (name) user.name = name;
+        if (phone) user.phone = phone;
+
+        await user.save();
+
+        res.json({
+            message: 'Profile updated successfully',
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                role: user.role
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Change Password
+app.put('/api/users/:user_id/password', async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        if (!oldPassword || !newPassword) {
+            return res.status(400).json({ error: 'Old password and new password are required' });
+        }
+
+        const user = await User.findById(req.params.user_id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (user.password_ !== oldPassword) {
+            return res.status(401).json({ error: 'Incorrect old password' });
+        }
+
+        // Complex password validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[*#@!$%&])[A-Za-z\d*#@!$%&]{8,}$/;
+        if (!passwordRegex.test(newPassword)) {
+            return res.status(400).json({ error: 'New password must be 8+ chars and include uppercase, lowercase, number, and special character (*#@!$%&)' });
+        }
+
+        user.password_ = newPassword;
+        await user.save();
+
+        res.json({ message: 'Password updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
