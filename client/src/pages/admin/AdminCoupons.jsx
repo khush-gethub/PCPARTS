@@ -3,6 +3,7 @@ import AdminPageHeader from '../../components/admin/AdminPageHeader';
 import AdminTable from '../../components/admin/AdminTable';
 import AdminBadge from '../../components/admin/AdminBadge';
 import { api } from '../../api';
+import { toast } from 'react-toastify';
 
 const AdminCoupons = () => {
     const [coupons, setCoupons] = useState([]);
@@ -79,11 +80,11 @@ const AdminCoupons = () => {
         e.preventDefault();
 
         if (Number(newCoupon.discount_value) < 0) {
-            alert("Discount value cannot be negative.");
+            toast.error("Discount value cannot be negative.");
             return;
         }
         if (Number(newCoupon.min_completed_orders) < 0) {
-            alert("Minimum orders required cannot be negative.");
+            toast.error("Minimum orders required cannot be negative.");
             return;
         }
 
@@ -95,18 +96,21 @@ const AdminCoupons = () => {
             }
             setShowModal(false);
             fetchCoupons();
+            toast.success(isEditing ? 'Coupon updated successfully' : 'Coupon created successfully');
         } catch (err) {
-            alert(`Failed to ${isEditing ? 'update' : 'create'} coupon: ` + err.message);
+            toast.error(`Failed to ${isEditing ? 'update' : 'create'} coupon: ` + err.message);
         }
     };
 
     const handleDeleteCoupon = async (id) => {
-        if (!window.confirm("Are you sure?")) return;
-        try {
-            await api.deleteCoupon(id);
-            fetchCoupons();
-        } catch (err) {
-            alert("Failed to delete: " + err.message);
+        if (window.confirm("Are you sure you want to delete this coupon?")) {
+            try {
+                await api.deleteCoupon(id);
+                fetchCoupons();
+                toast.success('Coupon deleted successfully');
+            } catch (err) {
+                toast.error("Failed to delete: " + err.message);
+            }
         }
     };
 

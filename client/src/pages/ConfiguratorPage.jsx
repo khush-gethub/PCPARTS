@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
@@ -157,32 +158,36 @@ const ConfiguratorPage = () => {
                 id: part.id || part._id // Ensure consistent ID for cart
             });
         });
-        alert(`${partsToBuy.length} items added to cart!`);
+        toast.success(`${partsToBuy.length} items added to cart!`);
     };
 
     const handleSaveBuild = async () => {
         const userStr = localStorage.getItem('user');
-        if (!userStr) {
-            alert('Please login to save your build');
+        const user = userStr ? JSON.parse(userStr) : null;
+        if (!user) {
+            toast.warning('Please login to save your build');
+            navigate('/login');
             return;
         }
-        const user = JSON.parse(userStr);
-        const buildItems = Object.entries(selectedParts)
-            .filter(([_, part]) => part !== null)
-            .map(([catId, part]) => ({
-                product_id: part._id,
-                category_id: catId,
-                variant_id: part.variant_id
-            }));
+        const items = Object.values(selectedParts).filter(Boolean);
 
-        if (buildItems.length === 0) {
-            alert('Please select at least one component to save');
+        if (items.length === 0) {
+            toast.warning('Please select at least one component to save');
             return;
         }
+
+        const buildItems = items.map(part => {
+            const categoryId = Object.keys(selectedParts).find(key => selectedParts[key] === part);
+            return {
+                product_id: part._id,
+                category_id: categoryId,
+                variant_id: part.variant_id
+            };
+        });
 
         setIsSaving(true);
         try {
-            const response = await fetch('http://localhost:4080/api/pc-builds', {
+            const res = await fetch('http://localhost:4080/api/pc-builds', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -192,14 +197,14 @@ const ConfiguratorPage = () => {
                     items: buildItems
                 })
             });
-            if (response.ok) {
-                alert('Build saved successfully!');
+            if (res.ok) {
+                toast.success('Build saved successfully!');
             } else {
-                alert('Failed to save build');
+                toast.error('Failed to save build');
             }
-        } catch (error) {
-            console.error('Save build error:', error);
-            alert('An error occurred while saving');
+        } catch (err) {
+            console.error(err);
+            toast.error('An error occurred while saving');
         } finally {
             setIsSaving(false);
         }

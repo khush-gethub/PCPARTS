@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
@@ -41,8 +42,9 @@ const RegisterPage = () => {
         }
 
         try {
-            await api.register(formData);
-            alert('Registration successful! Please login.');
+            const { name, email, password, phone } = formData;
+            await api.register({ name, email, password, phone });
+            toast.success('Registration successful! Please login.');
             navigate('/login');
         } catch (err) {
             setError(err.message || 'Registration failed. Please try again.');

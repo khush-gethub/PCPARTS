@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar.jsx';
 import SubNavbar from '../components/SubNavbar.jsx';
 import Footer from '../components/Footer.jsx';
@@ -80,7 +81,7 @@ const ProfilePage = () => {
 
     const handleCopyCode = (code) => {
         navigator.clipboard.writeText(code);
-        alert('Coupon code copied to clipboard!');
+        toast.success('Coupon code copied to clipboard!');
     };
 
     const fetchUserData = async (userId) => {
@@ -113,9 +114,9 @@ const ProfilePage = () => {
             const res = await api.updateUser(user.id, profileData);
             setUser(res.user);
             localStorage.setItem('user', JSON.stringify(res.user));
-            alert('Profile updated successfully!');
+            toast.success('Profile updated successfully!');
         } catch (err) {
-            alert('Failed to update profile: ' + err.message);
+            toast.error('Failed to update profile: ' + err.message);
         }
     };
 
@@ -123,17 +124,17 @@ const ProfilePage = () => {
         e.preventDefault();
 
         if (newAddress.pincode.length !== 6) {
-            alert('Pincode must be exactly 6 digits');
+            toast.error('Pincode must be exactly 6 digits');
             return;
         }
 
         try {
             if (editingAddressId) {
                 await api.updateAddress(editingAddressId, newAddress);
-                alert('Address updated successfully!');
+                toast.success('Address updated successfully!');
             } else {
                 await api.addAddress({ ...newAddress, user_id: user.id });
-                alert('Address added successfully!');
+                toast.success('Address added successfully!');
             }
 
             setShowAddressForm(false);
@@ -148,7 +149,7 @@ const ProfilePage = () => {
             });
             fetchUserData(user.id);
         } catch (err) {
-            alert('Operation failed: ' + err.message);
+            toast.error('Operation failed: ' + err.message);
         }
     };
 
@@ -187,13 +188,14 @@ const ProfilePage = () => {
     };
 
     const handleDeleteAddress = async (id) => {
-        if (!window.confirm('Are you sure you want to delete this address?')) return;
-        try {
-            await api.deleteAddress(id);
-            alert('Address deleted successfully!');
-            fetchUserData(user.id);
-        } catch (err) {
-            alert('Failed to delete address: ' + err.message);
+        if (window.confirm('Are you sure you want to delete this address?')) {
+            try {
+                await api.deleteAddress(id);
+                toast.success('Address deleted successfully!');
+                fetchUserData(user.id);
+            } catch (err) {
+                toast.error('Failed to delete address: ' + err.message);
+            }
         }
     };
 
@@ -508,7 +510,7 @@ const ProfilePage = () => {
 
                         {/* Order Detail Modal */}
                         {selectedOrder && (
-                            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+                            <div className="sticky inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
                                 <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedOrder(null)}></div>
                                 <div className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden animate-scaleUp max-h-[90vh] flex flex-col">
                                     <div className="p-8 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">

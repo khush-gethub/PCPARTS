@@ -4,6 +4,7 @@ import AdminPageHeader from '../../components/admin/AdminPageHeader';
 import AdminTable from '../../components/admin/AdminTable';
 import AdminBadge from '../../components/admin/AdminBadge';
 import { api } from '../../api';
+import { toast } from 'react-toastify';
 
 const AdminProducts = () => {
     const location = useLocation();
@@ -128,7 +129,7 @@ const AdminProducts = () => {
             try {
                 specsJson = JSON.parse(formData.specs || '{}');
             } catch (jsonErr) {
-                alert('Invalid JSON in Specs field. Please fix before saving.');
+                toast.error('Invalid JSON in Specs field. Please fix before saving.');
                 setSubmitting(false);
                 return;
             }
@@ -143,15 +144,16 @@ const AdminProducts = () => {
             if (currentProduct) {
                 await api.updateProduct(currentProduct._id, payload);
                 if (payload.stock > currentProduct.stock) {
-                    alert(`Notification: Stock for ${payload.name} has been increased from ${currentProduct.stock} to ${payload.stock}.`);
+                    toast.info(`Notification: Stock for ${payload.name} has been increased from ${currentProduct.stock} to ${payload.stock}.`);
                 }
             } else {
                 await api.createProduct(payload);
             }
             fetchData();
             handleCloseModal();
+            toast.success(currentProduct ? 'Product updated successfully' : 'Product added successfully');
         } catch (err) {
-            alert('Failed to save product: ' + err.message);
+            toast.error('Failed to save product: ' + err.message);
         } finally {
             setSubmitting(false);
         }
@@ -162,8 +164,9 @@ const AdminProducts = () => {
             try {
                 await api.deleteProduct(id);
                 fetchData();
+                toast.success('Product deleted successfully');
             } catch (err) {
-                alert('Failed to delete product: ' + err.message);
+                toast.error('Failed to delete product: ' + err.message);
             }
         }
     };

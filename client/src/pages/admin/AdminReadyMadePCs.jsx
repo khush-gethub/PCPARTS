@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import AdminPageHeader from '../../components/admin/AdminPageHeader';
 import AdminTable from '../../components/admin/AdminTable';
 import AdminBadge from '../../components/admin/AdminBadge';
+import { toast } from 'react-toastify';
 import { api } from '../../api';
 
 const AdminReadyMadePCs = () => {
@@ -137,12 +138,12 @@ const AdminReadyMadePCs = () => {
         };
 
         if (itemsToSave.length === 0) {
-            alert("Please select at least one component for the PC build.");
+            toast.warning("Please select at least one component for the PC build.");
             return;
         }
 
         if (!payload.price || payload.price <= 0) {
-            alert("The total price must be greater than 0. Please select valid components.");
+            toast.warning("The total price must be greater than 0. Please select valid components.");
             return;
         }
 

@@ -3,6 +3,7 @@ import { api } from '../../api.js';
 import AdminPageHeader from '../../components/admin/AdminPageHeader';
 import AdminTable from '../../components/admin/AdminTable';
 import AdminBadge from '../../components/admin/AdminBadge';
+import { toast } from 'react-toastify';
 
 const AdminOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -29,9 +30,10 @@ const AdminOrders = () => {
             await api.updateOrderStatus(orderId, newStatus);
             // Refresh local state or refetch
             setOrders(orders.map(o => o._id === orderId ? { ...o, order_status: newStatus } : o));
-        } catch (error) {
-            console.error(`Error updating status to ${newStatus}:`, error);
-            alert(`Failed to update order status to ${newStatus}`);
+            toast.success(`Order status updated to ${newStatus}`);
+        } catch (err) {
+            console.error(`Error updating status to ${newStatus}:`, err);
+            toast.error(`Failed to update order status to ${newStatus}`);
         }
     };
 
@@ -39,9 +41,10 @@ const AdminOrders = () => {
         try {
             await api.updatePaymentStatus(orderId, newStatus);
             setOrders(orders.map(o => o._id === orderId ? { ...o, payment_status: newStatus } : o));
-        } catch (error) {
-            console.error(`Error updating payment status:`, error);
-            alert(`Failed to update payment status`);
+            toast.success(`Payment status updated to ${newStatus}`);
+        } catch (err) {
+            console.error(`Error updating payment status:`, err);
+            toast.error(`Failed to update payment status`);
         }
     };
 

@@ -28,10 +28,13 @@ import AdminUsers from './pages/admin/AdminUsers.jsx';
 import AdminCoupons from './pages/admin/AdminCoupons.jsx';
 import AdminReadyMadePCs from './pages/admin/AdminReadyMadePCs.jsx';
 import AdminPlaceholderPage from './pages/admin/AdminPlaceholderPage.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <Router>
+      <ToastContainer position="bottom-right" autoClose={3000} theme="dark" />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/configurator" element={<ConfiguratorPage />} />

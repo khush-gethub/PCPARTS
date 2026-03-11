@@ -689,6 +689,8 @@ app.get('/products/:id/images', async (req, res) => {
 createGetAllRoute('/product-images', ProductImage);
 
 // 9. Benchmarks
+createGetAllRoute('/benchmarks', Benchmark);
+
 // New unified benchmark products endpoint
 app.get('/api/products/benchmark-data', async (req, res) => {
     try {
